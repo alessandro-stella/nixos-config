@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+AUR=$(yay -Qua | wc -l)
+OFFICIAL=$(checkupdates | wc -l)
+
+case $1 in
+    aur) echo "$AUR";;
+    official) echo "$OFFICIAL";;
+    update)
+        kitty sh -c 'yay -Syu --cleanmenu=false --diffmenu=false && yay -Yc && paccache -r -k 2'
+        ;;
+    "")
+        COUNT=$((OFFICIAL+AUR))
+        [[ "$COUNT" -eq 0 ]] && echo "" || echo "$COUNT"
+        ;;
+esac

@@ -1,0 +1,154 @@
+/* --- Global Properties --- */
+* {
+  border: none;
+  border-radius: 0;
+  font-family: "JetBrainsMono Nerd Font Propo";
+  font-weight: bold;
+  font-size: 14px;
+  min-height: 0;
+}
+
+/* --- Main Window --- */
+window#waybar {
+  background: rgba(32, 28, 39, 0.6);
+  color: #cdd6f4;
+}
+
+window#waybar.empty #window {
+  background: rgba(0, 0, 0, 0);
+}
+
+/* --- Tooltips --- */
+tooltip {
+  background: rgba(18, 17, 20, 0.80);
+  border-radius: 7px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #11111b;
+}
+
+tooltip label {
+  color: #cdd6f4;
+}
+
+/* --- Modules: Common Base --- */
+#custom-arch_logo,
+#window,
+#cpu,
+#disk,
+#memory,
+#clock,
+#battery,
+#pulseaudio,
+#tray,
+#custom-temperature,
+#backlight,
+#custom-notification,
+#network,
+#custom-updates {
+  padding: 0px 10px;
+}
+
+/* --- Workspaces Section --- */
+
+#workspaces button {
+  padding: 5px 10px;
+  color: #6c7086;
+  margin: 0px;
+  border-radius: 7px;
+  transition: all 0.15s ease;
+}
+
+#workspaces button:hover {
+  color: #a6adc8;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+#workspaces button.active,
+#workspaces button.focused {
+  color: #cdd6f4;
+}
+
+#workspaces button.urgent {
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+}
+
+/* --- Module Colors & States --- */
+
+#custom-arch_logo {
+  color: rgba(231, 231, 239, 1.00);
+}
+
+#pulseaudio.output {
+  color: #89b4fa;
+}
+
+#pulseaudio.input {
+  color: #cba6f7;
+}
+
+/* Critical/Warning States */
+#custom-temperature.critical,
+#battery.critical,
+#custom-notification.dnd-notification,
+#custom-notification.dnd-none,
+#custom-notification.dnd-inhibited-notification,
+#custom-notification.dnd-inhibited-none {
+  color: #e92d4d;
+}
+
+#battery.warning {
+  color: #ffdb58;
+}
+
+/* Animations & Specific Padding */
+
+#backlight {
+  padding-right: 0px;
+}
+
+#custom-notification {
+  transition: color 0.15s ease-in-out;
+}
+
+#tray-expander {
+  padding: 0px 10px;
+  border-right: 1px solid;
+  border-right-color: transparent;
+  transition: border-right-color 0.15s ease-in-out;
+}
+
+#tray-expander:hover {
+  border-right-color: #a6adc8;
+}
+
+/* Slider audio */
+
+#pulseaudio-slider {
+  padding: 0px;
+  padding-right: 10px;
+}
+
+#pulseaudio-slider slider {
+  min-height: 10px;
+  min-width: 10px;
+  opacity: 0;
+  background-image: none;
+  border: none;
+  box-shadow: none;
+  background-color: transparent;
+}
+
+#pulseaudio-slider trough {
+  min-width: 80px;
+  min-height: 8px;
+  border-radius: 5px;
+  background: black;
+}
+
+#pulseaudio-slider highlight {
+  min-width: 8px;
+  border-radius: 5px;
+  background: #a6adc8;
+}

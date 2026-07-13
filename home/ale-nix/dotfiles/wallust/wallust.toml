@@ -1,0 +1,9 @@
+[general]
+backend = "kmeans"
+colorspace = "lch"
+palette = "dark16"
+
+[templates]
+palette = { template = "paletteTemplate.json.j2", target = "~/.cache/wallust/colors.json" }
+kitty = { template = "kittyTemplate.json.j2", target = "~/.cache/wallust/colors-kitty.conf" }
+rofi = { template = "rofiTemplate.json.j2", target = "~/.cache/wallust/colors-rofi.rasi" }

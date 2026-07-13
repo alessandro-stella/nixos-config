@@ -1,0 +1,263 @@
+{
+  "reload_style_on_change": true,
+  "layer": "top",
+  "position": "top",
+  "mod": "dock",
+  "exclusive": true,
+  "passthrough": false,
+  "gtk-layer-shell": true,
+  "height": 35,
+  "modules-left": [
+    "custom/arch_logo",
+    "hyprland/workspaces"
+    // "custom/updates"
+  ],
+  "modules-center": [
+    "clock"
+  ],
+  "modules-right": [
+    "group/tray-expander",
+    "custom/notification",
+    "custom/temperature",
+    "battery",
+    "network",
+    "group/main-audio",
+    "group/hardware-info"
+  ],
+  "custom/arch_logo": {
+    "format": "",
+    "on-click": "pkill rofi; rofi -theme ~/.config/rofi/app_launcher.rasi -show drun",
+    "tooltip": false
+  },
+  "custom/updates": {
+    "tooltip": false,
+    "format": "",
+    "exec": "~/.config/waybar/scripts/update-sys",
+    "on-click": "~/.config/waybar/scripts/update-sys update",
+    "interval": 300,
+    "max-length": 10
+  },
+  "hyprland/workspaces": {
+    "disable-scroll": true
+  },
+  "clock": {
+    "format": "{:%H:%M • %d %b %Y}",
+    "tooltip": false
+  },
+  "custom/notification": {
+    "tooltip": true,
+    "format": "{icon}",
+    "format-icons": {
+      "notification": "󰂚",
+      "none": "󰂚",
+      "dnd-notification": "󰂛",
+      "dnd-none": "󰂛",
+      "inhibited-notification": "󰂚",
+      "inhibited-none": "󰂚",
+      "dnd-inhibited-notification": "󰂛",
+      "dnd-inhibited-none": "󰂛"
+    },
+    "return-type": "json",
+    "exec-if": "which swaync-client",
+    "exec": "swaync-client -swb | jq --unbuffered --compact-output 'if .alt | contains(\"dnd\") then .tooltip=\"Do Not Disturb: On\" else .tooltip=\"Do Not Disturb: Off\" end'",
+    "on-click": "swaync-client -d -sw > /dev/null",
+    "on-click-right": "swaync-client -t -sw > /dev/null",
+    "escape": true
+  },
+  "custom/temperature": {
+    "exec": "~/.config/waybar/scripts/temperature",
+    "interval": 5,
+    "return-type": "json",
+    "on-click": "kitty --title btop sh -c 'btop'"
+  },
+  "battery": {
+    "states": {
+      "warning": 30,
+      "critical": 10
+    },
+    "format": "{icon}",
+    "tooltip-format": "Capacity: {capacity}%",
+    "format-charging": "",
+    "format-plugged": "",
+    "format-icons": [
+      "󰂎",
+      "󰁺",
+      "󰁻",
+      "󰁼",
+      "󰁽",
+      "󰁾",
+      "󰁿",
+      "󰂀",
+      "󰂁",
+      "󰂂",
+      "󰁹"
+    ],
+    "events": {
+      "on-discharging-warning": "notify-send -i battery-caution -u normal 'Low battery'",
+      "on-discharging-critical": "notify-send -i battery-empty -u critical 'Battery critically low!'",
+      "on-charging-100": "notify-send -i battery-full -u normal 'Battery full!' 'You can unplug the charger'"
+    }
+  },
+  "backlight": {
+    "device": "intel_backlight",
+    "format": "{icon} {percent}%",
+    "format-icons": [
+      "󰃞",
+      "󰃟",
+      "󰃠"
+    ],
+    "on-scroll-down": "brightnessctl set 1%+",
+    "on-scroll-up": "brightnessctl set 1%-",
+    "smooth-scrolling-threshold": 0.5,
+    "tooltip": false
+  },
+  "group/main-audio": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600
+    },
+    "modules": [
+      "pulseaudio",
+      "pulseaudio/slider"
+    ]
+  },
+  "pulseaudio": {
+    "format": "{icon}",
+    "format-muted": "",
+    "on-click": "pamixer -t", // Mute
+    "on-click-right": "pavucontrol",
+    "tooltip": false,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "pulseaudio/slider": {
+    "min": 0,
+    "max": 100
+  },
+  "group/tray-expander": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": [
+      "custom/expand-icon",
+      "tray",
+      "group/audio",
+      "backlight"
+    ]
+  },
+  "custom/expand-icon": {
+    "format": "",
+    "tooltip": false
+  },
+  "tray": {
+    "icon-size": 16,
+    "spacing": 10
+  },
+  "group/audio": {
+    "orientation": "inherit",
+    "modules": [
+      "pulseaudio#output",
+      "pulseaudio#input"
+    ]
+  },
+  "pulseaudio#output": {
+    "format": "{icon} {volume}%",
+    "format-muted": "",
+    "on-click": "pamixer -t", // Mute
+    "on-click-right": "pavucontrol",
+    "on-scroll-down": "pamixer -i 5",
+    "on-scroll-up": "pamixer -d 5",
+    "smooth-scrolling-threshold": 0.5,
+    "scroll-step": 0.5,
+    "format-icons": {
+      "headphone": "",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": [
+        "",
+        "",
+        ""
+      ]
+    }
+  },
+  "pulseaudio#input": {
+    "format": "{format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": "",
+    "on-click": "pamixer --default-source -t", // Mute
+    "on-click-right": "pavucontrol",
+    "on-scroll-down": "pamixer --default-source -i 5",
+    "on-scroll-up": "pamixer --default-source -d 5",
+    "smooth-scrolling-threshold": 0.5,
+    "scroll-step": 0.5
+  },
+  "network": {
+    "format-icons": [
+      "󰤯",
+      "󰤟",
+      "󰤢",
+      "󰤥",
+      "󰤨"
+    ],
+    "format": "{icon}",
+    "format-wifi": "{icon}",
+    "format-ethernet": "󰌗",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} - {ipaddr}",
+    "tooltip-format-ethernet": "Connected - {ipaddr}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3,
+    "spacing": 1,
+    "on-click": "nm-connection-editor"
+  },
+  "group/hardware-info": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 600,
+      "children-class": "tray-group-item"
+    },
+    "modules": [
+      "cpu",
+      "memory",
+      "disk"
+    ]
+  },
+  "cpu": {
+    "interval": 10,
+    "format": " {usage}%",
+    "max-length": 10,
+    "on-click": "kitty --title btop sh -c 'btop'"
+  },
+  "memory": {
+    "interval": 30,
+    "format": " {}%",
+    "max-length": 10,
+    "tooltip": true,
+    "tooltip-format": "RAM - {used:0.1f}GB used",
+    "on-click": "kitty --title btop sh -c 'btop'"
+  },
+  "disk": {
+    "interval": 30,
+    "format": "󰋊 {percentage_used}%",
+    "path": "/",
+    "tooltip": true,
+    "tooltip-format": "{used} used out of {total}",
+    "on-click": "kitty --title btop sh -c 'btop'"
+  }
+}

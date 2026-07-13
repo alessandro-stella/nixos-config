@@ -1,0 +1,68 @@
+* {
+  background-image: none;
+  font-size: 16px;
+}
+
+window {
+  background-image: url("../themes/current_wallpaper/blurred.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: cover;
+  background-color: rgba(16, 20, 25, 0.5);
+}
+
+button {
+  color: white;
+  background-color: rgba(16, 20, 25, 0.4);
+  outline-style: none;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  text-shadow: none;
+  transition: background-color 0.3s ease;
+  margin: 8px;
+}
+
+button:hover {
+  background-color: rgba(186, 230, 241, 0.6);
+  background-size: 25%;
+  transition: background-color 0.3s ease;
+}
+
+label {
+  padding-bottom: 12px;
+}
+
+#hibernate,
+#lock,
+#logout,
+#reboot,
+#shutdown,
+#suspend {
+  background-position: center 40%;
+  background-repeat: no-repeat;
+  background-size: 100px 100px;
+}
+
+#hibernate {
+  background-image: url("./icons/hibernate.svg");
+}
+
+#lock {
+  background-image: url("./icons/lock.svg");
+}
+
+#logout {
+  background-image: url("./icons/logout.svg");
+}
+
+#reboot {
+  background-image: url("./icons/reboot.svg");
+}
+
+#shutdown {
+  background-image: url("./icons/shutdown.svg");
+}
+
+#suspend {
+  background-image: url("./icons/suspend.svg");
+}
