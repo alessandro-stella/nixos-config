@@ -15,6 +15,7 @@ in
     brave
     localsend
     nautilus
+    kitty
 
     # Tool cli
     fastfetch
@@ -25,6 +26,7 @@ in
     tree-sitter
     wakatime-cli
     neovim
+    oh-my-posh
 
     # Theming
     adw-gtk3
@@ -41,6 +43,7 @@ in
     wtype
     wl-clipboard
     wallust
+    waybar
 
     # Font and icons
     font-awesome
