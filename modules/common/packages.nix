@@ -1,4 +1,4 @@
-{ pkgs, ... };
+{ pkgs, ... }:
 
 {
   environment.systemPackages = with pkgs; [
@@ -7,7 +7,7 @@
     curl
     gnumake
     gcc
-    unvip
+    unzip
     glib
   ];
 }

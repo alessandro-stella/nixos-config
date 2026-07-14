@@ -1,4 +1,4 @@
-{ config, pkgs, ...}
+{ config, pkgs, ...}:
 
 let
   dotfilesPath = "/home/ale-nix/nixos-config/home/ale-nix/dotfiles";
@@ -24,12 +24,14 @@ in
     nodejs
     tree-sitter
     wakatime-cli
+    neovim
 
     # Theming
     adw-gtk3
     adwaita-icon-theme
 
     # Graphical suite
+    hyprland
     awww
     swaynotificationcenter
     swaylock-effects
@@ -46,13 +48,6 @@ in
   ];
 
   programs.home-manager.enable = true;
-
-  programs.kitty.enable = true;
-  programs.neovim.enable = true;
-  programs.waybar.enable = true;
-  programs.rofi.enable = true;
-  programs.btop.enable = true;
-  programs.oh-my-posh.enagle = true;
 
   xdg.configFile = {
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/btop";

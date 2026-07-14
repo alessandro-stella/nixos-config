@@ -6,7 +6,7 @@
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follow = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     nvim-config = {
@@ -15,7 +15,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nvim-config, ...};
+  outputs = { self, nixpkgs, home-manager, nvim-config, ...}:
   {
     nixosConfigurations = {
       desktop = 
@@ -23,6 +23,8 @@
           system = "x86_64-linux";
 
           modules = [
+	    { nixpkgs.config.allowUnfree = true; }
+
             ./hosts/desktop/configuration.nix
             ./modules/common/packages.nix
             ./modules/common/hyprland.nix
@@ -45,6 +47,8 @@
           system = "x86_64-linux";
 
           modules = [
+	    { nixpkgs.config.allowUnfree = true; }
+
             ./hosts/laptop/configuration.nix
             ./modules/common/packages.nix
             ./modules/common/hyprland.nix

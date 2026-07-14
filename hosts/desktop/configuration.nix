@@ -1,4 +1,4 @@
-{ config, pkgs, ... };
+{ config, pkgs, ... }:
 
 {
   imports = [
@@ -13,7 +13,7 @@
 
   security.polkit.enable = true;
 
-  time.timeZonee = "Europe/Rome";
+  time.timeZone = "Europe/Rome";
   i18n.defaultLocale = "it_IT.UTF-8";
 
   users.users."ale-nix" = {
@@ -27,5 +27,5 @@
   services.xserver.enable = true;
   programs.nix-ld.enable = true;
 
-  system.stateVersion = 26.05;
+  system.stateVersion = "26.05";
 }
