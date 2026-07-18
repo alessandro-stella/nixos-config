@@ -3,30 +3,24 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../common.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  networking.hostName = "thinkpad-t14";
 
-  networking.hostName = "laptop-nix";
-  networking.networkmanager.enable = true;
+  environment.systemPackages = with pkgs; [
+    brightnessctl
+    powertop
+  ];
 
-  security.polkit.enable = true;
+  services.tlp = {
+    enable = true;
 
-  time.timeZone = "Europe/Rome";
-  i18n.defaultLocale = "it_IT.UTF-8";
+    CPU_SCALING_GOVERNOR_ON_AC = "performance";
+    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-  users.users."ale-nix" = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
-  };
-
-  services.xserver.enable = true;
-  programs.nix-ld.enable = true;
-
-  system.stateVersion = "26.05";
+    CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+    CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
+  }
 }
 

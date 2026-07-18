@@ -15,55 +15,33 @@
     };
   };
 
-  outputs = { self, nixpkgs, home-manager, nvim-config, ...}:
+  outputs = { self, nixpkgs, home-manager, nvim-config, ...}@inputs:
+  let
+    sharedModules = [
+      { nixpkgs.config.allowUnfree = true; }
+
+      home-manager.nixosModules.home-manager
+      {
+        home-manager.useGlobalPkgs = true;
+        home-manager.useUserPkgs = true;
+        home-manager.extraSpecialArgs = { inherit nvim-config; };
+        home-manager.users."ale-nix" = import ./home/ale-nix/home.nix;
+      }
+    ];
+  in
   {
     nixosConfigurations = {
       desktop = 
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
-
-          modules = [
-	    { nixpkgs.config.allowUnfree = true; }
-
-            ./hosts/desktop/configuration.nix
-            ./modules/common/packages.nix
-            ./modules/common/hyprland.nix
-            ./modules/machines/desktop.nix
-
-            home-manager.nixosModules.home-manager
-
-            {
-              home-manager.users.ale-nix = import ./home/ale-nix/home.nix;
-
-              home-manager.extraSpecialArgs = {
-                inherit nvim-config;
-              };
-            }
-          ];
+          modules = [ ./hosts/desktop/configuration.nix ] ++ sharedModules;
         };
 
-    laptop = 
+      laptop = 
         nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
 
-          modules = [
-	    { nixpkgs.config.allowUnfree = true; }
-
-            ./hosts/laptop/configuration.nix
-            ./modules/common/packages.nix
-            ./modules/common/hyprland.nix
-            ./modules/machines/laptop.nix
-
-            home-manager.nixosModules.home-manager
-
-            {
-              home-manager.users.ale-nix = import ./home/ale-nix/home.nix;
-
-              home-manager.extraSpecialArgs = {
-                inherit nvim-config;
-              };
-            }
-          ];
+          modules = [ ./hosts/laptop/configuration.nix ] ++ sharedModules;
         };
     };
   };

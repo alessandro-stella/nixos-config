@@ -1,4 +1,4 @@
-{ config, pkgs, ...}:
+{ config, pkgs, nvim-config, ...}:
 
 let
   dotfilesPath = "/home/ale-nix/nixos-config/home/ale-nix/dotfiles";
@@ -66,19 +66,19 @@ in
     "wallust".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wallust";
     "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
     "wlogout".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wlogout";
-  };
 
-  home.sessionVariables = {
-    XCURSOR_THEME = "Adwaita";
-    XCURSOR_SIZE = "24";
-    HYPRCURSSOR_THEME = "Adwaita";
-    HYPRCURSSOR_SIZE = "24";
-
-    EDITOR = "nvim";
-    VISUAL = "nvim";
-
-    NIXOS_OZONE_WL = "1";
-    QT_QPA_PLATFORM = "wayland";
-    GDK_BACKEND = "wayland,x11";
+    "nvim" = {
+      source = nvim-config;
+      recursive = true;
+    };
   }; 
+
+  home.pointerCursor = {
+    enable = true;
+    gtk.enable = true;
+
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 24;
+  };
 }

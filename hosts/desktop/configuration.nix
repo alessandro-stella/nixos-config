@@ -3,29 +3,27 @@
 {
   imports = [
     ./hardware-configuration.nix
+    ../common.nix
   ];
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  environment.systemPackages = with pkgs; [
+    spotify
+    discord
+  ];
 
-  networking.hostName = "desktop-nix";
-  networking.networkmanager.enable = true;
+  services.keyd = {
+    enable = true;
 
-  security.polkit.enable = true;
+    keyboards.default = {
+      ids = [ "*" ];
 
-  time.timeZone = "Europe/Rome";
-  i18n.defaultLocale = "it_IT.UTF-8";
-
-  users.users."ale-nix" = {
-    isNormalUser = true;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
+      settings = {
+        main = {
+          "leftcontrol+leftalt" = "rightalt";
+        };
+      };
+    };
   };
 
-  services.xserver.enable = true;
-  programs.nix-ld.enable = true;
-
-  system.stateVersion = "26.05";
+  networking.hostName = "desktop-nix";
 }
