@@ -117,6 +117,9 @@ in
     librsvg
   ];
 
+  # Disable xterm
+  services.xserver.excludePackages = [ pkgs.xterm ];
+
   # Turn on experimental commands
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 

@@ -9,13 +9,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nvim-config = {
-      url = "github:alessandro-stella/OrionVim";
-      flake = false;
-    };
+    brave-origin.url = "github:Daniel-42-z/brave-origin-flake";
   };
 
-  outputs = { self, nixpkgs, home-manager, nvim-config, ...}@inputs:
+  outputs = { self, nixpkgs, home-manager, ...}@inputs:
   let
     sharedModules = [
       { 
@@ -26,9 +23,9 @@
 
       home-manager.nixosModules.home-manager
       {
+        home-manager.extraSpecialArgs = { inherit inputs; };
         home-manager.useGlobalPkgs = true;
         home-manager.useUserPackages = true;
-        home-manager.extraSpecialArgs = { inherit nvim-config; };
         home-manager.users."ale-nix" = import ./home/ale-nix/home.nix;
       }
     ];

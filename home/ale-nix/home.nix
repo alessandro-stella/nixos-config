@@ -1,4 +1,4 @@
-{ config, pkgs, nvim-config, ...}:
+{ config, pkgs, inputs, ...}:
 
 let
   dotfilesPath = "/home/ale-nix/nixos-config/home/ale-nix/dotfiles";
@@ -12,7 +12,6 @@ in
 
   home.packages = with pkgs; [
     # Apps
-    brave
     localsend
     nautilus
     kitty
@@ -54,6 +53,12 @@ in
 
   programs.home-manager.enable = true;
 
+  # Setting brave-origin
+  programs.brave = {
+    enable = true;
+    package = inputs.brave-origin.packages.${pkgs.system}.default;
+  };
+
   # Cursor settings
   home.pointerCursor = {
     enable = true;
@@ -64,11 +69,33 @@ in
     size = 24;
   };
 
+  # Dark theme
+  dconf.settings = {
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+    };
+  };
+
+  gtk = {
+    enable = true;
+    theme = {
+      name = "adw-gtk3-dark";
+      package = pkgs.adw-gtk3;
+    };
+
+    gtk3.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+
+    gtk4.extraConfig = {
+      gtk-application-prefer-dark-theme = 1;
+    };
+  };
+
   # Set folders inside .config
   xdg.configFile = {
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/btop";
     "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/fastfetch";
-    "gtk-3.0".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/gtk-3.0";
     "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr";
     "kitty".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/kitty";
     "oh-my-posh".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/oh-my-posh";
@@ -79,12 +106,40 @@ in
     "wallust".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wallust";
     "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
     "wlogout".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wlogout";
-
-    "nvim" = {
-      source = nvim-config;
-      recursive = true;
-    };
   }; 
+
+  # Handle neovim config
+  home.activation.setupNeovim = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    NVIM_DIR="$HOME/.config/nvim"
+    REPO_URL="https://github.com/alessandro-stella/OrionVim.git"
+
+    if [ ! -d "$NVIM_DIR/.git" ]; then
+      echo "Cloning OrionVim..."
+      rm -rf "$NVIM_DIR"
+      ${pkgs.git}/bin/git clone "$REPO_URL" "$NVIM_DIR"
+    else
+      echo "OrionVim already installed, checking updates..."
+      ${pkgs.git}/bin/git -C "$NVIM_DIR" pull
+    fi
+  '';
+
+  # Syncronize wallpapers
+  home.activation.setupWallpapers = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    PICS_DIR="$HOME/Pictures"
+    WP_DIR="$PICS_DIR/wallpapers"
+    REPO_URL="https://github.com/alessandro-stella/linux-wallpapers.git" 
+  
+    mkdir -p "$PICS_DIR"
+  
+    if [ ! -d "$WP_DIR/.git" ]; then
+      echo "Downloading wallpapers..."
+      rm -rf "$WP_DIR"
+      ${pkgs.git}/bin/git clone "$REPO_URL" "$WP_DIR"
+    else
+      echo "Wallpaper folder exists, checking for updates..."
+      ${pkgs.git}/bin/git -C "$WP_DIR" pull
+    fi
+  '';
 
   # Set symlink for theme changing
   home.activation.themeLinks =
@@ -96,12 +151,37 @@ in
         ["$HOME/.config/swaync/style.css"]="swaync.css"
         ["$HOME/.config/waybar/style.css"]="waybar.css"
         ["$HOME/.config/wlogout/style.css"]="wlogout.css"
+        ["$HOME/.config/hypr/modules/dynamic-border.lua"]="dynamic-border.lua"
       )
 
       for target in "''${!links[@]}"; do
         ln -sfn "$HOME/.config/themes/current_theme/''${links[$target]}" "$target"
       done
     '';
+
+  # Create custom files for hyprland
+  home.activation.setupHyprModules = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    MODULES_DIR="$HOME/.config/hypr/modules"
+    
+    mkdir -p "$MODULES_DIR"
+  
+    create_if_missing() {
+      local target=$1
+      local template=$2
+      
+      if [ ! -f "$target" ]; then
+        echo "Module missing, creating: $target"
+        cp "$template" "$target"
+        chmod 644 "$target"
+      else
+        echo "Module $target exists, skipping"
+      fi
+    }
+  
+    create_if_missing "$MODULES_DIR/custom-keybinds.lua" "${./dotfiles/hypr/templates/custom-keybinds.lua}"
+    create_if_missing "$MODULES_DIR/device-settings.lua" "${./dotfiles/hypr/templates/device-settings.lua}"
+    create_if_missing "$MODULES_DIR/monitors.lua"        "${./dotfiles/hypr/templates/monitors.lua}"
+  '';
 
   # Set .bashrc file
   home.file.".bashrc".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/bashrc";

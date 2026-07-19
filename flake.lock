@@ -1,5 +1,42 @@
 {
   "nodes": {
+    "brave-origin": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "nixpkgs": "nixpkgs"
+      },
+      "locked": {
+        "lastModified": 1783759392,
+        "narHash": "sha256-I2zI2OW8hKD8BVx9DX7quTxWgQhhzAaCF/8JXgUJpHU=",
+        "owner": "Daniel-42-z",
+        "repo": "brave-origin-flake",
+        "rev": "1b2fb9bc254e7de179595728bb5f2d621cf1b7b6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Daniel-42-z",
+        "repo": "brave-origin-flake",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -22,6 +59,22 @@
     },
     "nixpkgs": {
       "locked": {
+        "lastModified": 1780243769,
+        "narHash": "sha256-x5UQuRsH3MqI0U9afaXSNqzTPSeZlRLvFAav2Ux1pNw=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "331800de5053fcebacf6813adb5db9c9dca22a0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
         "lastModified": 1783776592,
         "narHash": "sha256-UgCQzxeWI75XM8G+hPrPh+MKzEPjG3SpAj7dtqSbksA=",
         "owner": "NixOS",
@@ -36,27 +89,26 @@
         "type": "github"
       }
     },
-    "nvim-config": {
-      "flake": false,
+    "root": {
+      "inputs": {
+        "brave-origin": "brave-origin",
+        "home-manager": "home-manager",
+        "nixpkgs": "nixpkgs_2"
+      }
+    },
+    "systems": {
       "locked": {
-        "lastModified": 1780039659,
-        "narHash": "sha256-DOCHH8FyRkvrGXmRtsUzqv8+MpX8W9gkbSkBoOPK4Zo=",
-        "owner": "alessandro-stella",
-        "repo": "OrionVim",
-        "rev": "4f0ad4db30feb06309681c6fd358dbd0c6a3a307",
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
         "type": "github"
       },
       "original": {
-        "owner": "alessandro-stella",
-        "repo": "OrionVim",
+        "owner": "nix-systems",
+        "repo": "default",
         "type": "github"
-      }
-    },
-    "root": {
-      "inputs": {
-        "home-manager": "home-manager",
-        "nixpkgs": "nixpkgs",
-        "nvim-config": "nvim-config"
       }
     }
   },
