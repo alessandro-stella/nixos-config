@@ -1,51 +1,51 @@
 * {
-    active-background: #312F43;
-    active-foreground: #E7E7EF;
-    normal-background: #121114;
-    normal-foreground: #E7E7EF;
-    urgent-background: #13101D;
-    urgent-foreground: #E7E7EF;
+    active-background: #796649;
+    active-foreground: #EAEDF1;
+    normal-background: #1D1E20;
+    normal-foreground: #EAEDF1;
+    urgent-background: #601C19;
+    urgent-foreground: #EAEDF1;
 
-    alternate-active-background: #121114;
-    alternate-active-foreground: #E7E7EF;
-    alternate-normal-background: #121114;
-    alternate-normal-foreground: #E7E7EF;
-    alternate-urgent-background: #121114;
-    alternate-urgent-foreground: #E7E7EF;
+    alternate-active-background: #1D1E20;
+    alternate-active-foreground: #EAEDF1;
+    alternate-normal-background: #1D1E20;
+    alternate-normal-foreground: #EAEDF1;
+    alternate-urgent-background: #1D1E20;
+    alternate-urgent-foreground: #EAEDF1;
 
-    selected-active-background: #13101D;
-    selected-active-foreground: #E7E7EF;
-    selected-normal-background: #312F43;
-    selected-normal-foreground: #E7E7EF;
-    selected-urgent-background: #4E556E;
-    selected-urgent-foreground: #E7E7EF;
+    selected-active-background: #601C19;
+    selected-active-foreground: #EAEDF1;
+    selected-normal-background: #796649;
+    selected-normal-foreground: #EAEDF1;
+    selected-urgent-background: #5A7187;
+    selected-urgent-foreground: #EAEDF1;
 
-    background-color: #121114;
-    background: #121114;
-    foreground: #E7E7EF;
-    border-color: #121114;
+    background-color: #1D1E20;
+    background: #1D1E20;
+    foreground: #EAEDF1;
+    border-color: #1D1E20;
     spacing: 2;
 
-    color0: #3A393C;
-    color1: #13101D;
-    color2: #312F43;
-    color3: #4E556E;
-    color4: #6C7A97;
-    color5: #929EBB;
-    color6: #BBBBD0;
-    color7: #D4D5DF;
-    color8: #95959C;
-    color9: #13101D;
-    color10: #312F43;
-    color11: #4E556E;
-    color12: #6C7A97;
-    color13: #929EBB;
-    color14: #BBBBD0;
-    color15: #D4D5DF;
+    color0: #434447;
+    color1: #601C19;
+    color2: #796649;
+    color3: #5A7187;
+    color4: #E24238;
+    color5: #E0A162;
+    color6: #C2CCD6;
+    color7: #D8DDE2;
+    color8: #979B9E;
+    color9: #601C19;
+    color10: #796649;
+    color11: #5A7187;
+    color12: #E24238;
+    color13: #E0A162;
+    color14: #C2CCD6;
+    color15: #D8DDE2;
 }
 
 #window {
-    background-color: #121114;
+    background-color: #1D1E20;
     border: 0;
     padding: 2.5ch;
 }
@@ -57,12 +57,12 @@
 
 #message {
     border: 2px 0px 0px;
-    border-color: #121114;
+    border-color: #1D1E20;
     padding: 1px;
 }
 
 #textbox {
-    text-color: #E7E7EF;
+    text-color: #EAEDF1;
 }
 
 #inputbar {
@@ -73,13 +73,13 @@
     expand: false;
     str: ":";
     margin: 0px 0.3em 0em 0em;
-    text-color: #E7E7EF;
+    text-color: #EAEDF1;
 }
 
 #listview {
     fixed-height: 0;
     border: 2px 0px 0px;
-    border-color: #121114;
+    border-color: #1D1E20;
     spacing: 2px;
     scrollbar: true;
     padding: 2px 0px 0px;
@@ -91,48 +91,48 @@
 }
 
 #element.normal.normal {
-    background-color: #121114;
-    text-color: #E7E7EF;
+    background-color: #1D1E20;
+    text-color: #EAEDF1;
 }
 
 #element.normal.urgent {
-    background-color: #13101D;
-    text-color: #E7E7EF;
+    background-color: #601C19;
+    text-color: #EAEDF1;
 }
 
 #element.normal.active {
-    background-color: #312F43;
-    text-color: #E7E7EF;
+    background-color: #796649;
+    text-color: #EAEDF1;
 }
 
 #element.selected.normal {
-    background-color: #312F43;
-    text-color: #E7E7EF;
+    background-color: #796649;
+    text-color: #EAEDF1;
 }
 
 #element.selected.urgent {
-    background-color: #4E556E;
-    text-color: #E7E7EF;
+    background-color: #5A7187;
+    text-color: #EAEDF1;
 }
 
 #element.selected.active {
-    background-color: #13101D;
-    text-color: #E7E7EF;
+    background-color: #601C19;
+    text-color: #EAEDF1;
 }
 
 #element.alternate.normal {
-    background-color: #121114;
-    text-color: #E7E7EF;
+    background-color: #1D1E20;
+    text-color: #EAEDF1;
 }
 
 #element.alternate.urgent {
-    background-color: #121114;
-    text-color: #E7E7EF;
+    background-color: #1D1E20;
+    text-color: #EAEDF1;
 }
 
 #element.alternate.active {
-    background-color: #121114;
-    text-color: #E7E7EF;
+    background-color: #1D1E20;
+    text-color: #EAEDF1;
 }
 
 #scrollbar {
@@ -144,35 +144,35 @@
 
 #sidebar {
     border: 2px 0px 0px;
-    border-color: #121114;
+    border-color: #1D1E20;
 }
 
 #button {
-    text-color: #E7E7EF;
+    text-color: #EAEDF1;
 }
 
 #button.selected {
-    background-color: #312F43;
-    text-color: #E7E7EF;
+    background-color: #796649;
+    text-color: #EAEDF1;
 }
 
 #inputbar {
     spacing: 0;
-    text-color: #E7E7EF;
+    text-color: #EAEDF1;
     padding: 1px;
 }
 
 #case-indicator {
     spacing: 0;
-    text-color: #E7E7EF;
+    text-color: #EAEDF1;
 }
 
 #entry {
     spacing: 0;
-    text-color: #E7E7EF;
+    text-color: #EAEDF1;
 }
 
 #prompt {
     spacing: 0;
-    text-color: #E7E7EF;
+    text-color: #EAEDF1;
 }
