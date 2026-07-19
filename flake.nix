@@ -23,7 +23,7 @@
       home-manager.nixosModules.home-manager
       {
         home-manager.useGlobalPkgs = true;
-        home-manager.useUserPkgs = true;
+        home-manager.useUserPackages = true;
         home-manager.extraSpecialArgs = { inherit nvim-config; };
         home-manager.users."ale-nix" = import ./home/ale-nix/home.nix;
       }
