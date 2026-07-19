@@ -295,7 +295,8 @@ Rectangle {
                 horizontalCenter: parent.horizontalCenter
                 bottomMargin: 100
             }
-            opacity: 0.5
+            opacity: colorExtractor.processed ? 0.5 : 0
+            Behavior on opacity { NumberAnimation { duration: 300 } }
         }
 
         MouseArea {
@@ -450,11 +451,10 @@ Rectangle {
                             if (typeof userModel !== "undefined" && userModel.count > 0) {
                                 var idx = container.userIndex;
                                 var modelIdx = userModel.index(idx, 0);
-                                var display = userModel.data(modelIdx, Qt.DisplayRole);
-                                var edit = userModel.data(modelIdx, Qt.EditRole);
-                                var nr = userModel.data(modelIdx, Qt.UserRole + 1);
-                                var realName = userModel.data(modelIdx, Qt.UserRole + 2);
-                                var finalName = display ? display.toString() : (realName ? realName.toString() : (nr ? nr.toString() : (edit ? edit.toString() : "User")));
+
+                                var username = userModel.data(modelIdx, Qt.EditRole);
+                                var finalName = username ? username.toString() : "User";
+
                                 return cleanName(finalName) + (userModel.count > 1 ? " ▾" : "");
                             }
                             return cleanName(sddm.lastUser ? sddm.lastUser : "User");
