@@ -70,7 +70,7 @@ inputbar {
     border-radius:               20px;
     orientation:                 horizontal;
     children:                    ["entry", "dummy" ];
-    background-image:            url("~/.config/themes/current_wallpaper/wallpaper.png", width);
+    background-image:            url("~/.config/themes/current_theme/wallpaper.png", width);
 }
 
 /* === Entry input === */

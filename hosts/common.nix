@@ -48,29 +48,44 @@ in
 
   programs.nix-ld.enable = true;
 
+  # Font and icons
+  fonts.packages = with pkgs; [
+    font-awesome
+    nerd-fonts.jetbrains-mono
+  ];
+
   # Hyprland
   programs.hyprland.enable = true;
 
+  # SDDM settings
   services.displayManager = {
     sddm = {
       enable = true;
       wayland.enable = false;
       theme = "pixie-better";
 
-      package = pkgs.sddm.override {
+      package = pkgs.kdePackages.sddm.override {
         extraPackages = [
           sddmTheme
-          pkgs.libsForQt5.qtgraphicaleffects
         ];
       };
     };
 
     defaultSession = "hyprland";
   };
+  
+  systemd.tmpfiles.rules = [
+    "A /home/ale-nix - - - - u:sddm:x"
+    "A /home/ale-nix/.config - - - - u:sddm:x"
+    "A /home/ale-nix/.config/themes - - - - u:sddm:x"
+ 
+    "A /home/ale-nix/.config/themes/current_theme - - - - u:sddm:rx"
+  ];
 
   # User settings
   users.users."ale-nix" = {
     isNormalUser = true;
+
     extraGroups = [
       "wheel"
       "networkmanager"
@@ -86,6 +101,8 @@ in
     gcc
     unzip
     glib
+
+    sddmTheme
   ];
 
   # Keep last 5 system generations

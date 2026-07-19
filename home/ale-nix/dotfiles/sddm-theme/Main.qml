@@ -100,7 +100,7 @@ Rectangle {
     }
 
     // Dynamic Color Extraction
-    property color extractedAccent: "#A9C78F"
+    property color extractedAccent: "#FFFFFF"
     
     Timer {
         id: colorDelay

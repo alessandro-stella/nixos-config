@@ -16,7 +16,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd("waybar") -- Status bar
 	hl.exec_cmd("swaync") -- Notification center
 	hl.exec_cmd(
-		"awww-daemon && awww img ~/.config/themes/current_wallpaper/wallpaper.png --transition-type fade --transition-duration 0.5"
+		"awww-daemon && awww img ~/.config/themes/current_theme/wallpaper.png --transition-type fade --transition-duration 0.5"
 	) -- Wallpaper
 
 	-- Utility and customization scripts
