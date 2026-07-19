@@ -1,5 +1,16 @@
 { config, pkgs, ... }:
 
+let
+  sddmTheme = pkgs.stdenv.mkDerivation {
+    name = "pixie-better";
+    src = ../home/ale-nix/dotfiles/sddm-theme;
+
+    installPhase = ''
+      mkdir -p $out/share/sddm/themes/pixie-better
+      cp -R ./* $out/share/sddm/themes/pixie-better
+    '';
+  };
+in
 {
   imports = [ ];
 
@@ -44,6 +55,14 @@
     sddm = {
       enable = true;
       wayland.enable = false;
+      theme = "pixie-better";
+
+      package = pkgs.sddm.override {
+        extraPackages = [
+          sddmTheme
+          pkgs.libsForQt5.qtgraphicaleffects
+        ];
+      };
     };
 
     defaultSession = "hyprland";
