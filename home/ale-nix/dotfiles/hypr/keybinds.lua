@@ -17,7 +17,7 @@ hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region -o ~/
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots"))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("rofi -theme ~/.config/rofi/app_launcher.rasi -show drun"))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("bash -c $HOME/.config/scripts/theme_changer/theme_chooser.sh"))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("bash -c ~/.config/scripts/theme_changer/theme_chooser.sh"))
 hl.bind(
 	mainMod .. " + V",
 	hl.dsp.exec_cmd(

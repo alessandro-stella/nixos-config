@@ -11,6 +11,7 @@
   environment.systemPackages = with pkgs; [
     brightnessctl
     powertop
+    networkmanagerapplet
   ];
 
   services.tlp = {
@@ -21,6 +22,10 @@
 
     CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
     CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
-  }
+  };
+
+  # Bluetooth
+  hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 }
 

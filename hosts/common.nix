@@ -89,6 +89,7 @@ in
     extraGroups = [
       "wheel"
       "networkmanager"
+      "wireshark"
     ];
   };
 
@@ -101,9 +102,18 @@ in
     gcc
     unzip
     glib
+    libnotify
+    bc
+    psmisc
 
     sddmTheme
   ];
+
+  # Setting up java
+  programs.java = {
+    enable = true;
+    package = pkgs.jdk21;
+  };
 
   # Keep last 5 system generations
   nix.gc = {
@@ -116,6 +126,9 @@ in
   programs.gdk-pixbuf.modulePackages = with pkgs; [
     librsvg
   ];
+
+  # Install wireshark
+  programs.wireshark.enable = true;
 
   # Disable xterm
   services.xserver.excludePackages = [ pkgs.xterm ];
