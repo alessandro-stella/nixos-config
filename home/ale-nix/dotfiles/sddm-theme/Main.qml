@@ -452,12 +452,12 @@ Rectangle {
                                 var idx = container.userIndex;
                                 var modelIdx = userModel.index(idx, 0);
 
-                                var username = userModel.data(modelIdx, Qt.EditRole);
+                                var username = userModel.data(modelIdx, Qt.UserRole);
                                 var finalName = username ? username.toString() : "User";
 
-                                return cleanName(finalName) + (userModel.count > 1 ? " ▾" : "");
+                                return finalName;
                             }
-                            return cleanName(sddm.lastUser ? sddm.lastUser : "User");
+                            return sddm.lastUser ? sddm.lastUser ? "User";
                         }
                         color: "white"
                         font.pixelSize: 24

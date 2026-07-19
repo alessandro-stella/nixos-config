@@ -63,12 +63,6 @@ in
       enable = true;
       wayland.enable = false;
       theme = "pixie-better";
-
-      package = pkgs.kdePackages.sddm.override {
-        extraPackages = [
-          sddmTheme
-        ];
-      };
     };
 
     defaultSession = "hyprland";
@@ -78,8 +72,8 @@ in
     "A /home/ale-nix - - - - u:sddm:x"
     "A /home/ale-nix/.config - - - - u:sddm:x"
     "A /home/ale-nix/.config/themes - - - - u:sddm:x"
- 
     "A /home/ale-nix/.config/themes/current_theme - - - - u:sddm:rx"
+    "D! /var/lib/sddm/.cache 0700 sddm sddm - -"
   ];
 
   # User settings
