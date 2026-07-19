@@ -18,6 +18,7 @@ in
     kitty
 
     # Tool cli
+    btop
     fastfetch
     jq
     tree
@@ -44,6 +45,7 @@ in
     wl-clipboard
     wallust
     waybar
+    rofi
 
     # Font and icons
     font-awesome
