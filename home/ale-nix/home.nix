@@ -54,6 +54,17 @@ in
 
   programs.home-manager.enable = true;
 
+  # Cursor settings
+  home.pointerCursor = {
+    enable = true;
+    gtk.enable = true;
+
+    package = pkgs.adwaita-icon-theme;
+    name = "Adwaita";
+    size = 24;
+  };
+
+  # Set folders inside .config
   xdg.configFile = {
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/btop";
     "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/fastfetch";
@@ -75,14 +86,24 @@ in
     };
   }; 
 
+  # Set symlink for theme changing
+  home.activation.themeLinks =
+    config.lib.dag.entryAfter [ "writeBoundary" ] ''
+      declare -A links=(
+        ["$HOME/.config/kitty/colors-kitty.conf"]="kitty.conf"
+        ["$HOME/.config/oh-my-posh/themes/current_theme.omp.json"]="oh-my-posh.omp.json"
+        ["$HOME/.config/rofi/colors.rasi"]="rofi.rasi"
+        ["$HOME/.config/swaync/style.css"]="swaync.css"
+        ["$HOME/.config/waybar/style.css"]="waybar.css"
+        ["$HOME/.config/wlogout/style.css"]="wlogout.css"
+      )
+
+      for target in "''${!links[@]}"; do
+        ln -sfn "$HOME/.config/themes/current_theme/''${links[$target]}" "$target"
+      done
+    '';
+
+  # Set .bashrc file
   home.file.".bashrc".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/bashrc";
-
-  home.pointerCursor = {
-    enable = true;
-    gtk.enable = true;
-
-    package = pkgs.adwaita-icon-theme;
-    name = "Adwaita";
-    size = 24;
-  };
 }
+

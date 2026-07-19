@@ -58,6 +58,13 @@ nix-build() {
     return 1
   fi
 
+  HW_CONFIG="hosts/$1/hardware-configuration.nix"
+
+  if [ -f "$HW_CONFIG" ]; then
+    git add -f --intent-to-add "$HW_CONFIG"
+    git update-index --assume-unchanged "$HW_CONFIG"
+  fi
+
   git add -A
   sudo nixos-rebuild switch --flake .#"$1"
 }
