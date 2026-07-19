@@ -448,16 +448,18 @@ Rectangle {
                         id: userNameLabel
                         anchors.centerIn: parent
                         text: {
-                            if (typeof userModel !== "undefined" && userModel.count > 0) {
-                                var idx = container.userIndex;
-                                var modelIdx = userModel.index(idx, 0);
+                          if(typeof userModel !== "undefined" && userModel.count > 0) {
+                            var modelIdx = userModel.index(container.userIndex, 0);
+                            var display = userModel.data(modelIdx, Qt.DisplayRole);
+                            var edit = userModel.data(modelIdx, Qt.EditRole);
+                            var nr = userModel.data(modelIdx, Qt.UserRole + 1);
+                            var realName = userModel.data(modelIdx, Qt.UserRole + 2);
 
-                                var username = userModel.data(modelIdx, Qt.UserRole);
-                                var finalName = username ? username.toString() : "User";
+                            var rawName = edit ? edit.toString() : (nr ? nr.toString() : (display ? display.toString() : (realName ? realName.toString() : "User")));
 
-                                return finalName;
-                            }
-                            return sddm.lastUser ? sddm.lastUser ? "User";
+                            return rawName + (userModel.count > 1 ? " ▾" : "");
+                          }  
+                          return sddm.lastUser ? sddm.lastUser.name : "User";
                         }
                         color: "white"
                         font.pixelSize: 24

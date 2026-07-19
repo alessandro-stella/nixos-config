@@ -15,8 +15,14 @@ in
   imports = [ ];
 
   # Generic configurations
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+    };
+
+    efi.canTouchEfiVariables = true;
+  };
 
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
@@ -72,8 +78,8 @@ in
     "A /home/ale-nix - - - - u:sddm:x"
     "A /home/ale-nix/.config - - - - u:sddm:x"
     "A /home/ale-nix/.config/themes - - - - u:sddm:x"
+ 
     "A /home/ale-nix/.config/themes/current_theme - - - - u:sddm:rx"
-    "D! /var/lib/sddm/.cache 0700 sddm sddm - -"
   ];
 
   # User settings

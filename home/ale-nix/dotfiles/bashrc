@@ -51,6 +51,17 @@ compile() {
     esac
 }
 
+# Build nix flake
+nix-build() {
+  if [ -z "$1" ]; then
+    echo "Error: specify flake name (ex: nix-build desktop)"
+    return 1
+  fi
+
+  git add -A
+  sudo nixos-rebuild switch --flake .#"$1"
+}
+
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 export EDITOR=nvim
@@ -58,9 +69,7 @@ export EDITOR=nvim
 #export JAVA_HOME=/usr/lib/jvm/$(archlinux-java get)
 #export PATH=$JAVA_HOME/bin:$PATH
 
-# eval "$(starship init bash)"
 eval "$(oh-my-posh --init --shell bash --config ~/.config/oh-my-posh/themes/current_theme.omp.json)"
-#. "$HOME/.cargo/env"
 
 if command -v fastfetch >/dev/null; then
 	fastfetch -c ~/.config/fastfetch/config.jsonc
