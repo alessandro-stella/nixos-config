@@ -18,7 +18,11 @@
   outputs = { self, nixpkgs, home-manager, nvim-config, ...}@inputs:
   let
     sharedModules = [
-      { nixpkgs.config.allowUnfree = true; }
+      { 
+        nixpkgs.config.allowUnfree = true;
+        services.openssh.enable = true;
+        networking.firewall.allowedTCPPorts = [ 22 ];
+      }
 
       home-manager.nixosModules.home-manager
       {

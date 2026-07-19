@@ -75,6 +75,8 @@ in
     };
   }; 
 
+  home.file.".bashrc".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/bashrc";
+
   home.pointerCursor = {
     enable = true;
     gtk.enable = true;
