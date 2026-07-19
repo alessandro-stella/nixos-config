@@ -76,6 +76,11 @@
     options = "--delete-generations +5";
   };
 
+  # Add support for svg
+  programs.gdk-pixbuf.modulePackages = with pkgs; [
+    librsvg
+  ];
+
   # Turn on experimental commands
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
