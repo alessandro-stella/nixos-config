@@ -4,20 +4,29 @@ This repository contains my personal system and user configurations managed via 
 
 ## Quick Start
 
-Run the following commands in sequence to clone the repository and deploy the configuration using Nix Flakes.
+Execute these separate steps to clone the repository and deploy the configuration using Nix Flakes.
+
+### 1. Enter a Nix Shell with Git
+If you are on a fresh installation and do not have Git installed globally, run this to drop into a temporary shell:
 
 ```bash
-# 1. Enter a temporary shell with Git (if not installed globally)
 nix shell nixpkgs#git
+```
 
-# 2. Clone the repository and enter the directory
-git clone [https://github.com/YOUR_USERNAME/YOUR_REPO.git](https://github.com/YOUR_USERNAME/YOUR_REPO.git) ~/dotfiles
-cd ~/dotfiles
+### 2. Clone the Repository
+Run this command to clone the configuration files and move into the repository directory:
 
-# 3. Build and switch to the system configuration (NixOS)
-# Replace 'YOUR_HOSTNAME' with the specific output name in your flake.nix
-sudo nixos-rebuild switch --flake .#YOUR_HOSTNAME
+```bash
+git clone https://github.com/alessandro-stella/nixos-config.git && cd ~/nixos-config
+```
 
-# 4. Build and switch to the user configuration (Home Manager)
-# Replace 'YOUR_USERNAME' with the specific configuration target in your flake
-home-manager switch --flake .#YOUR_USERNAME
+### 3. Build and Apply the Flake Configuration
+Run this command to apply both your system and user configurations. Be aware to choose the right settings:
+
+```bash
+sudo nixos-rebuild switch --flake .#dekstop
+```
+
+```bash
+sudo nixos-rebuild switch --flake .#laptop
+```
