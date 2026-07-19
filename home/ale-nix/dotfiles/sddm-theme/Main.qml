@@ -33,8 +33,7 @@ Rectangle {
         if (s.endsWith("/")) s = s.substring(0, s.length - 1);
         if (s.indexOf("/") !== -1) s = s.substring(s.lastIndexOf("/") + 1);
         if (s.indexOf(".desktop") !== -1) s = s.substring(0, s.indexOf(".desktop"));
-        s = s.replace(/[-_]/g, ' ');
-        return s.charAt(0).toUpperCase() + s.slice(1);
+        return s;
     }
 
     function doLogin() {
