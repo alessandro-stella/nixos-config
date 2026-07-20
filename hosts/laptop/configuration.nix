@@ -17,15 +17,26 @@
   services.tlp = {
     enable = true;
 
-    CPU_SCALING_GOVERNOR_ON_AC = "performance";
-    CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+    settings = {
+      CPU_SCALING_GOVERNOR_ON_AC = "performance";
+      CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
 
-    CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
-    CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
+      CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+      CPU_ENERGY_PERF_POLICY_ON_BAT = "powersave";
+    };
   };
 
   # Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
+
+  # Fingerprint reader 
+  services.fprintd.enable = true;
+
+  # Setup fingerprint reader for sudo and swaylock
+  security.pam.services = {
+    sudo.fprintAuth = true;
+    swaylock.fprintAuth = true;
+  };
 }
 

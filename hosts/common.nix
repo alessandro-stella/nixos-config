@@ -93,6 +93,19 @@ in
     ];
   };
 
+  # Generical graphic optimization
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      libva-vdpau-driver 
+      libvdpau-va-gl
+    ];
+  };
+
+  # External storage device settings
+  services.udisks2.enable = true;
+  services.gvfs.enable = true;
+
   # System packages
   environment.systemPackages = with pkgs; [
     git
@@ -106,6 +119,7 @@ in
     bc
     psmisc
 
+
     sddmTheme
   ];
 
@@ -113,6 +127,12 @@ in
   programs.java = {
     enable = true;
     package = pkgs.jdk21;
+  };
+
+  # Add localsend
+  programs.localsend = {
+    enable = true;
+    openFirewall = true;
   };
 
   # Keep last 5 system generations
