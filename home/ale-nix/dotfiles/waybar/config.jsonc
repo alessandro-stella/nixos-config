@@ -10,7 +10,6 @@
   "modules-left": [
     "custom/arch_logo",
     "hyprland/workspaces"
-    // "custom/updates"
   ],
   "modules-center": [
     "clock"
