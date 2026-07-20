@@ -19,7 +19,7 @@ nix shell nixpkgs#git --extra-experimental-features "nix-command flakes"
 Run this command to clone the configuration files and move into the repository directory:
 
 ```bash
-git clone [https://github.com/alessandro-stella/nixos-config.git](https://github.com/alessandro-stella/nixos-config.git) ~/nixos-config && cd ~/nixos-config
+git clone https://github.com/alessandro-stella/nixos-config.git && cd ~/nixos-config
 ```
 
 ### 3. Generate hardware-configuration.nix
