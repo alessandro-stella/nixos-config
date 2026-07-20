@@ -2,6 +2,8 @@
 
 This repository contains my personal system and user configurations managed via Nix Flakes, including an automated theme and wallpaper switching pipeline optimized to preserve symbolic links.
 
+WARNING: there are still some bugs that needs to be figured out, such as no wallpaper on the first installation (run the theme changer to fix that)
+
 ## Quick Start
 
 Execute these separate steps to clone the repository and deploy the configuration using Nix Flakes.
@@ -31,7 +33,7 @@ mkdir -p hosts/desktop && sudo nixos-generate-config --show-hardware-config > ho
 Run this to allow Nix Flakes to see the newly generated hardware configuration without tracking future changes on it:
 
 ```bash
-git add -f hosts/desktop/hardware-configuration.nix && git update-index --assume-unchanged hosts/desktop/hardware-configuration.nix
+git add -N hosts/desktop/hardware-configuration.nix && git update-index --assume-unchanged hosts/desktop/hardware-configuration.nix
 ```
 
 ### 5. Build and Apply the Flake Configuration
