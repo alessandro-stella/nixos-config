@@ -22,7 +22,7 @@ hl.on("hyprland.start", function()
 	-- Utility and customization scripts
 	hl.exec_cmd("~/.config/scripts/clean_screenshots.sh")
 	hl.exec_cmd("~/.config/scripts/clean_java_workspaces.sh")
-	hl.exec_cmd("~/.config/scripts/update_configs.sh")
+	hl.exec_cmd("bash -c 'sleep 10 && ~/.config/scripts/update_configs.sh'")
 
 	-- Clipboard
 	hl.exec_cmd("cliphist wipe")

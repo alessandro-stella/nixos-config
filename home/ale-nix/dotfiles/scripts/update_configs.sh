@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 REPOS=(
   "$HOME/nixos-config"
@@ -11,7 +11,7 @@ for REPO in "${REPOS[@]}"; do
 
     git fetch -q 2>/dev/null
 
-    BEHIND=$(git rev-list --count head..@{u} 2>/dev/null)
+    BEHIND=$(git rev-list --count HEAD..@{u} 2>/dev/null)
 
     REPO_NAME=$(basename "$REPO")
 
