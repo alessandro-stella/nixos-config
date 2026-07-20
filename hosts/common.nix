@@ -82,6 +82,9 @@ in
     "A /home/ale-nix/.config/themes/current_theme - - - - u:sddm:rx"
   ];
 
+  # Speed up SDDM
+  boot.kernelParams = [ "random.trust_cpu=on" ];
+
   # User settings
   users.users."ale-nix" = {
     isNormalUser = true;
