@@ -81,9 +81,15 @@ in
 
   gtk = {
     enable = true;
+    
     theme = {
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;
+    };
+
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
     };
 
     gtk3.extraConfig = {
@@ -113,7 +119,7 @@ in
     "scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/scripts";
   }; 
 
-  # Handle neovim config
+  # Setup Neovim configuration repository
   home.activation.setupNeovim = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     NVIM_DIR="$HOME/.config/nvim"
     REPO_URL="https://github.com/alessandro-stella/OrionVim.git"
@@ -124,25 +130,37 @@ in
       ${pkgs.git}/bin/git clone "$REPO_URL" "$NVIM_DIR"
     else
       echo "OrionVim already installed, checking updates..."
-      ${pkgs.git}/bin/git -C "$NVIM_DIR" pull
+      ${pkgs.git}/bin/git -C "$NVIM_DIR" pull || echo "Failed to update Neovim: no internet connection."
     fi
   '';
 
-  # Syncronize wallpapers
+  # Synchronize wallpapers repository
   home.activation.setupWallpapers = config.lib.dag.entryAfter [ "writeBoundary" ] ''
     PICS_DIR="$HOME/Pictures"
     WP_DIR="$PICS_DIR/wallpapers"
     REPO_URL="https://github.com/alessandro-stella/linux-wallpapers.git" 
-  
+
     mkdir -p "$PICS_DIR"
-  
+
     if [ ! -d "$WP_DIR/.git" ]; then
       echo "Downloading wallpapers..."
       rm -rf "$WP_DIR"
       ${pkgs.git}/bin/git clone "$REPO_URL" "$WP_DIR"
     else
       echo "Wallpaper folder exists, checking for updates..."
-      ${pkgs.git}/bin/git -C "$WP_DIR" pull
+      ${pkgs.git}/bin/git -C "$WP_DIR" pull || echo "Failed to update wallpapers: no internet connection."
+    fi
+  '';
+
+  # Unlock theme folder to SDDM
+  home.activation.fixSddmPermissions = config.lib.dag.entryAfter [ "writeBoundary" ] ''
+    chmod +x "$HOME"
+    chmod +x "$HOME/.config"
+    chmod +x "$HOME/.config/themes"
+    
+    if [ -f "$HOME/.config/themes/current_theme" ]; then
+      chmod +r "$HOME/.config/themes/current_theme"
+      echo "Theme permissions updated successfully"
     fi
   '';
 

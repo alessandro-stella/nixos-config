@@ -7,14 +7,11 @@ require("modules.dynamic-border")
 
 -- Starting scripts
 hl.on("hyprland.start", function()
-	hl.exec_cmd("~/.config/hypr/xdg-portals.sh") -- Make sure the correct portals are running
-	hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP") -- Wayland magic
-	hl.exec_cmd("systemctl --user import-environment WAYLAND_DISPLAY XDG_CURRENT_DESKTOP") -- More Wayland magic
 	hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1") -- graphical sudo elevation
 	hl.exec_cmd("blueman-applet") -- Systray app for BT
 	hl.exec_cmd("nm-applet --indicator") -- Systray app for Network/Wifi
 	hl.exec_cmd("waybar") -- Status bar
-	hl.exec_cmd("swaync") -- Notification center
+	-- hl.exec_cmd("swaync") -- Notification center
 	hl.exec_cmd(
 		"awww-daemon && awww img ~/.config/themes/current_theme/wallpaper.png --transition-type fade --transition-duration 0.5"
 	) -- Wallpaper
@@ -22,7 +19,7 @@ hl.on("hyprland.start", function()
 	-- Utility and customization scripts
 	hl.exec_cmd("~/.config/scripts/clean_screenshots.sh")
 	hl.exec_cmd("~/.config/scripts/clean_java_workspaces.sh")
-	hl.exec_cmd("bash -c 'sleep 10 && ~/.config/scripts/update_configs.sh'")
+	hl.exec_cmd("bash -c 'sleep 5 && ~/.config/scripts/update_configs.sh &'")
 
 	-- Clipboard
 	hl.exec_cmd("cliphist wipe")

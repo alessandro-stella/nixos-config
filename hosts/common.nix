@@ -24,6 +24,9 @@ in
     efi.canTouchEfiVariables = true;
   };
 
+  # Set tmp files to be saved in RAM
+  boot.tmp.useTmpfs = true;
+
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
   security.polkit.enable = true;
@@ -67,21 +70,13 @@ in
   services.displayManager = {
     sddm = {
       enable = true;
-      wayland.enable = false;
+      wayland.enable = true;
       theme = "pixie-better";
     };
 
     defaultSession = "hyprland";
   };
   
-  systemd.tmpfiles.rules = [
-    "A /home/ale-nix - - - - u:sddm:x"
-    "A /home/ale-nix/.config - - - - u:sddm:x"
-    "A /home/ale-nix/.config/themes - - - - u:sddm:x"
- 
-    "A /home/ale-nix/.config/themes/current_theme - - - - u:sddm:rx"
-  ];
-
   # Speed up SDDM
   boot.kernelParams = [ "random.trust_cpu=on" ];
 
@@ -122,7 +117,6 @@ in
     bc
     psmisc
 
-
     sddmTheme
   ];
 
@@ -151,7 +145,10 @@ in
   ];
 
   # Install wireshark
-  programs.wireshark.enable = true;
+  programs.wireshark = {
+    enable = true;
+    package = pkgs.wireshark;
+  };
 
   # Disable xterm
   services.xserver.excludePackages = [ pkgs.xterm ];
