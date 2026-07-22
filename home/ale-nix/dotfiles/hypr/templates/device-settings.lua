@@ -1,1 +1,0 @@
--- Additional configurations related only to this device

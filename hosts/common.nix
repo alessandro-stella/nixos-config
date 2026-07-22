@@ -3,7 +3,7 @@
 let
   sddmTheme = pkgs.stdenv.mkDerivation {
     name = "pixie-better";
-    src = ../home/ale-nix/dotfiles/sddm-theme;
+    src = ../home/alessandro/dotfiles/sddm-theme;
 
     installPhase = ''
       mkdir -p $out/share/sddm/themes/pixie-better
@@ -81,7 +81,7 @@ in
   boot.kernelParams = [ "random.trust_cpu=on" ];
 
   # User settings
-  users.users."ale-nix" = {
+  users.users.alessandro = {
     isNormalUser = true;
 
     extraGroups = [

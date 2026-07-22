@@ -1,0 +1,176 @@
+{
+  "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
+  "transient_prompt": {
+    "template": "  ❯❯ {{ .AbsolutePWD }} : ",
+    "foreground": "p:color15",
+    "background": "transparent",
+    "newline": true
+  },
+  "blocks": [
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "options": {
+            "cache_duration": "none"
+          },
+          "template": "\n╭─",
+          "foreground": "p:color15",
+          "type": "text",
+          "style": "plain"
+        },
+        {
+          "options": {
+            "cache_duration": "none"
+          },
+          "leading_diamond": "",
+          "template": "{{ .UserName }}",
+          "trailing_diamond": "█",
+          "foreground": "p:color15",
+          "background": "p:color0",
+          "type": "session",
+          "style": "diamond"
+        },
+        {
+          "options": {
+            "style": "full"
+          },
+          "trailing_diamond": "",
+          "template": " 󰉖 {{ path .Path .Location }}",
+          "foreground": "p:color15",
+          "background": "p:color12",
+          "type": "path",
+          "style": "diamond"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "right",
+      "segments": [
+        {
+          "options": {
+            "branch_icon": "",
+            "fetch_status": true,
+            "fetch_upstream_icon": true
+          },
+          "leading_diamond": "",
+          "trailing_diamond": "",
+          "template": " ({{ url .UpstreamIcon .UpstreamURL }} {{ url .HEAD .UpstreamURL }}){{ if gt .Ahead 0 }}<#FFFFFF> +{{ .Ahead }}</>{{ end }}{{ if gt .Behind 0 }}<#FFFFFF> -{{ .Behind }}</>{{ end }}{{ if .Working.Changed }}<#FFFFFF>  {{ .Working.String }}</>{{ end }}{{ if .Staging.Changed }}<#FFFFFF>  {{ .Staging.String }}</>{{ end }}",
+          "foreground": "#FFFFFF",
+          "background": "#F05032",
+          "type": "git",
+          "style": "diamond"
+        },
+        {
+          "leading_diamond": "",
+          "trailing_diamond": "",
+          "template": " {{ .Full }}",
+          "foreground": "#FFFFFF",
+          "background": "#339933",
+          "type": "node",
+          "style": "diamond"
+        },
+        {
+          "options": {
+            "display_mode": "files",
+            "extensions": [
+              "package-lock.json"
+            ]
+          },
+          "leading_diamond": "",
+          "trailing_diamond": "",
+          "template": " {{ .Full }}",
+          "foreground": "#FFFFFF",
+          "background": "#CB3837",
+          "type": "npm",
+          "style": "diamond"
+        },
+        {
+          "options": {
+            "display_mode": "files",
+            "extensions": [
+              "pnpm-lock.yaml"
+            ]
+          },
+          "leading_diamond": "",
+          "trailing_diamond": "",
+          "template": "󰋁 {{ .full }}",
+          "foreground": "#FFFFFF",
+          "background": "#F69220",
+          "type": "pnpm",
+          "style": "diamond"
+        },
+        {
+          "options": {
+            "display_mode": "files"
+          },
+          "leading_diamond": "",
+          "trailing_diamond": "",
+          "template": " {{ .Full }}",
+          "foreground": "#FFFFFF",
+          "background": "#3776AB",
+          "type": "python",
+          "style": "diamond"
+        },
+        {
+          "leading_diamond": "",
+          "trailing_diamond": "",
+          "template": " {{ .Full }}",
+          "foreground": "#FFFFFF",
+          "background": "#5382A1",
+          "type": "java",
+          "style": "diamond"
+        },
+        {
+          "leading_diamond": "",
+          "trailing_diamond": "",
+          "template": " {{ .Full }}",
+          "foreground": "#FFFFFF",
+          "background": "#777BB4",
+          "type": "php",
+          "style": "diamond"
+        }
+      ]
+    },
+    {
+      "type": "prompt",
+      "alignment": "left",
+      "segments": [
+        {
+          "options": {
+            "always_enabled": true,
+            "cache_duration": "none"
+          },
+          "template": "╰─ ❯❯",
+          "foreground": "p:color15",
+          "type": "text",
+          "style": "diamond"
+        }
+      ],
+      "newline": true
+    }
+  ],
+  "version": 3,
+  "patch_pwsh_bleed": true,
+  "final_space": true,
+  "palette": {
+    "color0": "#454845",
+    "color1": "#18293F",
+    "color2": "#386943",
+    "color3": "#148891",
+    "color4": "#58A468",
+    "color5": "#09D6CC",
+    "color6": "#87FBA1",
+    "color7": "#BAF5C8",
+    "color8": "#83AB8C",
+    "color9": "#18293F",
+    "color10": "#386943",
+    "color11": "#148891",
+    "color12": "#58A468",
+    "color13": "#09D6CC",
+    "color14": "#87FBA1",
+    "color15": "#BAF5C8"
+  }
+}

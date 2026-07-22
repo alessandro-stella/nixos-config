@@ -1,0 +1,43 @@
+daemonize
+clock
+screenshot
+effect-blur=10x3
+font=JetBrains Mono Nerd Font
+indicator-idle-visible
+indicator-radius=200
+indicator-thickness=12
+
+# Default colors
+ring-color=#0a0a0a
+line-color=#0a0a0a
+inside-color=#00000080
+text-color=#e0def4
+key-hl-color=#e0def4
+separator-color=#0a0a0a
+
+# Verifying password
+ring-ver-color=#e0def4
+line-ver-color=#00000000
+inside-ver-color=#00000080
+text-ver-color=#e0def4
+
+# Wrong password
+ring-wrong-color=#e06c75
+line-wrong-color=#00000000
+inside-wrong-color=#00000080
+text-wrong-color=#e06c75
+
+# Clear
+ring-clear-color=#e0def4
+line-clear-color=#00000000
+inside-clear-color=#00000080
+text-clear-color=#e0def4
+bs-hl-color=#e0def4
+
+# Other configs
+grace=2
+grace-no-mouse
+grace-no-touch
+datestr=%a, %e %B
+timestr=%H:%M
+ignore-empty-password
