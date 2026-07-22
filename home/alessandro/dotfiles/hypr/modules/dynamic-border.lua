@@ -1,1 +1,0 @@
-/home/alessandro/.config/themes/current_theme/dynamic-border.lua
