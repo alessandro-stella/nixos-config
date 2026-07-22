@@ -56,7 +56,7 @@
     "escape": true
   },
   "custom/temperature": {
-    "exec": "~/.config/waybar/scripts/temperature",
+    "exec": "~/.config/waybar/resources/temperature",
     "interval": 5,
     "return-type": "json",
     "on-click": "kitty --title btop sh -c 'btop'"
@@ -84,8 +84,8 @@
       "󰁹"
     ],
     "events": {
-      "on-discharging-warning": "notify-send -i battery-caution -u normal 'Low battery'",
-      "on-discharging-critical": "notify-send -i battery-empty -u critical 'Battery critically low!'"
+      "on-discharging-warning": "notify-send -i ~/.config/waybar/resources/battery-low.svg -u normal 'Low battery'",
+      "on-discharging-critical": "notify-send -i ~/.config/waybar/resources/battery-critical.svg -u critical 'Battery critically low!'"
     }
   },
   "backlight": {

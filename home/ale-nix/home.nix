@@ -84,8 +84,8 @@ in
     };
 
     iconTheme = {
-      name = "Papirus-Dark";
-      package = pkgs.papirus-icon-theme;
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
     };
 
     gtk3.extraConfig = {
