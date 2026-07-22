@@ -31,10 +31,6 @@ in
     neovim
     oh-my-posh
 
-    # Theming
-    adw-gtk3
-    adwaita-icon-theme
-
     # Graphical suite
     hyprland
     awww
@@ -88,8 +84,8 @@ in
     };
 
     iconTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
+      name = "Papirus-Dark";
+      package = pkgs.papirus-icon-theme;
     };
 
     gtk3.extraConfig = {

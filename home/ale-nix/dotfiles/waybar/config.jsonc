@@ -18,9 +18,9 @@
     "group/tray-expander",
     "custom/notification",
     "custom/temperature",
-    "battery",
     "network",
     "group/main-audio",
+    "battery",
     "group/hardware-info"
   ],
   "custom/arch_logo": {
@@ -74,7 +74,7 @@
       "warning": 30,
       "critical": 10
     },
-    "format": "{icon}",
+    "format": "{icon} {capacity}%",
     "tooltip-format": "Capacity: {capacity}%",
     "format-charging": "",
     "format-plugged": "",
@@ -93,8 +93,7 @@
     ],
     "events": {
       "on-discharging-warning": "notify-send -i battery-caution -u normal 'Low battery'",
-      "on-discharging-critical": "notify-send -i battery-empty -u critical 'Battery critically low!'",
-      "on-charging-100": "notify-send -i battery-full -u normal 'Battery full!' 'You can unplug the charger'"
+      "on-discharging-critical": "notify-send -i battery-empty -u critical 'Battery critically low!'"
     }
   },
   "backlight": {
