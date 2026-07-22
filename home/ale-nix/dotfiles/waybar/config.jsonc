@@ -28,14 +28,6 @@
     "on-click": "pkill rofi; rofi -theme ~/.config/rofi/app_launcher.rasi -show drun",
     "tooltip": false
   },
-  "custom/updates": {
-    "tooltip": false,
-    "format": "",
-    "exec": "~/.config/waybar/scripts/update-sys",
-    "on-click": "~/.config/waybar/scripts/update-sys update",
-    "interval": 300,
-    "max-length": 10
-  },
   "hyprland/workspaces": {
     "disable-scroll": true
   },
@@ -122,7 +114,7 @@
   "pulseaudio": {
     "format": "{icon}",
     "format-muted": "",
-    "on-click": "pamixer -t", // Mute
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", // Mute
     "on-click-right": "pavucontrol",
     "tooltip": false,
     "format-icons": {
@@ -174,7 +166,7 @@
   "pulseaudio#output": {
     "format": "{icon} {volume}%",
     "format-muted": "",
-    "on-click": "pamixer -t", // Mute
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", // Mute
     "on-click-right": "pavucontrol",
     "on-scroll-down": "pamixer -i 5",
     "on-scroll-up": "pamixer -d 5",
@@ -198,7 +190,7 @@
     "format": "{format_source}",
     "format-source": " {volume}%",
     "format-source-muted": "",
-    "on-click": "pamixer --default-source -t", // Mute
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle", // Mute
     "on-click-right": "pavucontrol",
     "on-scroll-down": "pamixer --default-source -i 5",
     "on-scroll-up": "pamixer --default-source -d 5",
