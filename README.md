@@ -65,5 +65,5 @@ reboot
 <br>
 
 ## Custom build command
-Instead of using the very verbose ```sudo nixos-rebuild switch --fetch .#<HOST>``` to rebuild the system, there's a very useful custom command: ```nix-build <HOST>```.
+Instead of using the very verbose ```sudo nixos-rebuild switch --flake .#<HOST>``` to rebuild the system, there's a very useful custom command: ```nix-build <HOST>```.
 This greatly improves the usability of the system, as it both shortens the actual command to write and eliminates the verbosity of NixOS errors by only keeping the useful parts.
