@@ -6,7 +6,18 @@
     ../common.nix
   ];
 
+  # Set device name
   networking.hostName = "thinkpad-t14";
+
+  # Set bootloader to systemd
+  boot.loader = {
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 5;
+    };
+
+    efi.canTouchEfiVariables = true;
+  };
 
   environment.systemPackages = with pkgs; [
     brightnessctl

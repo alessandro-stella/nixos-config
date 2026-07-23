@@ -1,15 +1,25 @@
 # NixOS Hyprland Flake Configuration
 
-This repository contains my personal system and user configurations managed via Nix Flakes, including an automated theme and wallpaper switching pipeline optimized to preserve symbolic links.
+This repository contains my personal system and user configurations managed via Nix Flakes. Moreover, this configurations is thought for one user only, so you'll need to handle that as it's explained next.
 
 WARNING: there are still some bugs that needs to be figured out, such as no wallpaper on the first installation (run the theme changer to fix that)
 
-## Quick Start
+## Important!!!
+This configuration aims to replicate my custom settings, therefore some of the configuration might not work. The most important settings to watch out are the bootloader and the graphical settings for SDDM:
 
-Execute these separate steps to clone the repository and deploy the configuration using Nix Flakes.
+### Bootloader
+On the laptop configuration, as I only use NixOS, I didn't include an option for dual boot, so i left the default ```systemd-boot```. On my desktop, as I dual boot Windows and NixOS, i added ```GRUB``` to customize the experience. I suppose you're at least a bit familiar with the Linux ecosystem (or else you'd be crazy to go straight to NixOS), so I didn't include an additional option to change this; I trust that you'll be more than capable to change the configuration after a first install to better suit your needs.
+
+### SDDM
+On my desktop I have two monitors and a sensor panel, but SDDM decided to show only on one monitor. Obviously it chose the wrong one, so inside the desktop configuration I had to change the output for it to obtain the right behavior. You'll need to change this too to avoid having future problems with the greeter.
+
+<br>
+
+## Preliminary steps
+This configuration starts from a fresh install after choosing "No desktop" during NixOS installation. If you're not connected to Internet, launch ```nmtui``` and connect to a WiFi. 
 
 ### 1. Enter a Nix Shell with Git
-If you are on a fresh installation and do not have Git installed globally, run this to drop into a temporary shell:
+Run this to drop into a temporary shell with Git working:
 
 ```bash
 nix shell nixpkgs#git --extra-experimental-features "nix-command flakes"
@@ -22,28 +32,32 @@ Run this command to clone the configuration files and move into the repository d
 git clone https://github.com/alessandro-stella/nixos-config.git && cd ~/nixos-config
 ```
 
-### 3. Generate hardware-configuration.nix
-Be aware to change "desktop" to "laptop" if needed:
+### 3. Set your username
+Edit ```flake.nix``` by changing the variable ```username``` to suit your wanted username.
+
+<br>
+
+## Installation.
+This setup is able to differentiate between a laptop or a desktop installation. Be aware to change "desktop" to "laptop" in the following commands to reflect your choice.
+
+### 1. Generate ```hardware-configuration.nix```
 
 ```bash
-mkdir -p hosts/desktop && sudo nixos-generate-config --show-hardware-config > hosts/desktop/hardware-configuration.nix
+sudo nixos-generate-config --show-hardware-config > hosts/<HOST>/hardware-configuration.nix
 ```
 
-### 4. Force Git to Index Untracked Hardware Configuration
-Run this to allow Nix Flakes to see the newly generated hardware configuration without tracking future changes on it:
+### 2. Force Git to index untracked hardware configuration
+```bash
+git add -f -N hosts/<HOST>/hardware-configuration.nix && git update-index --assume-unchanged hosts/<HOST>/hardware-configuration.nix
+```
+
+### 3. Build and apply the flake configuratio:
 
 ```bash
-git add -N hosts/desktop/hardware-configuration.nix && git update-index --assume-unchanged hosts/desktop/hardware-configuration.nix
+sudo nixos-rebuild switch --flake .#<HOST>
 ```
 
-### 5. Build and Apply the Flake Configuration
-Run the command matching your target host to apply both your system and user configurations:
-
-```bash
-sudo nixos-rebuild switch --flake .#desktop
-```
-
-### 6. Reboot the system and enjoy!
+### 4. Reboot the system and enjoy!
 
 ```bash
 reboot

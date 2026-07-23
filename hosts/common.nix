@@ -1,29 +1,22 @@
-{ config, pkgs, ... }:
+{ pkgs, username, ... }:
 
 let
   sddmTheme = pkgs.stdenv.mkDerivation {
     name = "pixie-better";
-    src = ../home/alessandro/dotfiles/sddm-theme;
+    src = ../home/dotfiles/sddm-theme;
 
     installPhase = ''
       mkdir -p $out/share/sddm/themes/pixie-better
+
+      substituteInPlace theme.conf \
+        --replace-fail "@THEME_BACKGROUND@" \
+        "/home/${username}/.config/themes/current_theme/wallpaper.png"
+
       cp -R ./* $out/share/sddm/themes/pixie-better
     '';
   };
 in
 {
-  imports = [ ];
-
-  # Generic configurations
-  boot.loader = {
-    systemd-boot = {
-      enable = true;
-      configurationLimit = 5;
-    };
-
-    efi.canTouchEfiVariables = true;
-  };
-
   # Set tmp files to be saved in RAM
   boot.tmp.useTmpfs = true;
 
@@ -55,6 +48,7 @@ in
   };
   console.keyMap = "it";
 
+  # Unpatched binaries
   programs.nix-ld.enable = true;
 
   # Font and icons
@@ -76,12 +70,9 @@ in
 
     defaultSession = "hyprland";
   };
-  
-  # Speed up SDDM
-  boot.kernelParams = [ "random.trust_cpu=on" ];
 
   # User settings
-  users.users.alessandro = {
+  users.users.${username} = {
     isNormalUser = true;
 
     extraGroups = [
@@ -91,7 +82,7 @@ in
     ];
   };
 
-  # Generical graphic optimization
+  # Generical graphic drivers 
   hardware.graphics = {
     enable = true;
     extraPackages = with pkgs; [
