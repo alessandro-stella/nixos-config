@@ -14,7 +14,6 @@ in
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "26.05";
 
-
   home.packages = with pkgs; [
     # Apps
     nautilus

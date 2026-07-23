@@ -1,11 +1,11 @@
 hosts/desktop/hardware-configuration.nix
 hosts/laptop/hardware-configuration.nix
 
-home/alessandro/dotfiles/hypr/modules
+home/dotfiles/hypr/modules
 
-home/alessandro/dotfiles/kitty/colors-kitty.conf
-home/alessandro/dotfiles/oh-my-posh/themes/current_theme.omp.json
-home/alessandro/dotfiles/rofi/colors.rasi
-home/alessandro/dotfiles/swaync/style.css
-home/alessandro/dotfiles/waybar/style.css
-home/alessandro/dotfiles/wlogout/style.css
+home/dotfiles/kitty/colors-kitty.conf
+home/dotfiles/oh-my-posh/themes/current_theme.omp.json
+home/dotfiles/rofi/colors.rasi
+home/dotfiles/swaync/style.css
+home/dotfiles/waybar/style.css
+home/dotfiles/wlogout/style.css
