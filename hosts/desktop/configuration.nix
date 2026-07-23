@@ -15,14 +15,24 @@
       enable = true;
       efiSupport = true;
       devices = [ "nodev" ];
+
+      default = "saved";
       useOSProber = true;
+
+      extraInstallCommands = ''
+        {
+        echo 'menuentry "UEFI Firmware Settings" --class uefi {'
+        echo '  fwsetup'
+        echo '}'
+        } >> /boot/grub/grub.cfg
+      '';
 
       minegrub-world-sel = {
         enable = true;
         customIcons = with config.system; [
           {
             inherit name;
-            lineTop = with nixos; distroName + " " + codeName + " (" + version + ")";
+            lineTop = with nixos; distroName + " (" + version + ")";
             lineBottom = "Survival Mode, No Cheats, Version: " + nixos.release;
             imgName = "nixos";
           }

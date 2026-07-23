@@ -60,7 +60,6 @@ nix-build() {
 
     local flake_name="$1"
     local hw_config="hosts/$flake_name/hardware-configuration.nix"
-
     if [ -f "$hw_config" ]; then
         git add -f --intent-to-add "$hw_config"
         git update-index --assume-unchanged "$hw_config"
@@ -81,7 +80,6 @@ nix-build() {
     local old_stty
     old_stty=$(stty -g 2>/dev/null)
     stty -echo -icanon time 0 min 0 2>/dev/null
-
     restore_tty() {
         [ -n "$keepalive_pid" ] && kill "$keepalive_pid" 2>/dev/null
         if [ -n "$old_stty" ]; then
@@ -95,7 +93,6 @@ nix-build() {
     outfile=$(mktemp)
     pidfile=$(mktemp)
     statusfile=$(mktemp)
-
     (
         (
             sudo nixos-rebuild switch --flake ".#$flake_name" --quiet &>"$outfile" &
@@ -124,24 +121,30 @@ nix-build() {
     local status
     status=$(cat "$statusfile")
     rm -f "$statusfile"
-
     printf "\r\033[K"
     restore_tty
     trap - INT
 
     if [ "$status" -ne 0 ]; then
-        local logfile="/tmp/nix-build-last-error.log"
-        cp "$outfile" "$logfile"
-
         echo "Build failed! Error:"
-        awk '
+        local err_excerpt
+        err_excerpt=$(awk '
             /^[[:space:]]*error:/ { capture=1; buf="" }
             capture { buf = buf $0 "\n" }
             END { printf "%s", buf }
-        ' "$outfile"
+        ' "$outfile")
 
-        echo
-        echo "(full log saved to $logfile)"
+        if [ -n "$err_excerpt" ]; then
+            printf '%s' "$err_excerpt"
+            echo
+            local logfile="/tmp/nix-build-last-error.log"
+            cp "$outfile" "$logfile"
+            echo "(full log saved to $logfile)"
+        else
+            cat "$outfile"
+            echo
+        fi
+
         rm -f "$outfile"
         return 1
     else
