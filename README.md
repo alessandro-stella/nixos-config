@@ -7,7 +7,7 @@ WARNING: there are still some bugs that needs to be figured out, such as no wall
 This configuration aims to replicate my custom settings, therefore some of the configuration might not work. The most important settings to watch out are the bootloader and the graphical settings for SDDM:
 
 ### Bootloader
-On the laptop configuration, as I only use NixOS, I didn't include an option for dual boot, so i left the default ```systemd-boot```. On my desktop, as I dual boot Windows and NixOS, i added ```GRUB``` to customize the experience. I suppose you're at least a bit familiar with the Linux ecosystem (or else you'd be crazy to go straight to NixOS), so I didn't include an additional option to change this; I trust that you'll be more than capable to change the configuration after a first install to better suit your needs.
+On the laptop configuration, as I only use NixOS, I didn't include an option for dual boot, so i left the default ```systemd-boot```. On my desktop, as I dual boot Windows and NixOS, I added ```GRUB``` to customize the experience. I suppose you're at least a bit familiar with the Linux ecosystem (or else you'd be crazy to go straight to NixOS), so I didn't include an additional option to change this; I trust that you'll be more than capable to edit the configuration after a first install to better suit your needs.
 
 ### SDDM
 On my desktop I have two monitors and a sensor panel, but SDDM decided to show only on one monitor. Obviously it chose the wrong one, so inside the desktop configuration I had to change the output for it to obtain the right behavior. You'll need to change this too to avoid having future problems with the greeter.
