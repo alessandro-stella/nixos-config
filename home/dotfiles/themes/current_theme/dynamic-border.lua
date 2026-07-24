@@ -3,7 +3,7 @@
 hl.config({
     general = {
         col = {
-            active_border = { colors = { "rgba(E8E5E0ee)", "rgba(D5D2CAee)" }, angle = 45 },
+            active_border = { colors = { "rgba(E7E7EFee)", "rgba(D4D5DFee)" }, angle = 45 },
         },
     },
 })
