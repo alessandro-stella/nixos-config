@@ -163,4 +163,5 @@ in
 
   # Set .bashrc file
   home.file.".bashrc".source = config.lib.file.mkOutOfStoreSymlink ./bashrc;
+  home.file.".zshrc".source = config.lib.file.mkOutOfStoreSymlink ./zshrc;
 }

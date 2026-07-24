@@ -74,12 +74,19 @@ in
   # User settings
   users.users.${username} = {
     isNormalUser = true;
+    shell = pkgs.zsh;
 
     extraGroups = [
       "wheel"
       "networkmanager"
       "wireshark"
     ];
+  };
+
+  programs.zsh = {
+    enable = true;
+    autosuggestions.enable = true;
+    syntaxHighlighting.enable = true;
   };
 
   # Generical graphic drivers 
@@ -149,3 +156,4 @@ in
 
   system.stateVersion = "26.05";
 }
+
