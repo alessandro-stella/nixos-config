@@ -20,7 +20,7 @@ window#waybar.empty #window {
 
 /* --- Tooltips --- */
 tooltip {
-  background: rgba(18, 17, 20, 0.80);
+  background: rgba(0, 1, 2, 0.80);
   border-radius: 7px;
   border-width: 2px;
   border-style: solid;
@@ -77,7 +77,7 @@ tooltip label {
 /* --- Module Colors & States --- */
 
 #custom-arch_logo {
-  color: rgba(231, 231, 239, 1.00);
+  color: rgba(232, 229, 224, 1.00);
 }
 
 #pulseaudio.output {
