@@ -4,6 +4,7 @@ hosts/laptop/hardware-configuration.nix
 home/dotfiles/hypr/modules
 
 home/dotfiles/kitty/colors-kitty.conf
+home/dotfiles/foot/colors-foot.ini
 home/dotfiles/oh-my-posh/themes/current_theme.omp.json
 home/dotfiles/rofi/colors.rasi
 home/dotfiles/swaync/style.css
