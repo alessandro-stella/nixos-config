@@ -15,6 +15,9 @@ in
   home.stateVersion = "26.05";
 
   home.packages = with pkgs; [
+    # Testing
+    foot
+
     # Apps
     nautilus
     kitty
@@ -122,8 +125,9 @@ in
     "wallust".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wallust";
     "waybar".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/waybar";
     "wlogout".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wlogout";
-
     "scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/scripts";
+
+    "foot".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/foot";
   }; 
 
   # Setup Neovim configuration repository

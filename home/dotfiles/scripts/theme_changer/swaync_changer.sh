@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
 THEME_DIR="$2"
-WAL_COLORS_JSON="$THEME_DIR/colors-kitty.conf"
+# WAL_COLORS_JSON="$THEME_DIR/colors-kitty.conf"
+WAL_COLORS_JSON="$THEME_DIR/colors-foot.ini"
 TEMPLATE_CSS="$HOME/.config/swaync/template.css"
 OUTPUT_CSS="$THEME_DIR/swaync.css"
 

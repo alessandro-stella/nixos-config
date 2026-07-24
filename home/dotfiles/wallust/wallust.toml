@@ -6,4 +6,5 @@ palette = "dark16"
 [templates]
 palette = { template = "paletteTemplate.json.j2", target = "~/.cache/wallust/colors.json" }
 kitty = { template = "kittyTemplate.json.j2", target = "~/.cache/wallust/colors-kitty.conf" }
+foot = { template = "footTemplate.json.j2", target = "~/.cache/wallust/colors-foot.ini" }
 rofi = { template = "rofiTemplate.json.j2", target = "~/.cache/wallust/colors-rofi.rasi" }

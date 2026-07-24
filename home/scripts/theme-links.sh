@@ -8,6 +8,7 @@ declare -A links=(
     ["$HOME/.config/waybar/style.css"]="waybar.css"
     ["$HOME/.config/wlogout/style.css"]="wlogout.css"
     ["$HOME/.config/hypr/modules/dynamic-border.lua"]="dynamic-border.lua"
+    ["$HOME/.config/foot/colors-foot.ini"]="foot.ini"
 )
 
 for target in "${!links[@]}"; do

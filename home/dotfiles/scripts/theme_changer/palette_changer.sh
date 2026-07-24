@@ -5,6 +5,7 @@ THEME_DIR="$2"
 WAL_CACHE="$HOME/.cache/wallust"
 WAL_COLORS_JSON="$WAL_CACHE/colors.json"
 KITTY_CONF="$WAL_CACHE/colors-kitty.conf"
+FOOT_CONF="$WAL_CACHE/colors-foot.ini"
 ROFI_CONF="$WAL_CACHE/colors-rofi.rasi"
 
 HYPR_CONF="$THEME_DIR/dynamic-border.lua"
@@ -143,6 +144,7 @@ done
 # Save files in theme folder
 cp "$WAL_COLORS_JSON" "$THEME_DIR/colors.json"
 cp "$KITTY_CONF" "$THEME_DIR/colors-kitty.conf"
+cp "$FOOT_CONF" "$THEME_DIR/colors-foot.ini"
 cp "$ROFI_CONF" "$THEME_DIR/colors-rofi.rasi"
 # --------------------------------------------------------------
 

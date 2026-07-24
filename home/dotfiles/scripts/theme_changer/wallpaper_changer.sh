@@ -17,6 +17,8 @@ REQUIRED_FILES=(
     "colors-kitty.conf"
     "colors.json"
     "colors-rofi.rasi"
+
+    "colors-foot.ini"
 )
 
 mkdir -p "$CURRENT_THEME_DIR" "$THEME_DIR"
@@ -74,6 +76,7 @@ update_file "$THEME_DIR/swaync.css" "$CURRENT_THEME_DIR/swaync.css"
 update_file "$THEME_DIR/current_theme.omp.json" "$CURRENT_THEME_DIR/oh-my-posh.omp.json"
 update_file "$THEME_DIR/colors-rofi.rasi" "$CURRENT_THEME_DIR/rofi.rasi" 
 update_file "$THEME_DIR/colors-kitty.conf" "$CURRENT_THEME_DIR/kitty.conf"
+update_file "$THEME_DIR/colors-foot.ini" "$CURRENT_THEME_DIR/foot.ini"
 
 RAND_X=$(echo "scale=2; $((RANDOM % 101)) / 100" | bc)
 RAND_Y=$(echo "scale=2; $((RANDOM % 101)) / 100" | bc)

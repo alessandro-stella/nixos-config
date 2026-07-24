@@ -1,8 +1,8 @@
 local mainMod = _G.mainMod or "SUPER"
 
 -- Apps and system
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("kitty"))
-hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("kitty -o allow_remote_control=yes"))
+hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("kitty"))
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("foot"))
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("swaylock -K"))

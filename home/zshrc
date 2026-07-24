@@ -122,14 +122,14 @@ nix-build() {
     done
 
     while [ ! -s "$statusfile" ]; do sleep 0.02; done
-    local status
-    status=$(cat "$statusfile")
+    local build_status 
+    build_status=$(cat "$statusfile")
     rm -f "$statusfile"
     printf "\r\033[K"
     restore_tty
     trap - INT
 
-    if [ "$status" -ne 0 ]; then
+    if [ "$build_status" -ne 0 ]; then
         echo "Build failed! Error:"
         local err_excerpt
         err_excerpt=$(awk '
