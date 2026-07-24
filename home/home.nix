@@ -26,6 +26,7 @@ in
     # Tool cli
     btop
     fastfetch
+    imagemagick
     jq
     tree
     ripgrep

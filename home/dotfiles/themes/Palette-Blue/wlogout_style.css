@@ -23,7 +23,7 @@ button {
 }
 
 button:hover {
-  background-color: rgba(144, 161, 183, 0.6);
+  background-color: rgba(195, 227, 230, 0.6);
   background-size: 25%;
   transition: background-color 0.3s ease;
 }

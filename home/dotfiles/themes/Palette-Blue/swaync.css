@@ -1,9 +1,9 @@
 /* --- Variables & Core Reset --- */
 :root {
-  --background: rgba(30, 33, 30, 0.85);
+  --background: rgba(20, 16, 24, 0.85);
   --text-color: #eeeeee;
   --border-radius: 5px;
-  --accent-color: #BAF5C8;
+  --accent-color: #DBF1F3;
   --icon-size: 24px;
 }
 

@@ -1,11 +1,5 @@
 {
   "$schema": "https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json",
-  "transient_prompt": {
-    "template": "  ❯❯ {{ .AbsolutePWD }} : ",
-    "foreground": "p:color15",
-    "background": "transparent",
-    "newline": true
-  },
   "blocks": [
     {
       "type": "prompt",
