@@ -23,6 +23,8 @@
     brightnessctl
     powertop
     networkmanagerapplet
+
+    swi-prolog
   ];
 
   services.power-profiles-daemon.enable = false;
