@@ -109,6 +109,7 @@ in
     curl
     gnumake
     gcc
+    clang
     unzip
     glib
     libnotify
