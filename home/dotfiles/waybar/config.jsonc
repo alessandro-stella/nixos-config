@@ -116,7 +116,8 @@
     "format-muted": "",
     "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", // Mute
     "on-click-right": "pavucontrol",
-    "tooltip": false,
+    "tooltip": true,
+    "tooltip-format": "Volume: {volume}%",
     "format-icons": {
       "headphone": "",
       "hands-free": "",
@@ -166,10 +167,10 @@
   "pulseaudio#output": {
     "format": "{icon} {volume}%",
     "format-muted": "",
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle", // Mute
+    "on-click": "~/.config/waybar/resources/volume-control toggle-mute output", // Mute
     "on-click-right": "pavucontrol",
-    "on-scroll-down": "pamixer -i 5",
-    "on-scroll-up": "pamixer -d 5",
+    "on-scroll-up": "~/.config/waybar/resources/volume-control up output",
+    "on-scroll-down": "~/.config/waybar/resources/volume-control down output",
     "smooth-scrolling-threshold": 0.5,
     "scroll-step": 0.5,
     "format-icons": {
@@ -190,10 +191,10 @@
     "format": "{format_source}",
     "format-source": " {volume}%",
     "format-source-muted": "",
-    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle", // Mute
+    "on-click": "~/.config/waybar/resources/volume-control toggle-mute input", // Mute
     "on-click-right": "pavucontrol",
-    "on-scroll-down": "pamixer --default-source -i 5",
-    "on-scroll-up": "pamixer --default-source -d 5",
+    "on-scroll-up": "~/.config/waybar/resources/volume-control up input",
+    "on-scroll-down": "~/.config/waybar/resources/volume-control down input",
     "smooth-scrolling-threshold": 0.5,
     "scroll-step": 0.5
   },

@@ -112,6 +112,13 @@ tooltip label {
   transition: color 0.15s ease-in-out;
 }
 
+#custom-notification.dnd-notification,
+#custom-notification.dnd-none,
+#custom-notification.dnd-inhibited-notification,
+#custom-notification.dnd-inhibited-none {
+  padding-left: 9px;
+}
+
 #tray-expander {
   padding: 0px 10px;
   border-right: 1px solid;
