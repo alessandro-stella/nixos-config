@@ -51,12 +51,6 @@ in
   # Unpatched binaries
   programs.nix-ld.enable = true;
 
-  # Font and icons
-  fonts.packages = with pkgs; [
-    font-awesome
-    nerd-fonts.jetbrains-mono
-  ];
-
   # Hyprland
   programs.hyprland.enable = true;
 
@@ -83,20 +77,15 @@ in
     ];
   };
 
+  # Zshell configuration
   programs.zsh = {
     enable = true;
     autosuggestions.enable = true;
     syntaxHighlighting.enable = true;
   };
 
-  # Generical graphic drivers 
-  hardware.graphics = {
-    enable = true;
-    extraPackages = with pkgs; [
-      libva-vdpau-driver 
-      libvdpau-va-gl
-    ];
-  };
+  # Enable graphics
+  hardware.graphics.enable = true;
 
   # External storage device settings
   services.udisks2.enable = true;

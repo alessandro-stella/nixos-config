@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../common.nix
+    ../gpu/nvidia.nix
   ];
 
   # Set device name
@@ -74,25 +75,6 @@
     name=HDMI-A-1
     mode=off
   '';
-
-  # Enable OpenGL
-  hardware.graphics = {
-    enable = true;
-  };
-
-  # Load nvidia driver for Xorg and Wayland
-  services.xserver.videoDrivers = ["nvidia"];
-
-  hardware.nvidia = {
-    modesetting.enable = true;
-    powerManagement.enable = false;
-    powerManagement.finegrained = false;
-
-    open = true;
-    nvidiaSettings = true;
-
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-  };
  
   # Desktop specific packages
   environment.systemPackages = with pkgs; [

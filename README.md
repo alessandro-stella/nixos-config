@@ -34,6 +34,9 @@ git clone https://github.com/alessandro-stella/nixos-config.git && cd ~/nixos-co
 ### 3. Set your username
 Edit ```flake.nix``` by changing the variable ```username``` to suit your wanted username.
 
+### 4. Select your GPU suite
+Depending on your host GPU (laptop or desktop) you need to change the imported modules at the start of ```hosts/<HOST>/configuration.nix```. Right now they're set on ```intel``` for the laptop and ```nvidia``` for the desktop. All needed configurations are inside ```hosts/gpu/```.
+
 <br>
 
 ## Installation.

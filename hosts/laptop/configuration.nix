@@ -4,6 +4,7 @@
   imports = [
     ./hardware-configuration.nix
     ../common.nix
+    ../gpu/intel.nix
   ];
 
   # Set device name
@@ -27,6 +28,8 @@
     swi-prolog
   ];
 
+  # Power management
+  services.upower.enable = true;
   services.power-profiles-daemon.enable = false;
 
   services.tlp = {
@@ -57,4 +60,3 @@
     swaylock.fprintAuth = true;
   };
 }
-
