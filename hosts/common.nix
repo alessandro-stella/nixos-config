@@ -20,6 +20,7 @@ in
   # Set tmp files to be saved in RAM
   boot.tmp.useTmpfs = true;
 
+  # Various safety features
   networking.networkmanager.enable = true;
   networking.firewall.enable = true;
   security.polkit.enable = true;
@@ -63,6 +64,21 @@ in
     };
 
     defaultSession = "hyprland";
+  };
+
+  # Font and icons
+  fonts.packages = with pkgs; [
+    font-awesome
+    nerd-fonts.jetbrains-mono
+  ];
+
+  # Extra sudo settings
+  security.sudo = {
+    enable = true;
+    extraConfig = ''
+      Defaults pwfeedback
+      Defaults insults
+    '';
   };
 
   # User settings
@@ -144,6 +160,7 @@ in
   # Turn on experimental commands
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Current nix version 
   system.stateVersion = "26.05";
 }
 

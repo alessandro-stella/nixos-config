@@ -169,8 +169,8 @@
     "format-muted": "",
     "on-click": "~/.config/waybar/resources/volume-control toggle-mute output", // Mute
     "on-click-right": "pavucontrol",
-    "on-scroll-up": "~/.config/waybar/resources/volume-control up output",
-    "on-scroll-down": "~/.config/waybar/resources/volume-control down output",
+    "on-scroll-up": "~/.config/waybar/resources/volume-control down output",
+    "on-scroll-down": "~/.config/waybar/resources/volume-control up output",
     "smooth-scrolling-threshold": 0.5,
     "scroll-step": 0.5,
     "format-icons": {
@@ -193,8 +193,8 @@
     "format-source-muted": "",
     "on-click": "~/.config/waybar/resources/volume-control toggle-mute input", // Mute
     "on-click-right": "pavucontrol",
-    "on-scroll-up": "~/.config/waybar/resources/volume-control up input",
-    "on-scroll-down": "~/.config/waybar/resources/volume-control down input",
+    "on-scroll-up": "~/.config/waybar/resources/volume-control down input",
+    "on-scroll-down": "~/.config/waybar/resources/volume-control up input",
     "smooth-scrolling-threshold": 0.5,
     "scroll-step": 0.5
   },
