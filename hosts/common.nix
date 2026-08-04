@@ -49,6 +49,24 @@ in
   };
   console.keyMap = "it";
 
+  # Font settings
+  fonts.fontconfig = {
+    enable = true;
+  
+    defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" ];
+    };
+  
+    antialias = true;
+
+    hinting = {
+      enable = true;
+      style = "slight";
+    };
+
+    subpixel.rgba = "none";
+  };
+
   # Unpatched binaries
   programs.nix-ld.enable = true;
 

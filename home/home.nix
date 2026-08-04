@@ -52,19 +52,9 @@ in
     wallust
     waybar
     rofi
-
-    # Font and icons
-    font-awesome
-    nerd-fonts.jetbrains-mono
   ];
 
-  programs.home-manager.enable = true;
-
-  # Default font settings
-  fonts.fontconfig.enable = true;
-  fonts.fontconfig.defaultFonts = {
-    monospace = [ "JetBrainsMono Nerd Font" ];
-  };
+  programs.home-manager.enable = true; 
 
   # Setting brave-origin
   programs.brave = {

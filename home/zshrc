@@ -1,14 +1,10 @@
 # ~/.zshrc
-#
 
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
 alias ls='ls --color=auto'
 alias grep='grep --color=auto'
-
-# Fallback prompt
-PS1='[%n@%m %1~]%# '
 
 # Alias to quickly compile C/C++ etc.
 compile() {
@@ -52,10 +48,10 @@ compile() {
     esac
 }
 
-# Build nix flake
-nix-build() {
+# Rebuild NixOS flake
+nixos-switch() {
     if [ -z "$1" ]; then
-        echo "Error: specify flake name (ex: nix-build desktop)"
+        echo "Error: specify flake name (ex: nixos-switch desktop)"
         return 1
     fi
 
@@ -141,7 +137,7 @@ nix-build() {
         if [ -n "$err_excerpt" ]; then
             printf '%s' "$err_excerpt"
             echo
-            local logfile="/tmp/nix-build-last-error.log"
+            local logfile="/tmp/nixos-switch-last-error.log"
             cp "$outfile" "$logfile"
             echo "(full log saved to $logfile)"
         else
@@ -160,6 +156,9 @@ nix-build() {
 export PATH="$HOME/.local/bin:$PATH"
 export PATH="$HOME/.npm-global/bin:$PATH"
 export EDITOR=nvim
+
+bindkey '^[[1;5D' backward-word
+bindkey '^[[1;5C' forward-word
 
 eval "$(oh-my-posh --init --shell zsh --config ~/.config/oh-my-posh/themes/current_theme.omp.json)"
 
