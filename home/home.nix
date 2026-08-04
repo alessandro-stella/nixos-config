@@ -25,8 +25,9 @@ in
     loupe
     pavucontrol
     apostrophe
+    bruno 
 
-    # Tool cli
+    # Tool CLI
     btop
     fastfetch
     imagemagick
@@ -34,6 +35,7 @@ in
     tree
     ripgrep
     nodejs
+    python3
     tree-sitter
     wakatime-cli
     neovim
