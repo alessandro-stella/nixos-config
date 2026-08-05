@@ -50,6 +50,11 @@ in
   console.keyMap = "it";
 
   # Font settings
+  fonts.packages = with pkgs; [
+    font-awesome
+    nerd-fonts.jetbrains-mono
+  ];
+
   fonts.fontconfig = {
     enable = true;
   
@@ -83,12 +88,6 @@ in
 
     defaultSession = "hyprland";
   };
-
-  # Font and icons
-  fonts.packages = with pkgs; [
-    font-awesome
-    nerd-fonts.jetbrains-mono
-  ];
 
   # Extra sudo settings
   security.sudo = {
@@ -138,6 +137,7 @@ in
     libnotify
     bc
     psmisc
+    fzf
 
     sddmTheme
   ];
