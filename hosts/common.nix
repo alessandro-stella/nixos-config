@@ -17,8 +17,38 @@ let
   };
 in
 {
+  # System packages
+  environment.systemPackages = with pkgs; [
+    git
+    wget
+    curl
+    gnumake
+    gcc
+    clang
+    unzip
+    glib
+    libnotify
+    bc
+    psmisc
+    fzf
+    ntfs3g
+
+    polkit_gnome
+    (writeShellScriptBin "start-polkit" ''
+    exec ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1
+    '')
+
+    sddmTheme
+  ];
+
   # Set tmp files to be saved in RAM
   boot.tmp.useTmpfs = true;
+
+  # Add NTFS to filesystems
+  boot.supportedFilesystems = [ "ntfs-3g" ];
+
+  # Avoid using ntfs3
+  boot.blacklistedKernelModules = [ "ntfs3" ];
 
   # Various safety features
   networking.networkmanager.enable = true;
@@ -57,11 +87,11 @@ in
 
   fonts.fontconfig = {
     enable = true;
-  
+
     defaultFonts = {
       monospace = [ "JetBrainsMono Nerd Font" ];
     };
-  
+
     antialias = true;
 
     hinting = {
@@ -122,25 +152,7 @@ in
 
   # External storage device settings
   services.udisks2.enable = true;
-  services.gvfs.enable = true;
-
-  # System packages
-  environment.systemPackages = with pkgs; [
-    git
-    wget
-    curl
-    gnumake
-    gcc
-    clang
-    unzip
-    glib
-    libnotify
-    bc
-    psmisc
-    fzf
-
-    sddmTheme
-  ];
+  services.gvfs.enable = true; 
 
   # Setting up java
   programs.java = {

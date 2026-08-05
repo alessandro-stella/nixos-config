@@ -13,7 +13,9 @@ in
   home.username = username;
   home.homeDirectory = "/home/${username}";
   home.stateVersion = "26.05";
+  programs.home-manager.enable = true; 
 
+  # Installed packages
   home.packages = with pkgs; [
     # Testing
     foot
@@ -55,8 +57,6 @@ in
     waybar
     rofi
   ];
-
-  programs.home-manager.enable = true; 
 
   # Setting brave-origin
   programs.brave = {

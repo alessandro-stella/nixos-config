@@ -7,7 +7,7 @@ require("modules.dynamic-border")
 
 -- Starting scripts
 hl.on("hyprland.start", function()
-	hl.exec_cmd("/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1") -- graphical sudo elevation
+	hl.exec_cmd("start-polkit") -- graphical sudo elevation
 	hl.exec_cmd("blueman-applet") -- Systray app for BT
 	hl.exec_cmd("nm-applet --indicator") -- Systray app for Network/Wifi
 	hl.exec_cmd("waybar") -- Status bar
