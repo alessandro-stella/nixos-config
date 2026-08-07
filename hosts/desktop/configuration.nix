@@ -96,4 +96,19 @@
       };
     };
   };
+
+  # Fix for instant wakeup from suspension
+  systemd.services.disable-acpi-wakeup = {
+    description = "Disable all ACPI devices for wakeup";
+    wantedBy = [ "multi-user.target" ];
+    script = ''
+      for dev in $(cat /proc/acpi/wakeup | grep enabled | awk '{print $1}'); do
+          echo $dev > /proc/acpi/wakeup
+      done
+    '';
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+    };
+  };
 }
