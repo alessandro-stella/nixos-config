@@ -102,7 +102,7 @@
     description = "Disable all ACPI devices for wakeup";
     wantedBy = [ "multi-user.target" ];
     script = ''
-      for dev in $(cat /proc/acpi/wakeup | grep enabled | awk '{print $1}'); do
+      for dev in $(${pkgs.coreutils}/bin/cat /proc/acpi/wakeup | ${pkgs.gnugrep}/bin/grep enabled | ${pkgs.gawk}/bin/awk '{print $1}'); do
           echo $dev > /proc/acpi/wakeup
       done
     '';

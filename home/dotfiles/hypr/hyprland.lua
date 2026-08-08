@@ -94,6 +94,17 @@ hl.window_rule({ name = "float-pavucontrol", match = { class = "pavucontrol" }, 
 hl.window_rule({ name = "float-blueman-manager", match = { class = "blueman-manager" }, float = true })
 hl.window_rule({ name = "float-nm-connection-editor", match = { class = "nm-connection-editor" }, float = true })
 
+-- Center and focus password popups
+hl.window_rule({
+	name = "center-password-popup",
+	match = {
+		class = "polkit-gnome-authentication-agent-1",
+	},
+	float = true,
+	center = true,
+	stay_focused = true,
+})
+
 -- Disable rofi animation for resizing
 hl.layer_rule({ name = "rofi-no-anim", match = { namespace = "rofi" }, no_anim = true })
 
