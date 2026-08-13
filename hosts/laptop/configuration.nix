@@ -24,8 +24,6 @@
     brightnessctl
     powertop
     networkmanagerapplet
-
-    swi-prolog
   ];
 
   # Power management

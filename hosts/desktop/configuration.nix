@@ -77,10 +77,7 @@
   '';
  
   # Desktop specific packages
-  environment.systemPackages = with pkgs; [
-    spotify
-    discord
-  ];
+  environment.systemPackages = with pkgs; [];
 
   # Change shortcut for AltGr
   services.keyd = {
