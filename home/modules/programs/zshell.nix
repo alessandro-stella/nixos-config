@@ -14,6 +14,7 @@
     };
 
     initContent = ''
+      PROMPT_EOL_MARK=
       export PATH="$HOME/.local/bin:$HOME/.npm-global/bin:$PATH"
       export EDITOR="nvim"
 

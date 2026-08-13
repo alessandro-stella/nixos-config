@@ -14,10 +14,8 @@ REQUIRED_FILES=(
     "waybar.css"
     "swaync.css"
     "current_theme.omp.json"
-    "colors-kitty.conf"
     "colors.json"
     "colors-rofi.rasi"
-
     "colors-foot.ini"
 )
 
@@ -75,7 +73,6 @@ update_file "$THEME_DIR/waybar.css" "$CURRENT_THEME_DIR/waybar.css"
 update_file "$THEME_DIR/swaync.css" "$CURRENT_THEME_DIR/swaync.css"
 update_file "$THEME_DIR/current_theme.omp.json" "$CURRENT_THEME_DIR/oh-my-posh.omp.json"
 update_file "$THEME_DIR/colors-rofi.rasi" "$CURRENT_THEME_DIR/rofi.rasi" 
-update_file "$THEME_DIR/colors-kitty.conf" "$CURRENT_THEME_DIR/kitty.conf"
 update_file "$THEME_DIR/colors-foot.ini" "$CURRENT_THEME_DIR/foot.ini"
 
 RAND_X=$(echo "scale=2; $((RANDOM % 101)) / 100" | bc)

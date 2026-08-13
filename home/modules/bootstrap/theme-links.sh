@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 declare -A links=(
-    ["$HOME/.config/kitty/colors-kitty.conf"]="kitty.conf"
     ["$HOME/.config/oh-my-posh/themes/current_theme.omp.json"]="oh-my-posh.omp.json"
     ["$HOME/.config/rofi/colors.rasi"]="rofi.rasi"
     ["$HOME/.config/swaync/style.css"]="swaync.css"

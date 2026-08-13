@@ -10,7 +10,7 @@
     baseIndex = 1;
     escapeTime = 0;
     secureSocket = false;
-    mouse = true;
+    mouse = false;
     historyLimit = 50000;
     
     plugins = with pkgs; [
@@ -22,7 +22,8 @@
           set -g @minimal-tmux-justify "centre"
           set -g @minimal-tmux-left false
           set -g @minimal-tmux-right false
-           # Current window indicator
+
+          # Current window indicator
           set -g @minimal-tmux-use-arrow true
           set -g @minimal-tmux-right-arrow ""
           set -g @minimal-tmux-left-arrow ""
@@ -32,7 +33,7 @@
     
     extraConfig = ''
       # Terminal settings
-      set -g default-terminal "xterm-256color"
+      set -g default-terminal "tmux-256color"
       set -ga terminal-overrides ",*256col*:Tc"
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
       set-environment -g COLORTERM "truecolor"

@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
 THEME_DIR="$2"
-# WAL_COLORS_JSON="$THEME_DIR/colors-kitty.conf"
 WAL_COLORS_JSON="$THEME_DIR/colors-foot.ini"
 TEMPLATE_CSS="$HOME/.config/swaync/template.css"
 OUTPUT_CSS="$THEME_DIR/swaync.css"
 
-BG_HEX=$(grep -m1 'background' "$WAL_COLORS_JSON" | grep -oE '#[0-9a-fA-F]{6}') || exit 1
+BG_VALUE=$(grep -A 30 '^\[colors-dark\]' "$WAL_COLORS_JSON" | grep '^background=' | grep -oE '[0-9A-Fa-f]{6}' | head -1)
+BG_HEX="#$BG_VALUE" || exit 1
+
 BORDER_HEX=${1:-"595959"}
 [[ $BORDER_HEX != \#* ]] && BORDER_HEX="#$BORDER_HEX"
 ALPHA=0.85

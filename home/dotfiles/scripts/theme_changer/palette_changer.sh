@@ -4,7 +4,6 @@ WALLPAPER="$1"
 THEME_DIR="$2"
 WAL_CACHE="$HOME/.cache/wallust"
 WAL_COLORS_JSON="$WAL_CACHE/colors.json"
-KITTY_CONF="$WAL_CACHE/colors-kitty.conf"
 FOOT_CONF="$WAL_CACHE/colors-foot.ini"
 ROFI_CONF="$WAL_CACHE/colors-rofi.rasi"
 
@@ -27,7 +26,9 @@ done
 rm -rf "$WAL_CACHE"
 wallust run "$WALLPAPER" || exit 1
 
-TERMINAL_BG=$(grep -E "^background" "$KITTY_CONF" | awk '{print $2}')
+# Extract background from foot 
+BG_VALUE=$(grep -A 30 '^\[colors-dark\]' "$FOOT_CONF" | grep '^background=' | grep -oE '[0-9A-Fa-f]{6}' | head -1)
+TERMINAL_BG="#$BG_VALUE"
 [[ "$TERMINAL_BG" =~ ^#[0-9a-fA-F]{6}$ ]] || { echo "Background detection failed"; exit 1; }
 
 # Utility functions
@@ -140,12 +141,11 @@ for c in "${sorted_colors[@]:1}"; do
 done
 [[ -z "$color2" ]] && color2=${sorted_colors[1]}
 
-
 # Save files in theme folder
 cp "$WAL_COLORS_JSON" "$THEME_DIR/colors.json"
-cp "$KITTY_CONF" "$THEME_DIR/colors-kitty.conf"
 cp "$FOOT_CONF" "$THEME_DIR/colors-foot.ini"
 cp "$ROFI_CONF" "$THEME_DIR/colors-rofi.rasi"
+
 # --------------------------------------------------------------
 
 # Wlogout Output

@@ -1,13 +1,14 @@
 #!/usr/bin/env bash
 
 THEME_DIR="$2"
-WAL_COLORS_JSON="$THEME_DIR/colors-kitty.conf"
+WAL_COLORS_JSON="$THEME_DIR/colors-foot.ini"
 TEMPLATE_CSS="$HOME/.config/waybar/template.css"
 OUTPUT_CSS="$THEME_DIR/waybar.css"
 LOGO_HEX=${1:-"#89b4fa"}
 ALPHA=0.8
 
-BG_HEX=$(grep -m1 'background' "$WAL_COLORS_JSON" | grep -oE '#[0-9a-fA-F]{6}') || exit 1
+BG_HEX=$(grep -A 30 '^\[colors-dark\]' "$FOOT_CONFIG" | grep '^background=' | grep -oE '[0-9A-Fa-f]{6}' | head -1)
+BG_HEX="#$BG_HEX" || exit 1
 
 convertToRgba() {
     local hex="${1#\#}"; local alpha="${2:-1.0}"

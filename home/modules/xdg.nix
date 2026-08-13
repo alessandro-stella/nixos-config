@@ -12,7 +12,6 @@ in
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/btop";
     "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/fastfetch";
     "hypr".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr";
-    "kitty".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/kitty";
     "oh-my-posh".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/oh-my-posh";
     "rofi".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/rofi";
     "swaylock".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaylock";
