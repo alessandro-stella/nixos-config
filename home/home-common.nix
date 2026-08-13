@@ -226,7 +226,7 @@ in
       bind r source-file ~/.config/tmux/tmux.conf \; \
         display-message "tmux configuration reloaded"
 
-        set -g message-style "fg=white,bg=default"
+        set -g message-style "fg=default,bg=default"
     '';
   };
 }
