@@ -20,6 +20,8 @@
   outputs = { self, nixpkgs, home-manager, ...}@inputs:
   let
     username = "alessandro";
+    dotfilesPath = "/home/${username}/nixos-config/home/dotfiles";
+
     sharedModules = [
       { 
         nixpkgs.config.allowUnfree = true;
@@ -30,7 +32,7 @@
     ];
     
     homeManagerConfig = modules: {
-      home-manager.extraSpecialArgs = { inherit inputs username; };
+      home-manager.extraSpecialArgs = { inherit inputs username dotfilesPath; };
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${username} = {

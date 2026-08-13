@@ -1,0 +1,42 @@
+{ pkgs, ... }:
+
+{
+  home.packages = with pkgs; [
+    # Apps
+    foot
+    nautilus
+    evince
+    loupe
+    pavucontrol
+    apostrophe
+    bruno 
+
+    # Tool CLI
+    btop
+    fastfetch
+    imagemagick
+    jq
+    tree
+    ripgrep
+    nodejs
+    python3
+    tree-sitter
+    wakatime-cli
+    neovim
+    oh-my-posh
+
+    # Graphical suite
+    hyprland
+    awww
+    swaynotificationcenter
+    swaylock-effects
+    wlogout
+    hyprshot
+    cliphist
+    wtype
+    wl-clipboard
+    wallust
+    waybar
+    rofi
+  ];
+}

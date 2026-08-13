@@ -1,8 +1,5 @@
-{ config, pkgs, username, ... }:
+{ config, pkgs, dotfilesPath, ... }:
 
-let
-  dotfilesPath = "/home/${username}/nixos-config/home/dotfiles";
-in
 {
   home.packages = with pkgs; [
     spotify
@@ -10,7 +7,7 @@ in
     gimp
   ];
 
-  # Adding configuration for PhotoGimp
+  # Configuration for PhotoGimp
   xdg.configFile."GIMP/3.2".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/photogimp/custom-GIMP";
 
   xdg.dataFile."applications" = {
