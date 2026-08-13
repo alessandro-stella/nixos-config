@@ -77,7 +77,9 @@
   '';
  
   # Desktop specific packages
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs; [
+    playerctl
+  ];
 
   # Change shortcut for AltGr
   services.keyd = {
