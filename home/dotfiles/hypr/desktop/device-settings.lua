@@ -14,9 +14,7 @@ hl.workspace_rule({
 -- Autostart
 hl.on("hyprland.start", function()
 	-- Focus main monitor
-	hl.dispatch(hl.dsp.focus({
-		monitor = "DP-3",
-	}))
+	hl.exec_cmd("sleep 0.2 && hyprctl dispatch 'hl.dsp.focus({ monitor = \"DP-3\" })'")
 
 	-- Set btop as sensor panel
 	hl.exec_cmd(
