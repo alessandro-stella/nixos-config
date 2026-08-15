@@ -1,4 +1,4 @@
-{ config, pkgs, username, dotfilesPath, ... }:
+{ config, pkgs, username, hostType, dotfilesPath, ... }:
   
 let
   activationPath = pkgs.lib.makeBinPath [
@@ -37,10 +37,11 @@ in
   '';
 
   # Create custom files for hyprland
-  home.activation.setupHyprModules =
-  config.lib.dag.entryAfter [ "linkGeneration" ] ''
-    export PATH=${activationPath}:$PATH
-    export TEMPLATE_DIR="${dotfilesPath}/hypr/templates"
-    ${./bootstrap/setup-hypr-modules.sh}
-  '';
+  # home.activation.setupHyprModules =
+  # config.lib.dag.entryAfter [ "linkGeneration" ] ''
+  #   export PATH=${activationPath}:$PATH
+  #   export DOTFILES_DIR="${dotfilesPath}"
+  #   export TEMPLATE_DIR="${dotfilesPath}/hypr/${hostType}"
+  #   ${./bootstrap/setup-hyprland.sh} 
+  # '';
 }

@@ -31,8 +31,8 @@
       home-manager.nixosModules.home-manager
     ];
     
-    homeManagerConfig = modules: {
-      home-manager.extraSpecialArgs = { inherit inputs username dotfilesPath; };
+    homeManagerConfig = hostType: modules: {
+      home-manager.extraSpecialArgs = { inherit inputs username hostType dotfilesPath; };
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${username} = {
@@ -49,7 +49,7 @@
           modules = [ 
             ./hosts/desktop/configuration.nix
             inputs.minegrub-world-sel-theme.nixosModules.default
-            (homeManagerConfig [ ./home/home-desktop.nix ])
+            (homeManagerConfig "desktop" [ ./home/home-desktop.nix ])
           ] ++ sharedModules;
         };
       laptop = 
@@ -58,7 +58,7 @@
           specialArgs = { inherit username; };
           modules = [ 
             ./hosts/laptop/configuration.nix
-            (homeManagerConfig [ ./home/home-laptop.nix ])
+            (homeManagerConfig "laptop" [ ./home/home-laptop.nix ])
           ] ++ sharedModules;
         };
     };
