@@ -11,6 +11,15 @@ hl.workspace_rule({
 	default = true,
 })
 
+-- Make password popup steal focus from window
+hl.window_rule({
+	match = {
+		class = "polkit-gnome-authentication-agent-1",
+	},
+	float = true,
+	center = true,
+})
+
 -- Autostart
 hl.on("hyprland.start", function()
 	-- Focus main monitor
