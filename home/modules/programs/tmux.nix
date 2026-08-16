@@ -66,6 +66,9 @@
 
       # Change message style
       set -g message-style "fg=default,bg=default"
+
+      # Hide status bar when the window runs Neovim
+      set-hook -g after-select-window 'if-shell -F "#{==:#{pane_current_command},nvim}" "set status off" "set status on"'
     '';
   };
 }
