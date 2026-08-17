@@ -58,7 +58,7 @@
       bind p previous-window
 
       # Do not attach to another session when the current session is destroyed
-      set-option -g detach-on-destroy on 
+      set-option -g detach-on-destroy on
 
       # Reload configuration
       bind r source-file ~/.config/tmux/tmux.conf \; \
