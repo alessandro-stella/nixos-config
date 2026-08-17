@@ -22,7 +22,6 @@
     python3
     tree-sitter
     wakatime-cli
-    neovim
     oh-my-posh
 
     # Graphical suite
@@ -38,5 +37,7 @@
     wallust
     waybar
     rofi
+
+    neovim
   ];
 }
