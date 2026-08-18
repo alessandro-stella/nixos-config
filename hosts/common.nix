@@ -19,6 +19,9 @@ in
 {
   # System packages
   environment.systemPackages = with pkgs; [
+    neovim
+    foot
+
     git
     wget
     curl

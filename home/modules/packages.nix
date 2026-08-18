@@ -3,7 +3,6 @@
 {
   home.packages = with pkgs; [
     # Apps
-    foot
     nautilus
     evince
     loupe
