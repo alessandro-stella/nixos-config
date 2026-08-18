@@ -42,24 +42,19 @@ Depending on your host GPU (laptop or desktop) you need to change the imported m
 ## Installation.
 This setup is able to differentiate between a laptop or a desktop installation. Be aware to change "desktop" to "laptop" in the following commands to reflect your choice.
 
-### 1. Generate ```hardware-configuration.nix```
+### 1. Generate ```hardware-configuration.nix``` (just to be sure, it should exist by default)
 
 ```bash
-sudo nixos-generate-config --show-hardware-config > hosts/<HOST>/hardware-configuration.nix
+sudo nixos-generate-config --show-hardware-config | sudo tee /etc/nixos/hardware-configuration.nix
 ```
 
-### 2. Force Git to index untracked hardware configuration
-```bash
-git add -f -N hosts/<HOST>/hardware-configuration.nix && git update-index --assume-unchanged hosts/<HOST>/hardware-configuration.nix
-```
-
-### 3. Build and apply the flake configuratio:
+### 2. Build and apply the flake configuratio:
 
 ```bash
-sudo nixos-rebuild switch --flake .#<HOST>
+sudo nixos-rebuild switch --flake .#<HOST> --impure
 ```
 
-### 4. Reboot the system and enjoy!
+### 3. Reboot the system and enjoy!
 
 ```bash
 reboot
@@ -68,5 +63,5 @@ reboot
 <br>
 
 ## Custom build command
-Instead of using the very verbose ```sudo nixos-rebuild switch --flake .#<HOST>``` to rebuild the system, there's a very useful custom command: ```nix-build <HOST>```.
+Instead of using the very verbose ```sudo nixos-rebuild switch --flake .#<HOST> --impure``` to rebuild the system, there's a very useful custom command: ```nixos-switch <HOST>```.
 This greatly improves the usability of the system, as it both shortens the actual command to write and eliminates the verbosity of NixOS errors by only keeping the useful parts.

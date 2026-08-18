@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./hardware-configuration.nix
     ../common.nix
     ../gpu/nvidia.nix
   ];

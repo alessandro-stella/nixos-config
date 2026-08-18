@@ -36,7 +36,5 @@
     wallust
     waybar
     rofi
-
-    neovim
   ];
 }

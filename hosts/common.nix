@@ -17,6 +17,11 @@ let
   };
 in
 {
+  # Use system hardware configuration
+  imports = [
+    /etc/nixos/hardware-configuration.nix
+  ];
+
   # System packages
   environment.systemPackages = with pkgs; [
     neovim

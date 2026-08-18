@@ -54,17 +54,8 @@
         fi
 
         local flake_name="$1"
-        local hw_config="hosts/$flake_name/hardware-configuration.nix"
-
-        if [ ! -f "$hw_config" ]; then
-          gum log --structured --level error "Hardware config not found" path "$hw_config"
-          return 1
-        fi
 
         gum log --level info "Preparing rebuild..."
-        git add -f --intent-to-add "$hw_config"
-        git update-index --assume-unchanged "$hw_config"
-        git add -A
 
         if ! sudo -n true 2>/dev/null; then
           if ! sudo -v; then
@@ -75,7 +66,7 @@
         local outfile=$(mktemp)
 
         if gum spin --spinner dot --title "Building NixOS ($flake_name)..." -- \
-          bash -c "set -o pipefail; sudo nixos-rebuild switch --flake '.#$flake_name' 2>&1 | tee '$outfile'"; then
+          bash -c "set -o pipefail; sudo nixos-rebuild switch --flake '.#$flake_name' --impure 2>&1 | tee '$outfile'"; then
         
           echo ""
           gum log --level info "✓ Build completed successfully!"
@@ -84,7 +75,7 @@
         else
           local exit_code=$?
           echo ""
-          gum log --structured --level error "Build failed," cmd "sudo nixos-rebuild switch --flake .#$flake_name"
+          gum log --structured --level error "Build failed," cmd "sudo nixos-rebuild switch --flake .#$flake_name --impure"
 
           echo ""
           local err_excerpt
