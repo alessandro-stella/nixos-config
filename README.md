@@ -48,7 +48,7 @@ This setup is able to differentiate between a laptop or a desktop installation. 
 sudo nixos-generate-config --show-hardware-config | sudo tee /etc/nixos/hardware-configuration.nix
 ```
 
-### 2. Build and apply the flake configuratio:
+### 2. Build and apply the flake configuration:
 
 ```bash
 sudo nixos-rebuild switch --flake .#<HOST> --impure

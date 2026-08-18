@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   imports = [
@@ -8,6 +8,8 @@
 
   # Set device name
   networking.hostName = "desktop-nix";
+
+  users.users."${username}".extraGroups = [ "lp" ];
 
   # Set bootloader to GRUB
   boot.loader = {
@@ -78,7 +80,22 @@
   # Desktop specific packages
   environment.systemPackages = with pkgs; [
     playerctl
+    system-config-printer
   ];
+
+  # Enable printing
+  services.printing = {
+    enable = true;
+    drivers = with pkgs; [
+      hplipWithPlugin 
+      samsung-unified-linux-driver
+      splix
+      hplip
+      cups-filters
+    ];
+  };
+
+  services.ipp-usb.enable = true;
 
   # Change shortcut for AltGr
   services.keyd = {
