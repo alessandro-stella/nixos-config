@@ -1,10 +1,9 @@
 # NixOS Hyprland Flake Configuration
 
 This repository contains my personal system and user configurations managed via Nix Flakes. Moreover, this configurations is thought for one user only, so you'll need to handle that as it's explained next.
-WARNING: there are still some bugs that needs to be figured out, such as no wallpaper on the first installation (run the theme changer to fix that)
 
-## Important!!!
-This configuration aims to replicate my custom settings, therefore some of the configuration might not work. The most important settings to watch out are the bootloader and the graphical settings for SDDM:
+> [!IMPORTANT]
+> This configuration aims to replicate my custom settings, therefore some of the configuration might not work. The most important settings to watch out are the bootloader and the graphical settings for SDDM:
 
 ### Bootloader
 On the laptop configuration, as I only use NixOS, I didn't include an option for dual boot, so i left the default ```systemd-boot```. On my desktop, as I dual boot Windows and NixOS, I added ```GRUB``` to customize the experience. I suppose you're at least a bit familiar with the Linux ecosystem (or else you'd be crazy to go straight to NixOS), so I didn't include an additional option to change this; I trust that you'll be more than capable to edit the configuration after a first install to better suit your needs.
@@ -40,7 +39,9 @@ Depending on your host GPU (laptop or desktop) you need to change the imported m
 <br>
 
 ## Installation.
-This setup is able to differentiate between a laptop or a desktop installation. Be aware to change "desktop" to "laptop" in the following commands to reflect your choice.
+
+> [!NOTE]
+> This setup is able to differentiate between a laptop or a desktop installation. Be aware to change "desktop" to "laptop" in the following commands to reflect your choice.
 
 ### 1. Generate ```hardware-configuration.nix``` (just to be sure, it should exist by default)
 
