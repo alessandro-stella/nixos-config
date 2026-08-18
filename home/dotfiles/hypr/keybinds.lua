@@ -2,7 +2,7 @@ local mainMod = _G.mainMod or "SUPER"
 
 -- Apps and system
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("foot"))
-hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("foot -e tmux a")) -- Reconnect to last tmux session
+hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("foot -e tmux a || tmux")) -- Reconnect to last tmux session or create a new one
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("swaylock -K"))
