@@ -21,6 +21,7 @@ in
     "wlogout".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wlogout";
     "scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/scripts";
     "foot".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/foot";
+    "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/quickshell";
 
     # Hyprland configuration
     "hypr/hyprland.lua".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/hyprland.lua";

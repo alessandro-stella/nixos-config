@@ -36,5 +36,8 @@
     wallust
     waybar
     rofi
+
+    # TESTING
+    quickshell
   ];
 }
