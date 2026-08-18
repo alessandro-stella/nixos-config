@@ -87,12 +87,17 @@
     (size 1417 1416))
 (session-info "toplevel"
     (factory-entry "gimp-file-open-dialog")
-    (position 1257 32)
-    (size 1688 1197))
+    (position 0 0)
+    (size 927 560)
+    (monitor 2))
 (session-info "toplevel"
     (factory-entry "gimp-brightness-contrast-tool-dialog")
     (position 91 439)
     (monitor 1))
+(session-info "toplevel"
+    (factory-entry "gimp-rotate-tool-dialog")
+    (position 1093 0)
+    (monitor 2))
 
 (hide-docks no)
 (single-window-mode yes)
