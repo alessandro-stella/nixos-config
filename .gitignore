@@ -5,3 +5,5 @@ home/dotfiles/rofi/colors.rasi
 home/dotfiles/swaync/style.css
 home/dotfiles/waybar/style.css
 home/dotfiles/wlogout/style.css
+
+home/dotfiles/quickshell/.qmlls.ini

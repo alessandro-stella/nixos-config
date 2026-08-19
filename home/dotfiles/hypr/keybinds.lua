@@ -49,3 +49,7 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("brave-origin --password-store=basic 
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("brave-origin --password-store=basic --app=https://web.whatsapp.com/"))
 
 require("modules.custom-keybinds")
+
+-- Testing quickshell
+hl.bind(mainMod .. " + SHIFT + SPACE", hl.dsp.global("quickshell:toggleLauncher"))
+hl.bind(mainMod .. " + U", hl.dsp.global("quickshell:toggleClipboard"))
