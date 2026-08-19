@@ -28,97 +28,104 @@ PanelWindow {
     right: 0
   }
 
-  // ===== PROPRIETÀ SISTEMA =====
+  // ===== CONFIGURAZIONE FONT =====
+  readonly property int barFontSize: 12
+  readonly property string barFontFamily: "monospace"
+
+  // ===== PROPRIETÀ REATTIVE (Zero CPU overhead) =====
+  readonly property string activeWindow: Hyprland.focusedWindow?.title ?? ""
+  readonly property string currentLayout: {
+    const win = Hyprland.focusedWindow
+    if (!win) return "Tiled"
+    if (win.floating) return "Floating"
+    if (win.fullscreen) return "Fullscreen"
+    return "Tiled"
+  }
+
+  // ===== PROPRIETÀ STATO SISTEMA =====
   property string kernelVersion: "Linux"
   property int cpuUsage: 0
   property int memUsage: 0
   property int diskUsage: 0
   property int volumeLevel: 0
-  property string activeWindow: "Window"
-  property string currentLayout: "Tile"
   property var lastCpuIdle: 0
   property var lastCpuTotal: 0
+  property var _memTotal: null
 
-  // ===== PROCESSI =====
+  // 1. Kernel: Eseguito una sola volta all'avvio
   Process {
-    id: kernelProc
     command: ["uname", "-r"]
+    running: true
     stdout: SplitParser {
       onRead: data => {
         if (data) topBar.kernelVersion = data.trim()
       }
     }
-    Component.onCompleted: running = true
   }
 
+  // 2. Metriche aggregate: CPU, RAM e Disco insieme
   Process {
-    id: cpuProc
-    command: ["sh", "-c", "head -1 /proc/stat"]
+    id: sysStatsProc
+    command: [
+      "sh", "-c",
+      "head -n1 /proc/stat; grep -E 'MemTotal|MemAvailable' /proc/meminfo; df -h / | awk 'NR==2 {print $5}'"
+    ]
     stdout: SplitParser {
       onRead: data => {
-        if (!data) return
-        var parts = data.trim().split(/\s+/)
-        var user = parseInt(parts[1]) || 0
-        var nice = parseInt(parts[2]) || 0
-        var system = parseInt(parts[3]) || 0
-        var idle = parseInt(parts[4]) || 0
-        var iowait = parseInt(parts[5]) || 0
-        var irq = parseInt(parts[6]) || 0
-        var softirq = parseInt(parts[7]) || 0
+        if (!data || data.trim() === "") return
+        const line = data.trim()
 
-        var total = user + nice + system + idle + iowait + irq + softirq
-        var idleTime = idle + iowait
+        // Calcolo CPU
+        if (line.startsWith("cpu ")) {
+          const parts = line.split(/\s+/)
+          const user = parseInt(parts[1]) || 0
+          const nice = parseInt(parts[2]) || 0
+          const system = parseInt(parts[3]) || 0
+          const idle = parseInt(parts[4]) || 0
+          const iowait = parseInt(parts[5]) || 0
+          const irq = parseInt(parts[6]) || 0
+          const softirq = parseInt(parts[7]) || 0
 
-        if (topBar.lastCpuTotal > 0) {
-          var totalDiff = total - topBar.lastCpuTotal
-          var idleDiff = idleTime - topBar.lastCpuIdle
-          if (totalDiff > 0) {
-            topBar.cpuUsage = Math.round(100 * (totalDiff - idleDiff) / totalDiff)
+          const total = user + nice + system + idle + iowait + irq + softirq
+          const idleTime = idle + iowait
+
+          if (topBar.lastCpuTotal > 0) {
+            const totalDiff = total - topBar.lastCpuTotal
+            const idleDiff = idleTime - topBar.lastCpuIdle
+            if (totalDiff > 0) {
+              topBar.cpuUsage = Math.max(0, Math.min(100, Math.round(100 * (totalDiff - idleDiff) / totalDiff)))
+            }
+          }
+          topBar.lastCpuTotal = total
+          topBar.lastCpuIdle = idleTime
+        }
+        // Calcolo Memoria da /proc/meminfo
+        else if (line.startsWith("MemTotal:")) {
+          topBar._memTotal = parseInt(line.replace(/[^0-9]/g, "")) || 1
+        }
+        else if (line.startsWith("MemAvailable:")) {
+          const avail = parseInt(line.replace(/[^0-9]/g, "")) || 0
+          if (topBar._memTotal) {
+            topBar.memUsage = Math.round(100 * (topBar._memTotal - avail) / topBar._memTotal)
           }
         }
-        topBar.lastCpuTotal = total
-        topBar.lastCpuIdle = idleTime
+        // Percentuale Disco (es. 45%)
+        else if (line.endsWith("%")) {
+          topBar.diskUsage = parseInt(line.replace("%", "")) || 0
+        }
       }
     }
     Component.onCompleted: running = true
   }
 
-  Process {
-    id: memProc
-    command: ["sh", "-c", "free | grep Mem"]
-    stdout: SplitParser {
-      onRead: data => {
-        if (!data) return
-        var parts = data.trim().split(/\s+/)
-        var total = parseInt(parts[1]) || 1
-        var used = parseInt(parts[2]) || 0
-        topBar.memUsage = Math.round(100 * used / total)
-      }
-    }
-    Component.onCompleted: running = true
-  }
-
-  Process {
-    id: diskProc
-    command: ["sh", "-c", "df / | tail -1"]
-    stdout: SplitParser {
-      onRead: data => {
-        if (!data) return
-        var parts = data.trim().split(/\s+/)
-        var percentStr = parts[4] || "0%"
-        topBar.diskUsage = parseInt(percentStr.replace('%', '')) || 0
-      }
-    }
-    Component.onCompleted: running = true
-  }
-
+  // 3. Volume
   Process {
     id: volProc
     command: ["wpctl", "get-volume", "@DEFAULT_AUDIO_SINK@"]
     stdout: SplitParser {
       onRead: data => {
         if (!data) return
-        var match = data.match(/Volume:\s*([\d.]+)/)
+        const match = data.match(/Volume:\s*([\d.]+)/)
         if (match) {
           topBar.volumeLevel = Math.round(parseFloat(match[1]) * 100)
         }
@@ -127,60 +134,14 @@ PanelWindow {
     Component.onCompleted: running = true
   }
 
-  Process {
-    id: windowProc
-    command: ["sh", "-c", "hyprctl activewindow -j | jq -r '.title // empty'"]
-    stdout: SplitParser {
-      onRead: data => {
-        if (data && data.trim()) {
-          topBar.activeWindow = data.trim()
-        }
-      }
-    }
-    Component.onCompleted: running = true
-  }
-
-  Process {
-    id: layoutProc
-    command: ["sh", "-c", "hyprctl activewindow -j | jq -r 'if .floating then \"Floating\" elif .fullscreen == 1 then \"Fullscreen\" else \"Tiled\" end'"]
-    stdout: SplitParser {
-      onRead: data => {
-        if (data && data.trim()) {
-          topBar.currentLayout = data.trim()
-        }
-      }
-    }
-    Component.onCompleted: running = true
-  }
-
-  // ===== TIMER =====
+  // Timer per aggiornare le statistiche ogni 2 secondi
   Timer {
     interval: 2000
     running: true
     repeat: true
     onTriggered: {
-      cpuProc.running = true
-      memProc.running = true
-      diskProc.running = true
+      sysStatsProc.running = true
       volProc.running = true
-    }
-  }
-
-  Connections {
-    target: Hyprland
-    function onRawEvent(event) {
-      windowProc.running = true
-      layoutProc.running = true
-    }
-  }
-
-  Timer {
-    interval: 200
-    running: true
-    repeat: true
-    onTriggered: {
-      windowProc.running = true
-      layoutProc.running = true
     }
   }
 
@@ -195,14 +156,7 @@ PanelWindow {
 
       Item { width: 8 }
 
-      Rectangle {
-        Layout.preferredWidth: 24
-        Layout.preferredHeight: 24
-        color: "transparent"
-      }
-
-      Item { width: 8 }
-
+      // Workspace Selector (Lookup diretto O(1))
       Repeater {
         model: 9
 
@@ -211,15 +165,16 @@ PanelWindow {
           Layout.preferredHeight: parent.height
           color: "transparent"
 
-          property var workspace: Hyprland.workspaces.values.find(ws => ws.id === index + 1) ?? null
-          property bool isActive: Hyprland.focusedWorkspace?.id === (index + 1)
-          property bool hasWindows: workspace !== null
+          readonly property int wsId: index + 1
+          readonly property var workspace: Hyprland.workspaces.get(wsId) ?? null
+          readonly property bool isActive: Hyprland.focusedWorkspace?.id === wsId
+          readonly property bool hasWindows: workspace !== null
 
           Text {
-            text: index + 1
+            text: parent.wsId
             color: parent.isActive ? Theme.colCyan : (parent.hasWindows ? Theme.colCyan : Theme.colMuted)
-            font.pixelSize: topBar.fontSize
-            font.family: topBar.fontFamily
+            font.pixelSize: topBar.barFontSize
+            font.family: topBar.barFontFamily
             font.bold: true
             anchors.centerIn: parent
           }
@@ -227,18 +182,20 @@ PanelWindow {
           Rectangle {
             width: 20
             height: 3
-            color: parent.isActive ? Theme.colPurple : Theme.colBg
+            color: parent.isActive ? Theme.colPurple : "transparent"
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.bottom: parent.bottom
           }
 
           MouseArea {
             anchors.fill: parent
-            onClicked: Hyprland.dispatch("workspace " + (index + 1))
+            cursorShape: Qt.PointingHandCursor
+            onClicked: Hyprland.dispatch("workspace " + parent.wsId)
           }
         }
       }
 
+      // Separatore
       Rectangle {
         Layout.preferredWidth: 1
         Layout.preferredHeight: 16
@@ -248,16 +205,18 @@ PanelWindow {
         color: Theme.colMuted
       }
 
+      // Layout Finestra
       Text {
         text: topBar.currentLayout
         color: Theme.colFg
-        font.pixelSize: topBar.fontSize
-        font.family: topBar.fontFamily
+        font.pixelSize: topBar.barFontSize
+        font.family: topBar.barFontFamily
         font.bold: true
         Layout.leftMargin: 5
         Layout.rightMargin: 5
       }
 
+      // Separatore
       Rectangle {
         Layout.preferredWidth: 1
         Layout.preferredHeight: 16
@@ -267,11 +226,12 @@ PanelWindow {
         color: Theme.colMuted
       }
 
+      // Titolo Finestra Attiva
       Text {
         text: topBar.activeWindow
         color: Theme.colPurple
-        font.pixelSize: topBar.fontSize
-        font.family: topBar.fontFamily
+        font.pixelSize: topBar.barFontSize
+        font.family: topBar.barFontFamily
         font.bold: true
         Layout.fillWidth: true
         Layout.leftMargin: 8
@@ -279,102 +239,108 @@ PanelWindow {
         maximumLineCount: 1
       }
 
+      // Kernel
       Text {
         text: topBar.kernelVersion
         color: Theme.colRed
-        font.pixelSize: topBar.fontSize
-        font.family: topBar.fontFamily
+        font.pixelSize: topBar.barFontSize
+        font.family: topBar.barFontFamily
         font.bold: true
         Layout.rightMargin: 8
       }
 
+      // Separatore
       Rectangle {
         Layout.preferredWidth: 1
         Layout.preferredHeight: 16
         Layout.alignment: Qt.AlignVCenter
-        Layout.leftMargin: 0
         Layout.rightMargin: 8
         color: Theme.colMuted
       }
 
+      // CPU
       Text {
         text: "CPU: " + topBar.cpuUsage + "%"
         color: Theme.colYellow
-        font.pixelSize: topBar.fontSize
-        font.family: topBar.fontFamily
+        font.pixelSize: topBar.barFontSize
+        font.family: topBar.barFontFamily
         font.bold: true
         Layout.rightMargin: 8
       }
 
+      // Separatore
       Rectangle {
         Layout.preferredWidth: 1
         Layout.preferredHeight: 16
         Layout.alignment: Qt.AlignVCenter
-        Layout.leftMargin: 0
         Layout.rightMargin: 8
         color: Theme.colMuted
       }
 
+      // Memoria
       Text {
         text: "Mem: " + topBar.memUsage + "%"
         color: Theme.colCyan
-        font.pixelSize: topBar.fontSize
-        font.family: topBar.fontFamily
+        font.pixelSize: topBar.barFontSize
+        font.family: topBar.barFontFamily
         font.bold: true
         Layout.rightMargin: 8
       }
 
+      // Separatore
       Rectangle {
         Layout.preferredWidth: 1
         Layout.preferredHeight: 16
         Layout.alignment: Qt.AlignVCenter
-        Layout.leftMargin: 0
         Layout.rightMargin: 8
         color: Theme.colMuted
       }
 
+      // Disco
       Text {
         text: "Disk: " + topBar.diskUsage + "%"
         color: Theme.colBlue
-        font.pixelSize: topBar.fontSize
-        font.family: topBar.fontFamily
+        font.pixelSize: topBar.barFontSize
+        font.family: topBar.barFontFamily
         font.bold: true
         Layout.rightMargin: 8
       }
 
+      // Separatore
       Rectangle {
         Layout.preferredWidth: 1
         Layout.preferredHeight: 16
         Layout.alignment: Qt.AlignVCenter
-        Layout.leftMargin: 0
         Layout.rightMargin: 8
         color: Theme.colMuted
       }
 
+      // Volume
       Text {
         text: "Vol: " + topBar.volumeLevel + "%"
         color: Theme.colPurple
-        font.pixelSize: topBar.fontSize
-        font.family: topBar.fontFamily
+        font.pixelSize: topBar.barFontSize
+        font.family: topBar.barFontFamily
         font.bold: true
         Layout.rightMargin: 8
       }
 
+      // Separatore
       Rectangle {
         Layout.preferredWidth: 1
         Layout.preferredHeight: 16
         Layout.alignment: Qt.AlignVCenter
-        Layout.leftMargin: 0
         Layout.rightMargin: 8
         color: Theme.colMuted
       }
 
+      // Orologio
       Text {
         id: clockText
         text: Qt.formatDateTime(new Date(), "ddd, MMM dd - HH:mm")
         color: Theme.colCyan
-        font.pixelSize: topBar.fontSize
-        font.family: topBar.fontFamily
+        font.pixelSize: topBar.barFontSize
+        font.family: topBar.barFontFamily
         font.bold: true
         Layout.rightMargin: 8
 

@@ -10,9 +10,7 @@ ShellRoot {
   Variants {
     model: Quickshell.screens
 
-    TopBar {
-      modelData: modelData
-    }
+    TopBar {}
   }
 
   // App launcher
