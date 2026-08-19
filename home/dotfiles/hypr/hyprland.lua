@@ -23,6 +23,9 @@ hl.on("hyprland.start", function()
 	-- Clipboard
 	hl.exec_cmd("cliphist wipe")
 	hl.exec_cmd("wl-paste --type text -w cliphist store")
+
+	-- Testing
+	hl.exec_cmd("quickshell")
 end)
 
 hl.config({

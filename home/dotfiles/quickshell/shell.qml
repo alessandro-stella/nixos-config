@@ -6,22 +6,22 @@ import "./app_launcher/"
 import "./clipboard/"
 
 ShellRoot {
-    // Top bar
-    // Variants {
-    //     model: Quickshell.screens
-    //
-    //     TopBar {
-    //         modelData: modelData
-    //     }
-    // }
+  // Top bar
+  Variants {
+    model: Quickshell.screens
 
-    // App launcher
-    AppLauncher {
-        id: appLauncher
+    TopBar {
+      modelData: modelData
     }
+  }
 
-    // Clipboard 
-    Clipboard {
-        id: cliboard
-    }
+  // App launcher
+  AppLauncher {
+    id: appLauncher
+  }
+
+  // Clipboard 
+  Clipboard {
+    id: cliboard
+  }
 }
