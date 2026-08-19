@@ -50,18 +50,4 @@
 
   # Tailscale integration
   services.tailscale.enable = true;
-
-  # Fingerprint reader 
-  # services.fprintd.enable = true;
-
-  # security.polkit.extraConfig = ''
-  #  polkit.addRule(function(action, subject) {
-  #    if (action.id == "net.reactivated.fprint.device.enroll" && subject.isInGroup("wheel")) {
-  #      return polkit.Result.YES;
-  #    }
-  #  });
-  # '';
-
-  # Change order of fingerprint scanner to AFTER sudo prompt
-  # security.pam.services.sudo.rules.auth.fprintd.order = config.security.pam.services.sudo.rules.auth.unix.order + 50;
 }
