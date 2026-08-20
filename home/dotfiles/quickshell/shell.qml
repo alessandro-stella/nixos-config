@@ -8,9 +8,16 @@ import "./clipboard/"
 ShellRoot {
   // Top bar
   Variants {
-    model: Quickshell.screens
-
-    TopBar {}
+    model: Quickshell.screens.length > 0 ? 
+      [...Array(Quickshell.screens.length)].map((_, i) => ({
+        index: i,
+        screen: Quickshell.screens[i]
+      })) : []
+    
+    TopBar {
+      monitorId: modelData.index
+      screen: modelData.screen
+    }
   }
 
   // App launcher

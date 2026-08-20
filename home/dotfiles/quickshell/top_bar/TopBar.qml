@@ -7,8 +7,9 @@ import "../"
 
 PanelWindow {
   id: root
-
+  required property int monitorId
   required property var modelData
+
   screen: modelData
 
   anchors {
@@ -91,7 +92,11 @@ PanelWindow {
 
           // Left widgets
           LogoWidget {}
-          WorkspacesWidget {}
+
+          WorkspacesWidget {
+            currentMonitorId: root.monitorId
+            showOnlyCurrentMonitor: true
+          }
         }
       }
 

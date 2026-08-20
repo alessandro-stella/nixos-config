@@ -7,23 +7,34 @@ import "../"
 
 RowLayout {
   id: root
+  
+  property bool showOnlyCurrentMonitor: false
+  property int currentMonitorId: -1
+  
   property int fontSize: Theme.barFontSize ?? 12
-
   spacing: 0
   Layout.fillHeight: true
 
   Repeater {
     model: {
-      const list = [...Hyprland.workspaces.values]
-      return list.sort((a, b) => a.id - b.id)
+    const list = [...Hyprland.workspaces.values]
+    console.log("currentMonitorId:", root.currentMonitorId)
+    const sorted = list.sort((a, b) => a.id - b.id)
+    
+    if (root.showOnlyCurrentMonitor && root.currentMonitorId !== null) {
+      return sorted.filter(ws => {
+        const wsMonitorId = ws.monitorId ?? ws.monitor?.id ?? ws.monitor
+        // Filtra solo i workspace che hanno un monitorId valido
+        return wsMonitorId !== null && wsMonitorId === root.currentMonitorId
+      })
     }
-
+    return sorted
+  }
+    
     delegate: Rectangle {
       id: wsButton
       required property var modelData
-
       readonly property bool isFocused: Hyprland.focusedWorkspace ? (Hyprland.focusedWorkspace.id === modelData.id) : false
-
       readonly property bool isUrgent: {
         if (!Hyprland.toplevels) return false;
         return Hyprland.toplevels.values.some(client => 
@@ -32,18 +43,14 @@ RowLayout {
           (client.urgent === true || client.demandsAttention === true)
         );
       }
-
       readonly property bool isHovered: wsMouse.containsMouse
-
       Layout.fillHeight: true
       Layout.preferredWidth: height
       radius: 6
-
       color: {
         if (isHovered) return Theme.barWorkspaceHover
         return "transparent"
       }
-
       Behavior on color {
         ColorAnimation { duration: 150; easing.type: Easing.InOutQuad }
       }
@@ -76,13 +83,11 @@ RowLayout {
         font.pixelSize: root.fontSize
         font.family: Theme.fontFamily
         font.bold: true
-
         color: {
           if (wsButton.isUrgent || wsButton.isFocused) return Theme.barColor
           if (wsButton.isHovered) return Theme.barDarkColor
           return Theme.barMutedColor
         }
-
         Behavior on color {
           ColorAnimation { duration: 150; easing.type: Easing.InOutQuad }
         }
@@ -93,7 +98,6 @@ RowLayout {
         anchors.fill: parent
         hoverEnabled: true
         cursorShape: Qt.PointingHandCursor
-
         onClicked: {
           Hyprland.dispatch("hl.dsp.focus({ workspace = " + modelData.id + " })")
         }
