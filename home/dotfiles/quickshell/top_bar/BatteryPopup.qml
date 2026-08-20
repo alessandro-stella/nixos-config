@@ -11,6 +11,7 @@ Scope {
 
   required property Item targetItem
   required property PanelWindow parentWindow
+  required property bool sysfsBatteryExists
   
   property bool isOpen: false
   property bool _isLoaded: false
@@ -25,7 +26,7 @@ Scope {
   }
 
   Loader {
-    active: popupScope._isLoaded
+    active: popupScope._isLoaded && popupScope.sysfsBatteryExists
     sourceComponent: popupContentComponent
   }
 

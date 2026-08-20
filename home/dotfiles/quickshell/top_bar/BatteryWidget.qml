@@ -30,10 +30,12 @@ Rectangle {
     }
   }
 
-  readonly property var dev: UPower.displayDevice
+  // Only use UPower if sysfs found a battery
+  readonly property var dev: sysfsBatteryExists ? UPower.displayDevice : null
   readonly property bool hasUPower: dev && dev.ready
   
-  readonly property bool isBatteryPresent: hasUPower || sysfsBatteryExists
+  // Se sysfs non ha batteria, niente UPower
+  readonly property bool isBatteryPresent: sysfsBatteryExists
 
   readonly property int percent: hasUPower ? Math.round(dev.percentage * 100) : 0
   readonly property bool isCharging: hasUPower && dev.state === UPowerDeviceState.Charging
@@ -102,6 +104,7 @@ Rectangle {
     id: batteryPopup
     parentWindow: root.parentWindow
     targetItem: root
+    sysfsBatteryExists: root.sysfsBatteryExists
   }
 
   MouseArea {

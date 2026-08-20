@@ -17,19 +17,18 @@ RowLayout {
 
   Repeater {
     model: {
-    const list = [...Hyprland.workspaces.values]
-    console.log("currentMonitorId:", root.currentMonitorId)
-    const sorted = list.sort((a, b) => a.id - b.id)
-    
-    if (root.showOnlyCurrentMonitor && root.currentMonitorId !== null) {
-      return sorted.filter(ws => {
-        const wsMonitorId = ws.monitorId ?? ws.monitor?.id ?? ws.monitor
-        // Filtra solo i workspace che hanno un monitorId valido
-        return wsMonitorId !== null && wsMonitorId === root.currentMonitorId
-      })
+      const list = [...Hyprland.workspaces.values]
+      const sorted = list.sort((a, b) => a.id - b.id)
+
+      if (root.showOnlyCurrentMonitor && root.currentMonitorId !== null) {
+        return sorted.filter(ws => {
+          const wsMonitorId = ws.monitorId ?? ws.monitor?.id ?? ws.monitor
+          return wsMonitorId !== null && wsMonitorId === root.currentMonitorId
+        })
+      }
+      
+      return sorted
     }
-    return sorted
-  }
     
     delegate: Rectangle {
       id: wsButton
