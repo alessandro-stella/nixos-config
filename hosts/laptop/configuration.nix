@@ -44,6 +44,14 @@
     };
   };
 
+  security.wrappers.tlp = {
+    source = "${pkgs.tlp}/bin/tlp";
+    setuid = true;
+    owner = "root";
+    group = "root";
+    permissions = "u+s,g+x,o+x";
+  }; 
+
   # Bluetooth
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;

@@ -18,7 +18,6 @@ Scope {
   property alias boxWidth: launcherBox.width
   property alias boxHeight: launcherBox.height
 
-  // Tutto ciò che metti dentro <GenericModal> ... </GenericModal> finisce qui dentro
   default property alias content: innerContainer.data
 
   signal opened()
@@ -32,7 +31,6 @@ Scope {
 
   function close(): void {
     contentWrapper.opacity = 0.0
-    // Nasconde dopo l'animazione
     closeTimer.start()
     root.closed()
   }

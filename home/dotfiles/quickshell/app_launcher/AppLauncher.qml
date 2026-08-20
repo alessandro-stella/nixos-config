@@ -151,7 +151,7 @@ GenericModal {
       Text {
         text: resultsList.count + " application" + (resultsList.count !== 1 ? "s" : "")
         color: Theme.colMuted
-        font.pixelSize: 11
+        font.pixelSize: Theme.fontSizeSmall
         font.family: Theme.fontFamily
       }
 
