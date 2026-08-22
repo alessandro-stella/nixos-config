@@ -73,6 +73,10 @@ PanelWindow {
           anchors.right: parent.right
 
           // Right widgets
+          NotificationWidget {
+            parentWindow: root
+          }
+
           BatteryWidget {
             parentWindow: root
           }
