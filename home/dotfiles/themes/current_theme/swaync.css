@@ -1,6 +1,7 @@
 /* --- Variables & Core Reset --- */
 :root {
-  --background: rgba(18, 17, 20, 0.85);
+  /* --background: rgba(18, 17, 20, 0.85); */
+  --background: #1a1b26;
   --text-color: #eeeeee;
   --border-radius: 5px;
   --accent-color: #E7E7EF;
