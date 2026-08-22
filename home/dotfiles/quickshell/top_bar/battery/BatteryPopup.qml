@@ -15,6 +15,7 @@ Scope {
   
   property bool isOpen: false
   property bool _isLoaded: false
+  property string tlpMode: "auto"
 
   function toggle() {
     if (!isOpen) {
@@ -25,9 +26,9 @@ Scope {
     }
   }
 
-  // Dati della batteria via sysfs
+  // Battery data container
   QtObject {
-    id: sysfsBattery
+    id: sysfsBatteryData
     property real percentage: 0.0
     property string rawStatus: "Unknown"
     property real timeRemaining: 0
@@ -37,7 +38,7 @@ Scope {
     property real health: 1.0
   }
 
-  // Timer per polling sysfs
+  // Timer for sysfs polling
   Timer {
     id: batteryPoller
     interval: 4000
@@ -46,7 +47,7 @@ Scope {
     onTriggered: readSysfs.running = true
   }
 
-  // Leggi sysfs battery
+  // Read sysfs battery
   Process {
     id: readSysfs
     command: ["sh", "-c", "
@@ -93,13 +94,32 @@ Scope {
   }
 
   // UPower device
-  readonly property var dev: sysfsBatteryExists ? UPower.displayDevice : null
+  readonly property var dev: sysfsBatteryExists && UPower.displayDevice ? UPower.displayDevice : null
   readonly property bool useNative: dev && dev.ready
 
-  // GenericPopup con contenuto batteria
+  // Dynamically load GenericPopup
   Loader {
+    id: popupLoader
     active: popupScope._isLoaded && popupScope.sysfsBatteryExists
     sourceComponent: popupContentComponent
+
+    onLoaded: {
+      if (item) {
+        item.isOpen = popupScope.isOpen
+      }
+    }
+  }
+
+  Connections {
+    target: popupScope
+    function onIsOpenChanged() {
+      if (popupLoader.item && popupLoader.item.isOpen !== popupScope.isOpen) {
+        popupLoader.item.isOpen = popupScope.isOpen
+        if (popupScope.isOpen) {
+          getTlpMode.running = true
+        }
+      }
+    }
   }
 
   Component {
@@ -112,35 +132,25 @@ Scope {
       targetItem: popupScope.targetItem
       popupWidth: 300
       
-      contentComponent: Component {
-        BatteryPopupContent {
-          useNative: popupScope.useNative
-          sysfsBattery: popupScope.sysfsBattery
-          dev: popupScope.dev
-          activeMode: popupScope.tlpMode
-        }
+      contentComponent: BatteryPopupContent {
+        useNative: popupScope.useNative
+        sysfsBattery: sysfsBatteryData
+        dev: popupScope.dev
+        activeMode: popupScope.tlpMode
       }
 
-      Connections {
-        target: genericPopup
-        function onIsOpenChanged() {
-          popupScope.isOpen = genericPopup.isOpen
-          if (genericPopup.isOpen) {
-            getTlpMode.running = true
-          }
+      onIsOpenChanged: {
+        if (popupScope.isOpen !== isOpen) {
+          popupScope.isOpen = isOpen
         }
-      }
-
-      Component.onCompleted: {
-        genericPopup.isOpen = popupScope.isOpen
       }
     }
-  }
+  } 
 
-  // Lettura TLP Mode
+  // Read TLP mode
   Process {
     id: getTlpMode
-    command: ["sh", "-c", "tlp-stat -s 2>/dev/null | awk '/Mode/ {print tolower($3)}'"]
+    command: ["sh", "-c", "tlp-stat -s 2>/dev/null | awk '/Power profile/ {print $4}' || echo 'auto'"]
     running: false 
     stdout: SplitParser {
       onRead: data => {
@@ -150,6 +160,4 @@ Scope {
       }
     }
   }
-
-  property string tlpMode: "auto"
 }

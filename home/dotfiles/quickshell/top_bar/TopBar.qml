@@ -23,7 +23,7 @@ PanelWindow {
   color: "transparent"
 
   readonly property color background: Theme.barBackground
-  //
+  
   // Main bar container
   Rectangle {
     anchors.fill: parent
@@ -64,10 +64,12 @@ PanelWindow {
         Layout.fillHeight: true
 
         RowLayout {
+          anchors.top: parent.top
+          anchors.bottom: parent.bottom
           anchors.right: parent.right
-          anchors.verticalCenter: parent.verticalCenter
           anchors.rightMargin: 10
-          spacing: 8
+          spacing: 10
+
 
           // Right widgets
           BatteryWidget {

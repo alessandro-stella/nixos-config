@@ -2,6 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.UPower
+import "../../" // Import Theme
 
 ColumnLayout {
   id: contentRoot
@@ -14,7 +15,7 @@ ColumnLayout {
 
   readonly property real batteryPct: useNative && dev ? dev.percentage : sysfsBattery.percentage
   readonly property real batteryWatts: useNative && dev ? dev.changeRate : sysfsBattery.powerRateW
-  readonly property real batteryHealth: useNative && dev && dev.healthSupported ? dev.healthPercentage : sysfsBattery.health
+  readonly property real batteryHealth: useNative && dev && dev.healthSupported ? dev.healthPercentage : (sysfsBattery ? sysfsBattery.health : 0)
   readonly property real batteryEnergy: useNative && dev ? dev.energy : sysfsBattery.energyWh
   readonly property real batteryCapacity: useNative && dev ? dev.energyCapacity : sysfsBattery.energyCapacityWh
 
@@ -39,10 +40,10 @@ ColumnLayout {
   }
 
   readonly property color statusColor: {
-    if (statusText === "Charging" || statusText === "Fully Charged") return "#a6e3a1";
-    if (statusText.indexOf("Threshold Hold") !== -1) return "#89b4fa";
-    if (batteryPct <= 0.15) return "#f38ba8";
-    return Theme.colSubtext ?? "#a6adc8";
+    if (statusText === "Charging" || statusText === "Fully Charged") return Theme.colGreen;
+    if (statusText.indexOf("Threshold Hold") !== -1) return Theme.colBlue;
+    if (batteryPct <= 0.15) return Theme.colRed;
+    return Theme.barColor
   }
 
   readonly property string timeRemainingText: {
@@ -68,7 +69,7 @@ ColumnLayout {
       text: "Battery"
       font.bold: true
       font.pixelSize: Theme.fontSize
-      color: Theme.colFg ?? "#cdd6f4"
+      color: Theme.barColor
       Layout.fillWidth: true
     }
 
@@ -88,7 +89,7 @@ ColumnLayout {
       text: Math.round(contentRoot.batteryPct * 100) + "%"
       font.bold: true
       font.pixelSize: 24
-      color: Theme.colFg ?? "#cdd6f4"
+      color: Theme.barColor
     }
 
     Item { Layout.fillWidth: true }
@@ -97,7 +98,7 @@ ColumnLayout {
       text: Math.abs(contentRoot.batteryWatts).toFixed(1) + " W"
       font.pixelSize: Theme.fontSizeSmall
       font.bold: true
-      color: contentRoot.batteryWatts > 0 ? "#a6e3a1" : (contentRoot.batteryWatts < 0 ? "#fab387" : (Theme.colSubtext ?? "#a6adc8"))
+      color: contentRoot.batteryWatts > 0 ? Theme.colGreen : (contentRoot.batteryWatts < 0 ? Theme.colYellow : (Theme.barDarkColor))
       visible: Math.abs(contentRoot.batteryWatts) > 0
     }
   }
@@ -115,7 +116,7 @@ ColumnLayout {
       anchors.bottom: parent.bottom
       width: parent.width * Math.max(0, Math.min(1, contentRoot.batteryPct))
       radius: 3
-      color: contentRoot.statusText.indexOf("Threshold Hold") !== -1 ? "#89b4fa" : (contentRoot.batteryPct <= 0.15 ? "#f38ba8" : (contentRoot.batteryPct <= 0.30 ? "#fab387" : "#a6e3a1"))
+      color: contentRoot.statusText.indexOf("Threshold Hold") !== -1 ? Theme.colBlue : (contentRoot.batteryPct <= 0.15 ? Theme.colGreen : (contentRoot.batteryPct <= 0.30 ? Theme.colYellow : Theme.colGreen))
 
       Behavior on width {
         NumberAnimation { duration: 300; easing.type: Easing.OutCubic }
@@ -129,13 +130,13 @@ ColumnLayout {
     Text {
       text: (contentRoot.statusText === "Charging") ? "Time to full" : "Remaining time"
       font.pixelSize: Theme.fontSizeSmall
-      color: Theme.colSubtext ?? "#a6adc8"
+      color: Theme.barDarkColor
     }
     Item { Layout.fillWidth: true }
     Text {
       text: contentRoot.timeRemainingText
       font.pixelSize: Theme.fontSizeSmall
-      color: Theme.colFg ?? "#cdd6f4"
+      color: Theme.barColor
     }
   }
 
@@ -146,13 +147,13 @@ ColumnLayout {
     Text {
       text: "Energy"
       font.pixelSize: Theme.fontSizeSmall
-      color: Theme.colSubtext ?? "#a6adc8"
+      color: Theme.barDarkColor
     }
     Item { Layout.fillWidth: true }
     Text {
       text: contentRoot.batteryEnergy.toFixed(1) + " / " + contentRoot.batteryCapacity.toFixed(1) + " Wh"
       font.pixelSize: Theme.fontSizeSmall
-      color: Theme.colFg ?? "#cdd6f4"
+      color: Theme.barColor
     }
   }
 
@@ -163,13 +164,13 @@ ColumnLayout {
     Text {
       text: "Battery Health"
       font.pixelSize: Theme.fontSizeSmall
-      color: Theme.colSubtext ?? "#a6adc8"
+      color: Theme.barDarkColor
     }
     Item { Layout.fillWidth: true }
     Text {
       text: Math.round(contentRoot.batteryHealth * 100) + "%"
       font.pixelSize: Theme.fontSizeSmall
-      color: contentRoot.batteryHealth >= 0.80 ? (Theme.colFg ?? "#cdd6f4") : "#fab387"
+      color: contentRoot.batteryHealth >= 0.80 ? (Theme.barColor) : Theme.colYellow 
     }
   }
 
@@ -180,22 +181,28 @@ ColumnLayout {
     Text {
       text: "Power profile"
       font.pixelSize: Theme.fontSizeSmall
-      color: Theme.colSubtext ?? "#a6adc8"
+      color: Theme.barDarkColor
     }
     Item { Layout.fillWidth: true }
     Text {
       text: {
         switch(contentRoot.activeMode) {
-          case "battery": return "Battery (powersave)"
-          case "auto":
-          case "none": return "Balanced"
-          case "ac": return "AC (performance)"
-          default: return contentRoot.activeMode
+          case "powersave/BAT": 
+            return "Battery (powersave)"
+          case "balanced/BAT": 
+          case "balanced/AC": 
+          case "auto": 
+          case "none": 
+            return "Balanced"
+          case "performance/AC": 
+            return "AC (performance)"
+          default: 
+            return contentRoot.activeMode
         }
       }
       font.pixelSize: Theme.fontSizeSmall
       font.bold: true
-      color: Theme.accent1 ?? "#cdd6f4"
+      color: Theme.accent1
     }
   }
 }
