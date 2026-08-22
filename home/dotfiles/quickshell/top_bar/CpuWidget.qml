@@ -9,7 +9,6 @@ Item {
 
   // Proprietà obbligatorie passate dalla barra
   required property var parentWindow
-  required property int usage
 
   // Proprietà opzionali per lo stile
   property int fontSize: 12
@@ -20,7 +19,7 @@ Item {
 
   Text {
     id: cpuText
-    text: "CPU: " + root.usage + "%"
+    text: "CPU: 157%"
     color: Theme.colYellow
     font.pixelSize: root.fontSize
     font.family: root.fontFamily
@@ -74,7 +73,7 @@ Item {
         }
 
         Text {
-          text: "Carico: " + root.usage + "%"
+          text: "Carico: 500%"
           color: "#cdd6f4"
           font.pixelSize: 10
           font.family: root.fontFamily
