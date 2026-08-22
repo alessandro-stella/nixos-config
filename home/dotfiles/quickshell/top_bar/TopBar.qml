@@ -3,8 +3,11 @@ import Quickshell.Wayland
 import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
-import "../"
+import "../" // Import Theme
+
+// Widgets
 import "./battery"
+import "./cpu"
 
 PanelWindow {
   id: root
@@ -31,7 +34,6 @@ PanelWindow {
 
     RowLayout {
       anchors.fill: parent
-      spacing: 0
 
       // Left
       Item { 
@@ -42,11 +44,13 @@ PanelWindow {
           anchors.top: parent.top
           anchors.bottom: parent.bottom
           anchors.left: parent.left
-          anchors.leftMargin: 10
-          spacing: 10
+          spacing: 0
 
           // Left widgets
-          LogoWidget {}
+          LogoWidget {
+            Layout.fillHeight: true
+            Layout.preferredWidth: Theme.barHeight 
+          }
 
           WorkspacesWidget {
             currentMonitorId: root.monitorId
@@ -67,9 +71,6 @@ PanelWindow {
           anchors.top: parent.top
           anchors.bottom: parent.bottom
           anchors.right: parent.right
-          anchors.rightMargin: 10
-          spacing: 10
-
 
           // Right widgets
           BatteryWidget {
