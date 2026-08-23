@@ -16,14 +16,7 @@ hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("hyprshot -m window -o ~/Pictures
 hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots"))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
--- hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("rofi -theme ~/.config/rofi/app_launcher.rasi -show drun"))
 hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("bash -c ~/.config/scripts/theme_changer/theme_chooser.sh"))
--- hl.bind(
--- 	mainMod .. " + V",
--- 	hl.dsp.exec_cmd(
--- 		"cliphist list | rofi -dmenu -theme ~/.config/rofi/clipboard.rasi | cliphist decode | wl-copy && wtype -M ctrl v -m ctrl"
--- 	)
--- )
 
 -- Move focus with mainMod + vim keys
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "l" }))
