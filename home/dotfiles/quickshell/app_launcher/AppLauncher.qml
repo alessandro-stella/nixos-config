@@ -203,23 +203,33 @@ GenericModal {
               Image {
                 id: appIcon
                 anchors.fill: parent
-                source: (delegateRoot.modelData.icon && delegateRoot.modelData.icon !== "") ? "image://icon/" + delegateRoot.modelData.icon : ""
+                source: delegateRoot.modelData.icon ? Quickshell.iconPath(delegateRoot.modelData.icon, true) : ""
                 smooth: true
                 mipmap: true
                 visible: status === Image.Ready
               }
 
               // Icon/text fallback
-              Text {
-                anchors.centerIn: parent
+              Rectangle {
+                anchors.fill: parent
                 visible: appIcon.status !== Image.Ready
-                text: delegateRoot.modelData.name ? delegateRoot.modelData.name.charAt(0).toUpperCase() : ""
-                color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
-                font.pixelSize: Theme.fontSize
-                font.family: Theme.fontFamily
-                font.bold: true
+                
+                color: "transparent" 
+                
+                border.color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
+                border.width: 1
+                radius: 4
+
+                Text {
+                  anchors.centerIn: parent
+                  text: delegateRoot.modelData.name ? delegateRoot.modelData.name.charAt(0).toUpperCase() : ""
+                  color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
+                  font.pixelSize: Theme.fontSize
+                  font.family: Theme.fontFamily
+                  font.bold: true
+                }
               }
-            }
+            } 
 
             // Name
             Text {
