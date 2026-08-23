@@ -12,6 +12,7 @@ Rectangle {
   color: "transparent"
 
   property real generalTemp: 0.0
+  property string tempLabel: "Hotspot" 
   readonly property real criticalTemperature: 70
 
   Timer {
@@ -31,8 +32,11 @@ Rectangle {
         try {
           let sensorsData = JSON.parse(data);
           let tempFound = 0.0;
+          let labelFound = "Hotspot";
           
           for (let adapter in sensorsData) {
+            if (adapter.match(/k10temp/i)) labelFound = "Control (Fans)";
+
             for (let sensorName in sensorsData[adapter]) {
               let sensor = sensorsData[adapter][sensorName];
               for (let key in sensor) {
@@ -47,7 +51,11 @@ Rectangle {
               }
             }
           }
-          if (tempFound > 0) root.generalTemp = tempFound;
+
+          if (tempFound > 0) {
+            root.generalTemp = tempFound;
+            root.tempLabel = labelFound;
+          }
         } catch(e) {
           console.log("Errore parsing JSON: " + e)
         }
@@ -64,6 +72,7 @@ Rectangle {
       if (root.generalTemp < 40) return "󱃃";
       return "󰔏";
     }
+
     font.pixelSize: Theme.fontSize
     font.family: Theme.fontFamily
     color: root.generalTemp >= root.criticalTemperature ? Theme.colRed : Theme.barColor
@@ -98,7 +107,7 @@ Rectangle {
       Text {
         id: temperatureTooltip
         anchors.centerIn: parent
-        text: "General temperature: " + Math.round(root.generalTemp) + "°C"
+        text: root.tempLabel + ": " + Math.round(root.generalTemp) + "°C"
         font.pixelSize: Theme.fontSizeSmall
         color: Theme.barColor
       }
