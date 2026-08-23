@@ -39,5 +39,6 @@
 
     # TESTING
     quickshell
+    lm_sensors
   ];
 }

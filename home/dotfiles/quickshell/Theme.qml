@@ -11,6 +11,8 @@ QtObject {
   readonly property color colYellow: "#e0af68"
   readonly property color colBlue: "#7aa2f7"
   readonly property color colGreen: "#a6e3a1"
+  readonly property color widgetDarkBackground: "#1a1b26"
+  readonly property color widgetLightBackground: "#313244"
 
   readonly property string fontFamily: "JetBrainsMono Nerd Font Propo"
   readonly property int fontSize: 16
@@ -20,6 +22,7 @@ QtObject {
   readonly property int slowAnimation: 250
   readonly property int fastAnimation: 150
 
+  readonly property int outerSpacing: 10
   readonly property int borderWidth: 2
   readonly property int radiusInner: 5
   readonly property int radiusOuter: radiusInner + borderWidth
@@ -29,6 +32,7 @@ QtObject {
 
   // Top bar properties
   readonly property color barBackground: Qt.rgba(32/255, 28/255, 39/255, 0.6) 
+  readonly property color barLightBackground: "#a6adc8"
   readonly property color barColor: "#cdd6f4"
   readonly property color barDarkColor: "#a6adc8"
   readonly property color barMutedColor: "#6c7086"

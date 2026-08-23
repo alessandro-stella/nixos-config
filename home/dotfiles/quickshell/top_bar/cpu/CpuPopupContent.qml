@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import "../../" // Import Theme
+import "../../"
 
 Item {
   id: contentRoot
@@ -34,15 +34,35 @@ Item {
     id: coresModel
   }
 
+  // Read data at first load to compare in percentage
+  function refresh(): void {
+    readCores.running = true
+    readRam.running = true
+  }
+
+  Component.onCompleted: {
+    refresh()
+    initialReadTimer.start()
+  }
+
+  Timer {
+    id: initialReadTimer
+
+    interval: 100
+    repeat: false
+
+    onTriggered: {
+      readCores.running = true
+    }
+  }
+
   Timer {
     interval: 2000
     running: true
     repeat: true
-    triggeredOnStart: true
 
     onTriggered: {
-      readCores.running = true
-      readRam.running = true
+      refresh()
     }
   }
 
@@ -177,7 +197,7 @@ Item {
             Layout.preferredHeight: 6
 
             radius: 3
-            color: "#313244"
+            color: Theme.widgetLightBackground
 
             Rectangle {
               height: parent.height
@@ -288,7 +308,7 @@ Item {
       width: 36
 
       radius: 8
-      color: "#313244"
+      color: Theme.widgetLightBackground
 
       clip: true
 

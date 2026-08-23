@@ -2,7 +2,7 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Services.UPower
-import "../../" // Import Theme
+import "../../"
 
 ColumnLayout {
   id: contentRoot
@@ -108,7 +108,7 @@ ColumnLayout {
     Layout.fillWidth: true
     implicitHeight: 6
     radius: 3
-    color: "#313244"
+    color: Theme.widgetLightBackground
 
     Rectangle {
       anchors.left: parent.left

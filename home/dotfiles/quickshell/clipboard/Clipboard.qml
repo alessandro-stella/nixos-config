@@ -5,18 +5,20 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "../"
-import "../generic_modal/"
 
 GenericModal {
   id: root
 
-  ipcTarget: "clipboard"
+required property int monitorId
+  required property var modelData
+
+  screen: modelData
   shortcutName: "toggleClipboard"
 
   property int selectedIndex: 0
   property var historyItems: []
 
-  // Carica gli elementi da cliphist all'apertura
+  // Load cliphist data
   onOpened: {
     searchInput.text = ""
     root.selectedIndex = 0
@@ -24,7 +26,7 @@ GenericModal {
     searchInput.forceActiveFocus()
   }
 
-  // Processo per recuperare la cronologia
+  // Get history
   Process {
     id: cliphistListProcess
     command: ["cliphist", "list"]
@@ -48,7 +50,7 @@ GenericModal {
     cliphistListProcess.running = true
   }
 
-  // Processo per decodificare, copiare e incollare
+  // Handle decode, copy and paste
   Process {
     id: pasteProcess
   }
@@ -56,14 +58,14 @@ GenericModal {
   function pasteEntry(rawEntry) {
     if (!rawEntry) return
 
-    // 1. Estraiamo solo l'ID numerico di cliphist (es. "5830")
+    // Get cliphist numeric id
     const match = rawEntry.match(/^(\d+)/)
     if (!match) return
     const id = match[1]
 
-    root.close()
+    StateManager.closeAllWidgets()
 
-    // 2. Passiamo l'ID pulito a cliphist decode
+    // Pass id to cliphist decode
     pasteProcess.command = [
       "sh",
       "-c",
@@ -72,7 +74,7 @@ GenericModal {
     pasteProcess.running = true
   }
 
-  // Modello per filtrare la cronologia
+  // Filter history
   ScriptModel {
     id: filteredHistory
     values: {
@@ -82,13 +84,13 @@ GenericModal {
       if (q === "") return all
 
       return all.filter(item => {
-        // Rimuove l'ID numerico iniziale di cliphist prima di filtrare
         const content = item.replace(/^\d+\s+/, "")
         return content.toLowerCase().includes(q)
       })
     }
   }
 
+  // GenericModal content
   FocusScope {
     anchors.fill: parent
     focus: true
@@ -98,27 +100,15 @@ GenericModal {
       spacing: 12
 
       // Header
-      RowLayout {
-        Layout.fillWidth: true
-        spacing: 8
-
-        Text {
-          text: ""
-          color: Theme.accent2
-          font.pixelSize: Theme.fontSize
-          font.family: Theme.fontFamily
-        }
-
-        Text {
-          text: "Clipboard History"
-          color: Theme.accent2
-          font.pixelSize: Theme.fontSize
-          font.family: Theme.fontFamily
-          font.bold: true
-        }
+      Text {
+        text: "Clipboard History"
+        color: Theme.accent2
+        font.pixelSize: Theme.fontSize
+        font.family: Theme.fontFamily
+        font.bold: true
       }
 
-      // Barra di ricerca
+      // Search bar
       Rectangle {
         Layout.fillWidth: true
         height: 42
@@ -164,7 +154,7 @@ GenericModal {
 
             onTextChanged: root.selectedIndex = 0
 
-            Keys.onEscapePressed: root.close()
+            Keys.onEscapePressed: StateManager.closeAllWidgets()
 
             Keys.onPressed: event => {
               if (event.key === Qt.Key_Down || event.key === Qt.Key_Tab) {
@@ -187,15 +177,16 @@ GenericModal {
         }
       }
 
-      // Conteggio risultati
+      // Count results
       Text {
-        text: resultsList.count + " item" + (resultsList.count !== 1 ? "s" : "")
+        text: resultsList.count + " match" + (resultsList.count !== 1 ? "es" : "") + " found"
         color: Theme.colMuted
-        font.pixelSize: 11
+        font.pixelSize: Theme.fontSizeSmall
         font.family: Theme.fontFamily
+        visible: resultsList.count > 0
       }
 
-      // Lista degli elementi copiati
+      // Show clipboard history
       ListView {
         id: resultsList
         Layout.fillWidth: true
@@ -246,7 +237,7 @@ GenericModal {
             anchors.rightMargin: 12
             spacing: 12
 
-            // Icona indicatrice
+            // Icon
             Text {
               text: ""
               color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
@@ -255,7 +246,7 @@ GenericModal {
               Layout.alignment: Qt.AlignVCenter
             }
 
-            // Testo della voce copiata
+            // Copied text
             Text {
               text: delegateRoot.displayText
               color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colFg
@@ -277,7 +268,7 @@ GenericModal {
           }
         }
 
-        // Messaggio vuoto
+        // Empty or no match
         Text {
           anchors.centerIn: parent
           text: root.historyItems.length === 0 ? "Clipboard is empty" : "No matches found"

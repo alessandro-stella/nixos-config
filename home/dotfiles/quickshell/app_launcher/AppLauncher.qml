@@ -4,12 +4,14 @@ import QtQuick
 import QtQuick.Controls
 import QtQuick.Layouts
 import "../"
-import "../generic_modal/"
 
 GenericModal {
   id: root
 
-  ipcTarget: "launcher"
+  required property int monitorId
+  required property var modelData
+
+  screen: modelData 
   shortcutName: "toggleLauncher"
 
   property int selectedIndex: 0
@@ -23,7 +25,7 @@ GenericModal {
   function launchApp(entry) {
     if (!entry) return
     entry.execute()
-    root.close()
+    StateManager.closeAllWidgets()
   }
 
   ScriptModel {
@@ -48,7 +50,7 @@ GenericModal {
     }
   }
 
-  // Contenuto effettivo iniettato nel GenericModal
+  // GenericModal content
   FocusScope {
     anchors.fill: parent
     focus: true
@@ -58,27 +60,17 @@ GenericModal {
       spacing: 12
 
       // Header
-      RowLayout {
-        Layout.fillWidth: true
-        spacing: 8
+      
 
         Text {
-          text: ""
-          color: Theme.accent2
-          font.pixelSize: Theme.fontSize
-          font.family: Theme.fontFamily
-        }
-
-        Text {
-          text: "Applications"
+          text: "Launch Application"
           color: Theme.accent2
           font.pixelSize: Theme.fontSize
           font.family: Theme.fontFamily
           font.bold: true
         }
-      }
 
-      // Barra di ricerca
+      // Search bar
       Rectangle {
         Layout.fillWidth: true
         height: 42
@@ -124,7 +116,7 @@ GenericModal {
 
             onTextChanged: root.selectedIndex = 0
 
-            Keys.onEscapePressed: root.close()
+            Keys.onEscapePressed: StateManager.closeAllWidgets()
 
             Keys.onPressed: event => {
               if (event.key === Qt.Key_Down || event.key === Qt.Key_Tab) {
@@ -147,15 +139,16 @@ GenericModal {
         }
       }
 
-      // Conteggio risultati
+      // Count results
       Text {
-        text: resultsList.count + " application" + (resultsList.count !== 1 ? "s" : "")
+        text: resultsList.count + " application" + (resultsList.count !== 1 ? "s" : "") + " found"
         color: Theme.colMuted
         font.pixelSize: Theme.fontSizeSmall
         font.family: Theme.fontFamily
+        visible: resultsList.count > 0
       }
 
-      // Lista delle applicazioni
+      // Application list
       ListView {
         id: resultsList
         Layout.fillWidth: true
@@ -201,7 +194,7 @@ GenericModal {
             anchors.rightMargin: 12
             spacing: 12
 
-            // Icona
+            // Icon
             Item {
               width: 24
               height: 24
@@ -216,7 +209,7 @@ GenericModal {
                 visible: status === Image.Ready
               }
 
-              // Fallback testuale/icona
+              // Icon/text fallback
               Text {
                 anchors.centerIn: parent
                 visible: appIcon.status !== Image.Ready
@@ -228,32 +221,16 @@ GenericModal {
               }
             }
 
-            // Nome + Descrizione
-            ColumnLayout {
+            // Name
+            Text {
+              text: delegateRoot.modelData.name ?? ""
+              color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colFg
+              font.pixelSize: Theme.fontSizeSmall
+              font.family: Theme.fontFamily
+              font.bold: root.selectedIndex === delegateRoot.index
+              elide: Text.ElideRight
               Layout.fillWidth: true
-              Layout.alignment: Qt.AlignVCenter
-              spacing: 1
-
-              Text {
-                text: delegateRoot.modelData.name ?? ""
-                color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colFg
-                font.pixelSize: Theme.fontSizeSmall
-                font.family: Theme.fontFamily
-                font.bold: root.selectedIndex === delegateRoot.index
-                elide: Text.ElideRight
-                Layout.fillWidth: true
-              }
-
-              Text {
-                text: delegateRoot.modelData.genericName ?? delegateRoot.modelData.comment ?? ""
-                color: Theme.colMuted
-                font.pixelSize: Theme.fontSizeSmall
-                font.family: Theme.fontFamily
-                elide: Text.ElideRight
-                Layout.fillWidth: true
-                visible: text !== ""
-              }
-            }
+            } 
           }
 
           MouseArea {
@@ -265,7 +242,7 @@ GenericModal {
           }
         }
 
-        // Messaggio lista vuota
+        // Empty or not found 
         Text {
           anchors.centerIn: parent
           text: "No applications found"

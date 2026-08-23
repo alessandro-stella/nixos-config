@@ -3,8 +3,7 @@ import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
 import Quickshell.Services.UPower
-import "../"
-import "../../generic_popup"
+import "../../"
 
 Scope {
   id: popupScope
@@ -20,9 +19,9 @@ Scope {
   function toggle() {
     if (!isOpen) {
       _isLoaded = true
-      isOpen = true
+      StateManager.requestOpen(popupScope)
     } else {
-      isOpen = false
+      StateManager.requestClose(popupScope)
     }
   }
 

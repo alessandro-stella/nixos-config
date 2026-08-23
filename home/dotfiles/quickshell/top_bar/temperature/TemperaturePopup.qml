@@ -48,12 +48,11 @@ Scope {
 
     GenericPopup {
       id: genericPopup
-      
       parentWindow: popupScope.parentWindow
       targetItem: popupScope.targetItem
-      popupWidth: 380
+      popupWidth: 500
       
-      contentComponent: CpuPopupContent {}
+      contentComponent: TemperaturePopupContent {}
 
       onIsOpenChanged: {
         if (popupScope.isOpen !== isOpen) {

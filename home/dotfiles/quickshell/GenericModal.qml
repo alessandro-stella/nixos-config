@@ -11,9 +11,10 @@ import "../"
 Scope {
   id: root
 
-  // Proprietà personalizzabili dall'esterno
-  property string ipcTarget: ""
+  required property var screen
+
   property string shortcutName: ""
+
   property alias panelVisible: launcherPanel.visible
   property alias boxWidth: launcherBox.width
   property alias boxHeight: launcherBox.height
@@ -35,6 +36,10 @@ Scope {
     root.closed()
   }
 
+  function closeAll(): void {
+    StateManager.closeAllWidgets()
+  }
+
   function toggle(): void {
     if (launcherPanel.visible) {
       close()
@@ -43,19 +48,26 @@ Scope {
     }
   }
 
-  // Gestione IPC
-  IpcHandler {
-    target: root.ipcTarget
-    function toggle(): void {
-      if (root.ipcTarget !== "") {
-        root.toggle()
-      }
-    }
+  function isFocusedMonitor(): bool {
+    const monitor = Hyprland.focusedMonitor
+
+    if (!monitor || !root.screen)
+        return false
+
+    return monitor.name === root.screen.name
   }
 
-  // Gestione Scorciatoia globale
+  Component.onCompleted: {
+    StateManager.registerWidget(root)
+  }
+
+  Component.onDestruction: {
+    StateManager.unregisterWidget(root)
+  }
+
   GlobalShortcut {
     name: root.shortcutName
+
     onPressed: {
       if (root.shortcutName !== "") {
         root.toggle()
@@ -63,21 +75,30 @@ Scope {
     }
   }
 
-  // Timer per il delay prima di nascondere
   Timer {
     id: closeTimer
+
     interval: Theme.fastAnimation + 50
-    onTriggered: launcherPanel.visible = false
+
+    onTriggered: {
+      launcherPanel.visible = false
+    }
   }
 
   PanelWindow {
     id: launcherPanel
-    screen: Quickshell.focusedScreen
+
+    screen: root.screen
     visible: false
     color: "transparent"
 
     WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: visible ? WlrKeyboardFocus.Exclusive : WlrKeyboardFocus.None
+
+    WlrLayershell.keyboardFocus:
+      visible && root.isFocusedMonitor()
+        ? WlrKeyboardFocus.Exclusive
+        : WlrKeyboardFocus.None
+
     WlrLayershell.namespace: "quickshell-modal"
 
     exclusionMode: ExclusionMode.Ignore
@@ -89,13 +110,12 @@ Scope {
       right: true
     }
 
-    // Wrapper per l'animazione di opacity
     Item {
       id: contentWrapper
+
       anchors.fill: parent
       opacity: 1.0
 
-      // Animazione smooth per l'opacità
       Behavior on opacity {
         NumberAnimation {
           duration: Theme.fastAnimation
@@ -103,38 +123,64 @@ Scope {
         }
       }
 
-      // Sfondo scuro che chiude al click
-      MouseArea {
-        anchors.fill: parent
-        onClicked: root.close()
+      // Backdrop
+      Rectangle {
+        id: backdrop
 
-        Rectangle {
+        anchors.fill: parent
+
+        color: Qt.rgba(0, 0, 0, 0.5)
+
+        MouseArea {
           anchors.fill: parent
-          color: Qt.rgba(0, 0, 0, 0.5)
+
+          onClicked: {
+            root.closeAll()
+          }
         }
       }
 
-      // Box centrale con bordi e stile comune
+      // Content
       Rectangle {
         id: launcherBox
+
         anchors.centerIn: parent
-        width: launcherPanel.screen 
-          ? Math.max(Theme.widgetMinWidth, Math.min(Math.round(launcherPanel.screen.width * Theme.widgetWidthRatio), Theme.widgetMaxWidth)) 
+
+        visible: root.isFocusedMonitor()
+
+        width: launcherPanel.screen
+          ? Math.max(
+              Theme.widgetMinWidth,
+              Math.min(
+                Math.round(
+                  launcherPanel.screen.width * Theme.widgetWidthRatio
+                ),
+                Theme.widgetMaxWidth
+              )
+            )
           : Theme.widgetMaxWidth
-        height: Math.min(Theme.widgetDefaultHeight, Theme.widgetMaxHeight)
+
+        height: Math.min(
+          Theme.widgetDefaultHeight,
+          Theme.widgetMaxHeight
+        )
+
         radius: Theme.radiusOuter
+
         color: Theme.colBg
+
         border.color: Theme.accent1
         border.width: Theme.borderWidth
 
-        // Blocca il click per evitare che il box chiuda se stesso
         MouseArea {
           anchors.fill: parent
+
           onClicked: {}
         }
 
         Item {
           id: innerContainer
+
           anchors.fill: parent
           anchors.margins: 16
         }

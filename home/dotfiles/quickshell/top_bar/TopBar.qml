@@ -3,14 +3,16 @@ import Quickshell.Wayland
 import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
-import "../" // Import Theme
+import "../"
 
 // Widgets
 import "./battery"
 import "./cpu"
+import "./temperature"
 
 PanelWindow {
   id: root
+
   required property int monitorId
   required property var modelData
 
@@ -44,7 +46,6 @@ PanelWindow {
           anchors.top: parent.top
           anchors.bottom: parent.bottom
           anchors.left: parent.left
-          spacing: 0
 
           // Left widgets
           LogoWidget {
@@ -71,9 +72,16 @@ PanelWindow {
           anchors.top: parent.top
           anchors.bottom: parent.bottom
           anchors.right: parent.right
+          anchors.rightMargin: 10
+
+          spacing: 16
 
           // Right widgets
           NotificationWidget {
+            parentWindow: root
+          }
+
+          TemperatureWidget {
             parentWindow: root
           }
 

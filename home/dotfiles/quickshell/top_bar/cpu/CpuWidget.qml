@@ -2,14 +2,14 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import "../../" // Import Theme
+import "../../"
 
 Rectangle {
   id: root
 
   required property PanelWindow parentWindow
 
-  implicitWidth: contentRow.implicitWidth + 16
+  implicitWidth: contentRow.implicitWidth
   implicitHeight: parent.height
   color: "transparent"
 

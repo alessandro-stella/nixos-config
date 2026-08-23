@@ -2,21 +2,39 @@ import QtQuick
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import "../" // Import Theme
+import "../"
 
-Rectangle {
+Item {
   id: root
 
   required property PanelWindow parentWindow
 
-  implicitWidth: parent.height 
-  implicitHeight: parent.height
-  color: "transparent"
+  readonly property string iconNormal: "󰂚"
+  readonly property string iconDnd: "󰂛"
 
-  property string notifIcon: "󰂚"
+  property string notifIcon: iconNormal
   property bool isDnd: false
 
-  // Listen to swaync status
+  TextMetrics {
+    id: iconDndMetrics
+    font.pixelSize: Theme.barFontSize
+    font.family: Theme.fontFamily
+    text: root.iconDnd 
+  }
+
+  TextMetrics {
+    id: iconNormalMetrics
+    font.pixelSize: Theme.barFontSize
+    font.family: Theme.fontFamily
+    text: root.iconNormal
+  }
+
+  readonly property real maxIconWidth: Math.max(iconDndMetrics.advanceWidth, iconNormalMetrics.advanceWidth)
+
+  implicitWidth: maxIconWidth 
+  implicitHeight: parent.height
+
+  // Listen swaync status
   Process {
     id: swayncWatcher
     command: ["swaync-client", "-swb"]
@@ -29,26 +47,26 @@ Rectangle {
           let altStatus = json.alt || "";
           
           if (altStatus.indexOf("dnd") !== -1) {
-            root.notifIcon = "󰂛";
+            root.notifIcon = root.iconDnd;
             root.isDnd = true;
           } else {
-            root.notifIcon = "󰂚";
+            root.notifIcon = root.iconNormal;
             root.isDnd = false;
           }
         } catch (e) {
-          // Ignore parsing error
+          // Ignore parsing errors
         }
       }
     }
   }
 
-  // Turn on/off do-not-disturb
+  // Toggle DND (left click)
   Process {
     id: toggleDnd
     command: ["swaync-client", "-d", "-sw"]
   }
 
-  // Open/close notification panel
+  // Open/close notification panel (right click)
   Process {
     id: togglePanel
     command: ["swaync-client", "-t", "-sw"]
@@ -57,13 +75,16 @@ Rectangle {
   RowLayout {
     id: contentRow
     anchors.centerIn: parent
-    spacing: 4
+    spacing: 2
 
     Text {
       text: root.notifIcon
       font.pixelSize: Theme.barFontSize
       font.family: Theme.fontFamily
       color: root.isDnd ? Theme.colRed : Theme.barColor
+      
+      horizontalAlignment: Text.AlignHCenter 
+      Layout.preferredWidth: root.maxIconWidth
     }
   }
 
