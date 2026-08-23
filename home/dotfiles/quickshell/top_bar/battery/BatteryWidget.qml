@@ -12,7 +12,7 @@ Rectangle {
 
   visible: isBatteryPresent
 
-  implicitWidth: contentRow.implicitWidth + 16
+  implicitWidth: contentRow.implicitWidth
   implicitHeight: parent.height
   color: "transparent"
 

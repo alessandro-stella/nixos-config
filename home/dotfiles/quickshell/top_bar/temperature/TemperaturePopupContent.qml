@@ -9,6 +9,10 @@ Item {
 
   implicitHeight: mainLayout.implicitHeight
   implicitWidth: 400
+  
+  // For Intel processors only
+  property bool hasHotspot: false
+  property real hotspotTemp: 0.0
 
   function tempColor(temp) {
     if (temp >= 85) return Theme.colRed;
@@ -35,10 +39,13 @@ Item {
         if (!data || data.trim() === "") return;
         try {
           let sensorsData = JSON.parse(data);
-          let cpuCount = 0;
-          let otherCount = 0;
+          
+          let cpuList = [];
+          let otherList = [];
           
           let nameTracker = {};
+          let localHasHotspot = false;
+          let localHotspotTemp = 0.0;
 
           for (let adapter in sensorsData) {
             let isCpuAdapter = adapter.match(/coretemp|k10temp/i);
@@ -48,7 +55,7 @@ Item {
               
               let sensor = sensorsData[adapter][sensorName];
               for (let key in sensor) {
-                if (key.endsWith("_input")) {
+                if (key.match(/^temp\d+_input$/)) {
                   let val = parseFloat(sensor[key]);
                   if (val <= 0) continue;
                   
@@ -59,19 +66,25 @@ Item {
                     if (adapter.match(/acpitz/i)) continue;
                   }
 
-                  let targetModel = isCpuSensor ? cpuTempsModel : otherTempsModel;
-                  let count = isCpuSensor ? cpuCount : otherCount;
-                  
                   let displayName = sensorName;
                   
                   if (isCpuSensor) {
                     if (sensorName.match(/Tctl/i)) displayName = "Control (Fans)";
                     else if (sensorName.match(/Tccd/i)) displayName = "Cores (Real)";
-                    else if (sensorName.match(/Package/i)) displayName = "Package";
+                    else if (sensorName.match(/Package/i)) {
+                      localHasHotspot = true;
+                      localHotspotTemp = val;
+                      continue;
+                    }
+                    else if (sensorName.match(/Core/i)) {
+                       displayName = sensorName.replace(/Core\s*/i, "Core ");
+                    }
                   } else {
                     let baseAdapter = adapter.split("-")[0];
                     baseAdapter = baseAdapter.replace(/_wmi|_[0-9]+/g, "");
-                    baseAdapter = baseAdapter.charAt(0).toUpperCase() + baseAdapter.slice(1);
+                    
+                    if (baseAdapter.match(/pch/i)) baseAdapter = "PCH";
+                    else baseAdapter = baseAdapter.charAt(0).toUpperCase() + baseAdapter.slice(1);
                     
                     let sName = sensorName;
                     if (sName === "Composite") sName = ""; 
@@ -96,29 +109,47 @@ Item {
                     displayName = displayName.substring(0, 14) + "…";
                   }
                   
-                  if (count < targetModel.count) {
-                    targetModel.setProperty(count, "name", displayName);
-                    targetModel.setProperty(count, "temp", val);
+                  if (isCpuSensor) {
+                    cpuList.push({name: displayName, temp: val});
                   } else {
-                    targetModel.append({"name": displayName, "temp": val});
+                    otherList.push({name: displayName, temp: val});
                   }
-                  
-                  if (isCpuSensor) cpuCount++;
-                  else otherCount++;
                 }
               }
             }
           }
-          
-          while (cpuTempsModel.count > cpuCount) cpuTempsModel.remove(cpuTempsModel.count - 1);
-          while (otherTempsModel.count > otherCount) otherTempsModel.remove(otherTempsModel.count - 1);
-          
+
+          contentRoot.hasHotspot = localHasHotspot;
+          contentRoot.hotspotTemp = localHotspotTemp;
+
+          cpuList.sort((a, b) => a.name.localeCompare(b.name, undefined, {numeric: true}));
+          otherList.sort((a, b) => a.name.localeCompare(b.name, undefined, {numeric: true}));
+
+          for (let i = 0; i < cpuList.length; i++) {
+              if (i < cpuTempsModel.count) {
+                  cpuTempsModel.setProperty(i, "name", cpuList[i].name);
+                  cpuTempsModel.setProperty(i, "temp", cpuList[i].temp);
+              } else {
+                  cpuTempsModel.append(cpuList[i]);
+              }
+          }
+          while (cpuTempsModel.count > cpuList.length) cpuTempsModel.remove(cpuTempsModel.count - 1);
+
+          for (let i = 0; i < otherList.length; i++) {
+              if (i < otherTempsModel.count) {
+                  otherTempsModel.setProperty(i, "name", otherList[i].name);
+                  otherTempsModel.setProperty(i, "temp", otherList[i].temp);
+              } else {
+                  otherTempsModel.append(otherList[i]);
+              }
+          }
+          while (otherTempsModel.count > otherList.length) otherTempsModel.remove(otherTempsModel.count - 1);
         } catch(e) {
           console.log("JSON parsing error: " + e)
         }
       }
     }
-  }
+  } 
 
   ColumnLayout {
     id: mainLayout
@@ -131,13 +162,31 @@ Item {
       Layout.fillWidth: true
       spacing: 12
 
-      Text {
-        text: "Processor"
-        font.bold: true
-        font.pixelSize: Theme.fontSize
-        color: Theme.barColor
+      // Title bar
+      RowLayout {
+        Layout.fillWidth: true
+        
+        Text {
+          text: "Processor"
+          font.bold: true
+          font.pixelSize: Theme.fontSize
+          color: Theme.barColor
+        }
+        
+        Item {
+          Layout.fillWidth: true
+        }
+        
+        Text {
+          visible: contentRoot.hasHotspot
+          text: "Hotspot: " + Math.round(contentRoot.hotspotTemp) + "°C"
+          font.bold: true
+          font.pixelSize: Theme.fontSizeSmall
+          color: contentRoot.tempColor(contentRoot.hotspotTemp)
+        }
       }
 
+      // Core temp
       GridLayout {
         columns: 2
         Layout.fillWidth: true
@@ -186,12 +235,15 @@ Item {
       }
     }
 
+    // Divider
     Rectangle {
       Layout.fillWidth: true
       Layout.preferredHeight: 1
       color: Theme.widgetLightBackground
     }
 
+
+    // Other sensors
     ColumnLayout {
       Layout.fillWidth: true
       spacing: 12
@@ -205,7 +257,6 @@ Item {
         color: Theme.barColor
       }
 
-      // Changed from Flow to a 3-column GridLayout
       GridLayout {
         columns: 3
         Layout.fillWidth: true

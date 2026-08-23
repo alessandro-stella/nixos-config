@@ -7,7 +7,7 @@ import "../../"
 Rectangle {
   id: root
   required property PanelWindow parentWindow
-  implicitWidth: contentRow.implicitWidth
+  implicitWidth: iconText.implicitWidth
   implicitHeight: parent.height
   color: "transparent"
 
@@ -24,7 +24,6 @@ Rectangle {
 
   Process {
     id: readTemp
-    // Schiacciamo il JSON su una singola riga!
     command: ["sh", "-c", "sensors -j | tr -d '\\n'"]
     stdout: SplitParser {
       onRead: data => {
@@ -56,21 +55,18 @@ Rectangle {
     }
   }
 
-  RowLayout {
-    id: contentRow
+  Text {
+    id: iconText
     anchors.centerIn: parent
-    spacing: 4
-
-    Text {
-      text: {
-        if (root.generalTemp >= root.criticalTemperature) return "󱃂";
-        if (root.generalTemp < 40) return "󱃃";
-        return "󰔏";
-      }
-      font.pixelSize: Theme.barFontSize
-      font.family: Theme.fontFamily
-      color: root.generalTemp >= root.criticalTemperature ? Theme.colRed : Theme.barColor
+    
+    text: {
+      if (root.generalTemp >= root.criticalTemperature) return "󱃂";
+      if (root.generalTemp < 40) return "󱃃";
+      return "󰔏";
     }
+    font.pixelSize: Theme.fontSize
+    font.family: Theme.fontFamily
+    color: root.generalTemp >= root.criticalTemperature ? Theme.colRed : Theme.barColor
   }
 
   PopupWindow {
@@ -89,11 +85,11 @@ Rectangle {
 
     Rectangle {
       id: tooltipRect
-      color: "#1e1e2e"
+      color: Theme.widgetDarkBackground
       border.color: Theme.accent1
       border.width: Theme.borderWidth
       radius: 6
-      implicitWidth: temperatureTooltip.implicitWidth + 16
+      implicitWidth: temperatureTooltip.implicitWidth + 24
       implicitHeight: 36
       
       anchors.bottom: parent.bottom
