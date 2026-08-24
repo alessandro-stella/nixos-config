@@ -58,4 +58,35 @@
 
   # Tailscale integration
   services.tailscale.enable = true;
+
+  # Disable trackpoint (hardware damage causes drift, I suppose)
+  systemd.services.trackpoint-filter = {
+    description = "Filtro per bloccare il drift del TrackPoint";
+    wantedBy = [ "multi-user.target" ];
+    after = [ "systemd-udev-settle.service" ];
+
+    serviceConfig = {
+      Type = "simple";
+      ExecStart = pkgs.writeShellScript "evsieve-start" ''
+        for syspath in /sys/class/input/event*; do
+          if grep -q "TPPS/2 Elan TrackPoint" "$syspath/device/name" 2>/dev/null; then
+            EVENT_DEV="/dev/input/$(basename "$syspath")"
+            break
+          fi
+        done
+
+        if [ -z "$EVENT_DEV" ]; then
+          echo "TrackPoint not found"
+          exit 1
+        fi
+
+        exec ${pkgs.evsieve}/bin/evsieve \
+          --input "$EVENT_DEV" grab \
+          --block rel \
+          --output name="TrackPoint Buttons Only"
+      '';
+      Restart = "always";
+      RestartSec = "3s";
+    };
+  };
 }
