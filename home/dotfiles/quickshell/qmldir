@@ -1,3 +1,4 @@
+ModalBackdrop 1.0 ModalBackdrop.qml
 GenericModal 1.0 GenericModal.qml
 GenericPopup 1.0 GenericPopup.qml
 singleton StateManager 1.0 StateManager.qml

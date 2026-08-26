@@ -61,8 +61,8 @@ hl.config({
 		rounding = 5,
 		blur = {
 			enabled = true,
-			size = 7,
-			passes = 4,
+			size = 5,
+			passes = 3,
 			new_optimizations = true,
 		},
 		shadow = {

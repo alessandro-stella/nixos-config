@@ -42,15 +42,4 @@ QtObject {
   readonly property int barFontSizeSmall: 11
   readonly property int batteryWarning: 30
   readonly property int batteryCritical: 10
-
-  // Width properties
-  readonly property real widgetWidthRatio: 0.30
-  readonly property int widgetMinWidth: 440
-  readonly property int widgetMaxWidth: 640
-
-  // Height properties
-  readonly property real widgetHeightRatio: 0.50 
-  readonly property int widgetMinHeight: 380
-  readonly property int widgetMaxHeight: 520 
-  readonly property int widgetDefaultHeight: 480 
 }

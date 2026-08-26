@@ -5,47 +5,8 @@ import QtQuick
 import "./top_bar/"
 import "./app_launcher/"
 import "./clipboard/"
-
-// ShellRoot {
-//   // Top bar
-//   Variants {
-//     model: Quickshell.screens.length > 0 ? 
-//       [...Array(Quickshell.screens.length)].map((_, i) => ({
-//         index: i,
-//         screen: Quickshell.screens[i]
-//       })) : []
-//
-//     TopBar {
-//       monitorId: modelData.index
-//       screen: modelData.screen
-//     }
-//   }
-//
-//   // App launcher
-//   Variants {
-//   model: Quickshell.screens.length > 0 ? 
-//     [...Array(Quickshell.screens.length)].map((_, i) => ({
-//       index: i,
-//       screen: Quickshell.screens[i]
-//     })) : []
-//
-//
-//   }
-//
-//   // Clipboard
-//   Variants {
-//   model: Quickshell.screens.length > 0 ? 
-//     [...Array(Quickshell.screens.length)].map((_, i) => ({
-//       index: i,
-//       screen: Quickshell.screens[i]
-//     })) : []
-//
-//     Clipboard {
-//       monitorId: modelData.index
-//       screen: modelData.screen
-//     }
-//   }
-// }
+import "./logout_menu/"
+import "./theme_changer/"
 
 ShellRoot {
     id: root
@@ -79,6 +40,26 @@ ShellRoot {
         model: root.monitorModel
 
         Clipboard {
+            monitorId: modelData
+            screen: Quickshell.screens[modelData]
+        }
+    }
+
+    // Logout menu
+    Variants {
+        model: root.monitorModel
+
+        LogoutMenu {
+            monitorId: modelData
+            screen: Quickshell.screens[modelData]
+        }
+    }
+
+    // Theme changer
+    Variants {
+        model: root.monitorModel
+
+        ThemeChanger {
             monitorId: modelData
             screen: Quickshell.screens[modelData]
         }

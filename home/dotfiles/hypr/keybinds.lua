@@ -46,3 +46,5 @@ require("modules.custom-keybinds")
 -- Testing quickshell
 hl.bind(mainMod .. " + SPACE", hl.dsp.global("quickshell:toggleLauncher"))
 hl.bind(mainMod .. " + V", hl.dsp.global("quickshell:toggleClipboard"))
+hl.bind(mainMod .. " + SHIFT + M", hl.dsp.global("quickshell:toggleLogoutMenu"))
+hl.bind(mainMod .. " + P", hl.dsp.global("quickshell:toggleThemeChanger"))

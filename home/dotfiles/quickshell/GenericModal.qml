@@ -8,181 +8,221 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import "../"
 
-Scope {
+ModalBackdrop {
   id: root
 
-  required property var screen
+  // If > 0 override automatic width calculation
+  property real preferredWidth: 0
 
-  property string shortcutName: ""
+  readonly property real widgetWidthRatio: 0.30
+  readonly property int widgetMinWidth: 440
+  readonly property int widgetMaxWidth: 640
 
-  property alias panelVisible: launcherPanel.visible
+  readonly property int widgetMinHeight: 380
+  readonly property int widgetMaxHeight: 520
+  readonly property int widgetDefaultHeight: 480
+
   property alias boxWidth: launcherBox.width
   property alias boxHeight: launcherBox.height
 
+  property string title: ""
+  property string searchPlaceholder: "Type to search..."
+  property alias searchText: searchInput.text
+  property string resultsText: ""
+  property int selectedIndex: 0
+  property int maxIndex: 0
+
+  // Signal for child class
+  signal enterPressed()
+
   default property alias content: innerContainer.data
 
-  signal opened()
-  signal closed()
-
-  function open(): void {
-    launcherPanel.visible = true
-    contentWrapper.opacity = 1.0
-    root.opened()
+  onOpened: {
+    searchInput.text = ""
+    root.selectedIndex = 0
+    searchInput.forceActiveFocus()
   }
 
-  function close(): void {
-    contentWrapper.opacity = 0.0
-    closeTimer.start()
-    root.closed()
-  }
+  // Main container
+  Rectangle {
+    id: launcherBox
 
-  function closeAll(): void {
-    StateManager.closeAllWidgets()
-  }
+    anchors.centerIn: parent
 
-  function toggle(): void {
-    if (launcherPanel.visible) {
-      close()
-    } else {
-      open()
-    }
-  }
+    width: root.preferredWidth > 0
+      ? root.preferredWidth
+      : root.screen
+        ? Math.max(
+            root.widgetMinWidth,
+            Math.min(
+              Math.round(root.screen.width * root.widgetWidthRatio),
+              root.widgetMaxWidth
+            )
+          )
+        : root.widgetMaxWidth
 
-  function isFocusedMonitor(): bool {
-    const monitor = Hyprland.focusedMonitor
+    height: Math.min(
+      root.widgetDefaultHeight,
+      root.widgetMaxHeight
+    )
 
-    if (!monitor || !root.screen)
-        return false
+    radius: Theme.radiusOuter
+    color: Theme.colBg
+    border.color: Theme.accent1
+    border.width: Theme.borderWidth
 
-    return monitor.name === root.screen.name
-  }
-
-  Component.onCompleted: {
-    StateManager.registerWidget(root)
-  }
-
-  Component.onDestruction: {
-    StateManager.unregisterWidget(root)
-  }
-
-  GlobalShortcut {
-    name: root.shortcutName
-
-    onPressed: {
-      if (root.shortcutName !== "") {
-        root.toggle()
-      }
-    }
-  }
-
-  Timer {
-    id: closeTimer
-
-    interval: Theme.fastAnimation + 50
-
-    onTriggered: {
-      launcherPanel.visible = false
-    }
-  }
-
-  PanelWindow {
-    id: launcherPanel
-
-    screen: root.screen
-    visible: false
-    color: "transparent"
-
-    WlrLayershell.layer: WlrLayer.Overlay
-
-    WlrLayershell.keyboardFocus:
-      visible && root.isFocusedMonitor()
-        ? WlrKeyboardFocus.Exclusive
-        : WlrKeyboardFocus.None
-
-    WlrLayershell.namespace: "quickshell-modal"
-
-    exclusionMode: ExclusionMode.Ignore
-
-    anchors {
-      top: true
-      bottom: true
-      left: true
-      right: true
-    }
-
-    Item {
-      id: contentWrapper
-
+    // Prevent clicks from reaching the backdrop.
+    MouseArea {
       anchors.fill: parent
-      opacity: 1.0
+      onClicked: {}
+    }
 
-      Behavior on opacity {
-        NumberAnimation {
-          duration: Theme.fastAnimation
-          easing.type: Easing.InCubic
-        }
-      }
+    // Content
+    FocusScope {
+      anchors.fill: parent
+      anchors.margins: 16
+      focus: true
 
-      // Backdrop
-      Rectangle {
-        id: backdrop
-
+      ColumnLayout {
         anchors.fill: parent
+        spacing: 12
 
-        color: Qt.rgba(0, 0, 0, 0.5)
+        // Header
+        Text {
+          text: root.title
+          color: Theme.accent2
+          font.pixelSize: Theme.fontSize
+          font.family: Theme.fontFamily
+          font.bold: true
+          visible: text !== ""
+        }
 
-        MouseArea {
-          anchors.fill: parent
+        // Search bar
+        Rectangle {
+          Layout.fillWidth: true
+          height: 42
 
-          onClicked: {
-            root.closeAll()
+          radius: Theme.radiusInner
+          color: "#24283b"
+
+          border.color: searchInput.activeFocus
+            ? Theme.accent2
+            : Theme.colMuted
+
+          border.width: Theme.borderWidth
+
+          RowLayout {
+            anchors.fill: parent
+
+            anchors.leftMargin: 12
+            anchors.rightMargin: 12
+
+            spacing: 10
+
+            // Search icon
+            Text {
+              text: ""
+              color: Theme.colMuted
+              font.pixelSize: Theme.fontSize
+              font.family: Theme.fontFamily
+
+              Layout.alignment: Qt.AlignVCenter
+            }
+
+            // Search input
+            TextInput {
+              id: searchInput
+
+              Layout.fillWidth: true
+              Layout.alignment: Qt.AlignVCenter
+
+              color: Theme.colFg
+
+              font.pixelSize: Theme.fontSize
+              font.family: Theme.fontFamily
+
+              clip: true
+              focus: true
+              selectByMouse: true
+
+              // Placeholder
+              Text {
+                anchors.fill: parent
+
+                text: root.searchPlaceholder
+
+                color: Theme.colMuted
+
+                font.pixelSize: Theme.fontSize
+                font.family: Theme.fontFamily
+
+                visible: !parent.text && !parent.activeFocus
+
+                verticalAlignment: Text.AlignVCenter
+              }
+
+              onTextChanged: {
+                root.selectedIndex = 0
+              }
+
+              Keys.onEscapePressed: {
+                StateManager.closeAllWidgets()
+              }
+
+              Keys.onPressed: event => {
+                if (
+                  event.key === Qt.Key_Down ||
+                  event.key === Qt.Key_Tab
+                ) {
+                  event.accepted = true
+
+                  root.selectedIndex = Math.min(
+                    root.selectedIndex + 1,
+                    root.maxIndex
+                  )
+                }
+
+                else if (event.key === Qt.Key_Up) {
+                  event.accepted = true
+
+                  root.selectedIndex = Math.max(
+                    root.selectedIndex - 1,
+                    0
+                  )
+                }
+
+                else if (
+                  event.key === Qt.Key_Return ||
+                  event.key === Qt.Key_Enter
+                ) {
+                  event.accepted = true
+
+                  root.enterPressed()
+                }
+              }
+            }
           }
         }
-      }
 
-      // Content
-      Rectangle {
-        id: launcherBox
 
-        anchors.centerIn: parent
+        // Result count
+        Text {
+          text: root.resultsText
 
-        visible: root.isFocusedMonitor()
+          color: Theme.colMuted
 
-        width: launcherPanel.screen
-          ? Math.max(
-              Theme.widgetMinWidth,
-              Math.min(
-                Math.round(
-                  launcherPanel.screen.width * Theme.widgetWidthRatio
-                ),
-                Theme.widgetMaxWidth
-              )
-            )
-          : Theme.widgetMaxWidth
+          font.pixelSize: Theme.fontSizeSmall
+          font.family: Theme.fontFamily
 
-        height: Math.min(
-          Theme.widgetDefaultHeight,
-          Theme.widgetMaxHeight
-        )
-
-        radius: Theme.radiusOuter
-
-        color: Theme.colBg
-
-        border.color: Theme.accent1
-        border.width: Theme.borderWidth
-
-        MouseArea {
-          anchors.fill: parent
-
-          onClicked: {}
+          visible: text !== ""
         }
 
+        // Content
         Item {
           id: innerContainer
 
-          anchors.fill: parent
-          anchors.margins: 16
+          Layout.fillWidth: true
+          Layout.fillHeight: true
         }
       }
     }

@@ -14,12 +14,16 @@ GenericModal {
   screen: modelData 
   shortcutName: "toggleLauncher"
 
-  property int selectedIndex: 0
+  title: "Launch Application"
+  searchPlaceholder: "Type to search..."
+  resultsText: resultsList.count > 0 ? resultsList.count + " application" + (resultsList.count !== 1 ? "s" : "") + " found" : ""
+  maxIndex: Math.max(0, resultsList.count - 1)
 
-  onOpened: {
-    searchInput.text = ""
-    root.selectedIndex = 0
-    searchInput.forceActiveFocus()
+  onEnterPressed: {
+    if (root.selectedIndex >= 0 && root.selectedIndex < filteredApps.values.length) {
+      const entry = filteredApps.values[root.selectedIndex]
+      if (entry) root.launchApp(entry)
+    }
   }
 
   function launchApp(entry) {
@@ -32,9 +36,9 @@ GenericModal {
     id: filteredApps
     objectProp: "id"
     values: {
-    const all = [...DesktopEntries.applications.values]
-    const q = searchInput.text.trim().toLowerCase()
-    if (q === "") return all.sort((a, b) => (a.name || "").localeCompare(b.name || ""))
+      const all = [...DesktopEntries.applications.values]
+      const q = root.searchText.trim().toLowerCase()
+      if (q === "") return all.sort((a, b) => (a.name || "").localeCompare(b.name || ""))
 
       return all.filter(d =>
         (d.name && d.name.toLowerCase().includes(q))
@@ -50,218 +54,118 @@ GenericModal {
     }
   }
 
-  // GenericModal content
-  FocusScope {
+  ListView {
+    id: resultsList
     anchors.fill: parent
-    focus: true
+    model: filteredApps
+    clip: true
+    spacing: 4
+    boundsBehavior: Flickable.StopAtBounds
+    currentIndex: root.selectedIndex
 
-    ColumnLayout {
-      anchors.fill: parent
-      spacing: 12
+    onCurrentIndexChanged: positionViewAtIndex(currentIndex, ListView.Contain)
 
-      // Header
-      
+    highlightMoveDuration: 60
+    highlightResizeDuration: 60
 
-        Text {
-          text: "Launch Application"
-          color: Theme.accent2
-          font.pixelSize: Theme.fontSize
-          font.family: Theme.fontFamily
-          font.bold: true
-        }
+    highlight: Rectangle {
+      radius: 8
+      color: "#2f3549"
+      visible: root.selectedIndex >= 0
 
-      // Search bar
       Rectangle {
-        Layout.fillWidth: true
-        height: 42
-        radius: Theme.radiusInner
-        color: "#24283b"
-        border.color: searchInput.activeFocus ? Theme.accent2 : Theme.colMuted
-        border.width: Theme.borderWidth
+        width: 3
+        height: 24
+        radius: 2
+        color: Theme.accent2
+        anchors.left: parent.left
+        anchors.leftMargin: 3
+        anchors.verticalCenter: parent.verticalCenter
+      }
+    }
 
-        RowLayout {
-          anchors.fill: parent
-          anchors.leftMargin: 12
-          anchors.rightMargin: 12
-          spacing: 10
+    delegate: Rectangle {
+      id: delegateRoot
+      required property var modelData
+      required property int index
 
-          Text {
-            text: ""
-            color: Theme.colMuted
-            font.pixelSize: Theme.fontSize
-            font.family: Theme.fontFamily
-            Layout.alignment: Qt.AlignVCenter
+      width: resultsList.width
+      height: 40
+      radius: 8
+      color: "transparent"
+
+      RowLayout {
+        anchors.fill: parent
+        anchors.leftMargin: 12
+        anchors.rightMargin: 12
+        spacing: 12
+
+        // Icon
+        Item {
+          width: 24
+          height: 24
+          Layout.alignment: Qt.AlignVCenter
+
+          Image {
+            id: appIcon
+            anchors.fill: parent
+            source: delegateRoot.modelData.icon ? Quickshell.iconPath(delegateRoot.modelData.icon, true) : ""
+            smooth: true
+            mipmap: true
+            visible: status === Image.Ready
           }
 
-          TextInput {
-            id: searchInput
-            Layout.fillWidth: true
-            Layout.alignment: Qt.AlignVCenter
-            color: Theme.colFg
-            font.pixelSize: Theme.fontSize
-            font.family: Theme.fontFamily
-            clip: true
-            focus: true
-            selectByMouse: true
+          // Icon/text fallback
+          Rectangle {
+            anchors.fill: parent
+            visible: appIcon.status !== Image.Ready
+            
+            color: "transparent" 
+            
+            border.color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
+            border.width: 1
+            radius: 4
 
             Text {
-              anchors.fill: parent
-              text: "Type to search..."
-              color: Theme.colMuted
+              anchors.centerIn: parent
+              text: delegateRoot.modelData.name ? delegateRoot.modelData.name.charAt(0).toUpperCase() : ""
+              color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
               font.pixelSize: Theme.fontSize
               font.family: Theme.fontFamily
-              visible: !parent.text && !parent.activeFocus
-              verticalAlignment: Text.AlignVCenter
-            }
-
-            onTextChanged: root.selectedIndex = 0
-
-            Keys.onEscapePressed: StateManager.closeAllWidgets()
-
-            Keys.onPressed: event => {
-              if (event.key === Qt.Key_Down || event.key === Qt.Key_Tab) {
-                event.accepted = true
-                root.selectedIndex = Math.min(root.selectedIndex + 1, resultsList.count - 1)
-                resultsList.positionViewAtIndex(root.selectedIndex, ListView.Contain)
-              } else if (event.key === Qt.Key_Up) {
-                event.accepted = true
-                root.selectedIndex = Math.max(root.selectedIndex - 1, 0)
-                resultsList.positionViewAtIndex(root.selectedIndex, ListView.Contain)
-              } else if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
-                event.accepted = true
-                if (root.selectedIndex >= 0 && root.selectedIndex < filteredApps.values.length) {
-                  const entry = filteredApps.values[root.selectedIndex]
-                  if (entry) root.launchApp(entry)
-                }
-              }
+              font.bold: true
             }
           }
-        }
-      }
+        } 
 
-      // Count results
-      Text {
-        text: resultsList.count + " application" + (resultsList.count !== 1 ? "s" : "") + " found"
-        color: Theme.colMuted
-        font.pixelSize: Theme.fontSizeSmall
-        font.family: Theme.fontFamily
-        visible: resultsList.count > 0
-      }
-
-      // Application list
-      ListView {
-        id: resultsList
-        Layout.fillWidth: true
-        Layout.fillHeight: true
-        model: filteredApps
-        clip: true
-        spacing: 4
-        boundsBehavior: Flickable.StopAtBounds
-        currentIndex: root.selectedIndex
-
-        highlightMoveDuration: 60
-        highlightResizeDuration: 60
-
-        highlight: Rectangle {
-          radius: 8
-          color: "#2f3549"
-          visible: root.selectedIndex >= 0
-
-          Rectangle {
-            width: 3
-            height: 24
-            radius: 2
-            color: Theme.accent2
-            anchors.left: parent.left
-            anchors.leftMargin: 3
-            anchors.verticalCenter: parent.verticalCenter
-          }
-        }
-
-        delegate: Rectangle {
-          id: delegateRoot
-          required property var modelData
-          required property int index
-
-          width: resultsList.width
-          height: 40
-          radius: 8
-          color: "transparent"
-
-          RowLayout {
-            anchors.fill: parent
-            anchors.leftMargin: 12
-            anchors.rightMargin: 12
-            spacing: 12
-
-            // Icon
-            Item {
-              width: 24
-              height: 24
-              Layout.alignment: Qt.AlignVCenter
-
-              Image {
-                id: appIcon
-                anchors.fill: parent
-                source: delegateRoot.modelData.icon ? Quickshell.iconPath(delegateRoot.modelData.icon, true) : ""
-                smooth: true
-                mipmap: true
-                visible: status === Image.Ready
-              }
-
-              // Icon/text fallback
-              Rectangle {
-                anchors.fill: parent
-                visible: appIcon.status !== Image.Ready
-                
-                color: "transparent" 
-                
-                border.color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
-                border.width: 1
-                radius: 4
-
-                Text {
-                  anchors.centerIn: parent
-                  text: delegateRoot.modelData.name ? delegateRoot.modelData.name.charAt(0).toUpperCase() : ""
-                  color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
-                  font.pixelSize: Theme.fontSize
-                  font.family: Theme.fontFamily
-                  font.bold: true
-                }
-              }
-            } 
-
-            // Name
-            Text {
-              text: delegateRoot.modelData.name ?? ""
-              color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colFg
-              font.pixelSize: Theme.fontSizeSmall
-              font.family: Theme.fontFamily
-              font.bold: root.selectedIndex === delegateRoot.index
-              elide: Text.ElideRight
-              Layout.fillWidth: true
-            } 
-          }
-
-          MouseArea {
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onEntered: root.selectedIndex = delegateRoot.index
-            onClicked: root.launchApp(delegateRoot.modelData)
-          }
-        }
-
-        // Empty or not found 
+        // Name
         Text {
-          anchors.centerIn: parent
-          text: "No applications found"
-          color: Theme.colMuted
-          font.pixelSize: Theme.fontSize
+          text: delegateRoot.modelData.name ?? ""
+          color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colFg
+          font.pixelSize: Theme.fontSizeSmall
           font.family: Theme.fontFamily
-          visible: resultsList.count === 0 && searchInput.text !== ""
-        }
+          font.bold: root.selectedIndex === delegateRoot.index
+          elide: Text.ElideRight
+          Layout.fillWidth: true
+        } 
       }
+
+      MouseArea {
+        anchors.fill: parent
+        hoverEnabled: true
+        cursorShape: Qt.PointingHandCursor
+        onEntered: root.selectedIndex = delegateRoot.index
+        onClicked: root.launchApp(delegateRoot.modelData)
+      }
+    }
+
+    // Empty or not found 
+    Text {
+      anchors.centerIn: parent
+      text: "No applications found"
+      color: Theme.colMuted
+      font.pixelSize: Theme.fontSize
+      font.family: Theme.fontFamily
+      visible: resultsList.count === 0 && root.searchText !== ""
     }
   }
 }
