@@ -156,7 +156,7 @@ ModalBackdrop {
                 font.pixelSize: Theme.fontSize
                 font.family: Theme.fontFamily
 
-                visible: !parent.text && !parent.activeFocus
+                visible: !parent.text 
 
                 verticalAlignment: Text.AlignVCenter
               }
