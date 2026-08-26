@@ -40,5 +40,6 @@
     # TESTING
     quickshell
     lm_sensors
+    zenity
   ];
 }

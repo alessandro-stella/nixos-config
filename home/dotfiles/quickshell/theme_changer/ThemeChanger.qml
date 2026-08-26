@@ -453,7 +453,7 @@ GenericModal {
       anchors.bottom: parent.bottom
       anchors.left: parent.left
       anchors.right: parent.right
-      height: 50
+      height: 45
       spacing: 15
 
       // Preview button
