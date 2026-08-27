@@ -96,6 +96,7 @@ Scope {
 
         anchor.edges: Edges.Bottom
         anchor.gravity: Edges.Bottom
+        anchor.margins.top: Theme.barHeight + Math.round(Theme.outerSpacing / 2) - Math.round(Theme.borderWidth / 2)
 
         visible: false
         color: "transparent"

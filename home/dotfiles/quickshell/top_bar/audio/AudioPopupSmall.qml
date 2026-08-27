@@ -7,6 +7,7 @@ import "../.."
 Scope {
   id: smallPopupRoot
 
+  required property real scrollStep
   required property Item targetItem
   required property PanelWindow parentWindow
   required property var defaultSink
@@ -25,7 +26,6 @@ Scope {
     text: "Muted"
   }
 
-  // Assicura che il nodo resti bound quando il popup è aperto
   PwObjectTracker {
     objects: smallPopupRoot.defaultSink ? [smallPopupRoot.defaultSink] : []
   }
@@ -89,6 +89,7 @@ Scope {
         anchor.item: smallPopupRoot.targetItem
         anchor.edges: Edges.Bottom
         anchor.gravity: Edges.Bottom
+        anchor.margins.top: Theme.barHeight + Math.round(Theme.outerSpacing / 2) - Math.round(Theme.borderWidth / 2)
 
         visible: false
         color: "transparent"
@@ -121,6 +122,21 @@ Scope {
             anchors.fill: parent
             hoverEnabled: true
             acceptedButtons: Qt.NoButton
+
+            onWheel: (wheel) => {
+              if (Pipewire.ready && smallPopupRoot.defaultSink && smallPopupRoot.defaultSink.ready && smallPopupRoot.defaultSink.audio) {
+                let step = root.scrollStep;
+                    
+                let isTrackpad = (wheel.phase !== 0); 
+                let isScrollUp = isTrackpad ? (wheel.angleDelta.y < 0) : (wheel.angleDelta.y > 0);
+
+                if (isScrollUp) {
+                  smallPopupRoot.defaultSink.audio.volume = Math.min(1.0, smallPopupRoot.defaultSink.audio.volume + step);
+                } else {
+                  smallPopupRoot.defaultSink.audio.volume = Math.max(0.0, smallPopupRoot.defaultSink.audio.volume - step);
+                }
+              }
+            }
 
             onEntered: {
               if (smallPopupRoot.hidePopupTimer) {

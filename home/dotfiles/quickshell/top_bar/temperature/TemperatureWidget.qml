@@ -7,7 +7,7 @@ import "../../"
 Rectangle {
   id: root
   required property PanelWindow parentWindow
-  implicitWidth: iconText.implicitWidth
+  Layout.preferredWidth: iconText.implicitWidth + 2
   implicitHeight: parent.height
   color: "transparent"
 
@@ -86,8 +86,8 @@ Rectangle {
     anchor.edges: Edges.Bottom
     anchor.gravity: Edges.Bottom
 
-    visible: mouseArea.containsMouse
-    color: "transparent" 
+    visible: mouseArea.containsMouse || tooltipRect.opacity > 0
+    color: "transparent"  
 
     implicitWidth: tooltipRect.implicitWidth
     implicitHeight: tooltipRect.implicitHeight + Math.round(Theme.outerSpacing / 2)
@@ -103,6 +103,23 @@ Rectangle {
       
       anchors.bottom: parent.bottom
       anchors.horizontalCenter: parent.horizontalCenter
+
+      opacity: mouseArea.containsMouse ? 1 : 0
+      scale: mouseArea.containsMouse ? 1 : 0.94
+
+      Behavior on opacity {
+        NumberAnimation {
+          duration: Theme.fastAnimation
+          easing.type: Easing.OutCubic
+        }
+      }
+
+      Behavior on scale {
+        NumberAnimation {
+          duration: Theme.fastAnimation
+          easing.type: Easing.OutCubic
+        }
+      }
 
       Text {
         id: temperatureTooltip

@@ -67,15 +67,6 @@ ModalBackdrop {
               id: actionProcess
 
               command: ["sh", "-c", modelData.action]
-
-              onExited: (exitCode, exitStatus) => {
-                console.log(
-                  "Comando terminato:",
-                  modelData.action,
-                  "exitCode:",
-                  exitCode
-                )
-              }
             }
 
             // Wait for render before executing command
