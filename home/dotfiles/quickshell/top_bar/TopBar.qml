@@ -10,6 +10,7 @@ import "./battery"
 import "./cpu"
 import "./temperature"
 import "./audio"
+import "./network"
 
 PanelWindow {
   id: root
@@ -83,6 +84,10 @@ PanelWindow {
           }
 
           TemperatureWidget {
+            parentWindow: root
+          }
+
+          NetworkWidget {
             parentWindow: root
           }
 
