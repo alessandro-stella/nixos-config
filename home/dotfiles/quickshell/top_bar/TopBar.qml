@@ -9,6 +9,7 @@ import "../"
 import "./battery"
 import "./cpu"
 import "./temperature"
+import "./audio"
 
 PanelWindow {
   id: root
@@ -82,6 +83,10 @@ PanelWindow {
           }
 
           TemperatureWidget {
+            parentWindow: root
+          }
+
+          AudioWidget {
             parentWindow: root
           }
 
