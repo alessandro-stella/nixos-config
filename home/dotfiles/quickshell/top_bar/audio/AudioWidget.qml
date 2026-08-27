@@ -99,9 +99,16 @@ Rectangle {
     onWheel: (wheel) => {
       if (root.defaultSink && root.defaultSink.ready && root.defaultSink.audio) {
         let step = 0.05;
-        if (wheel.angleDelta.y > 0) {
+        
+        // Se la fase è diversa da 0 (Qt.NoScrollPhase), è quasi certamente un trackpad
+        let isTrackpad = (wheel.phase !== 0); 
+        
+        // Applichiamo la logica invertita solo se stiamo usando il trackpad
+        let isScrollUp = isTrackpad ? (wheel.angleDelta.y < 0) : (wheel.angleDelta.y > 0);
+
+        if (isScrollUp) {
           root.defaultSink.audio.volume = Math.min(1.0, root.defaultSink.audio.volume + step);
-        } else if (wheel.angleDelta.y < 0) {
+        } else {
           root.defaultSink.audio.volume = Math.max(0.0, root.defaultSink.audio.volume - step);
         }
       }
