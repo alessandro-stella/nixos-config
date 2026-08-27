@@ -94,7 +94,7 @@ Rectangle {
     Text {
       text: root.hasUPower ? (root.percent + "%") : ""
       font.pixelSize: Theme.barFontSize
-      color: Theme.barColor
+      color: root.activeColor
       font.family: Theme.fontFamily
       visible: text !== ""
     }
