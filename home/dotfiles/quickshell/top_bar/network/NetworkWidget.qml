@@ -13,7 +13,7 @@ Rectangle {
   implicitHeight: parent.height
   color: "transparent"
 
-  property string connectionType: "disconnected" // "wifi", "ethernet", "disconnected"
+  property string connectionType: "disconnected" // "wifi", "ethernet", "disconnected", "wifi_off"
   property string ssidName: ""
 
   Timer {
@@ -26,7 +26,7 @@ Rectangle {
 
   Process {
     id: checkNetwork
-    command: ["sh", "-c", "nmcli -t -f TYPE,STATE,CONNECTION device | grep '^ethernet:connected\\|^wifi:connected'"]
+    command: ["sh", "-c", "if [ \"$(nmcli radio wifi)\" = \"disabled\" ]; then echo \"wifi:disabled\"; else nmcli -t -f TYPE,STATE,CONNECTION device | grep '^ethernet:connected\\|^wifi:connected'; fi"]
     stdout: SplitParser {
       onRead: data => {
         if (!data || data.trim() === "") {
@@ -35,11 +35,20 @@ Rectangle {
           return
         }
 
-        let lines = data.trim().split("\n")
+        let cleaned = data.trim()
+        if (cleaned === "wifi:disabled") {
+          root.connectionType = "wifi_off"
+          root.ssidName = "Off"
+          return
+        }
+
+        let lines = cleaned.split("\n")
+        let found = false
         for (let line of lines) {
           if (line.startsWith("ethernet:connected")) {
             root.connectionType = "ethernet"
             root.ssidName = "LAN"
+            found = true
             break
           } else if (line.startsWith("wifi:connected")) {
             root.connectionType = "wifi"
@@ -47,8 +56,13 @@ Rectangle {
             if (parts.length >= 3) {
               root.ssidName = parts[2]
             }
+            found = true
             break
           }
+        }
+        if (!found) {
+          root.connectionType = "disconnected"
+          root.ssidName = ""
         }
       }
     }
@@ -60,7 +74,6 @@ Rectangle {
     spacing: 4
 
     Text {
-      // Icona dinamica in base al tipo di connessione
       text: {
         if (root.connectionType === "ethernet") return "󰈀"
         if (root.connectionType === "wifi") return "󰖩"
@@ -76,7 +89,7 @@ Rectangle {
       font.pixelSize: Theme.fontSizeSmall
       font.family: Theme.fontFamily
       color: Theme.barColor
-      visible: root.connectionType !== "disconnected"
+      visible: root.connectionType !== "disconnected" && root.connectionType !== "wifi_off"
     }
   }
 

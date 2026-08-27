@@ -51,7 +51,7 @@ Scope {
       
       parentWindow: popupScope.parentWindow
       targetItem: popupScope.targetItem
-      popupWidth: 340
+      popupWidth: 380
       
       contentComponent: NetworkPopupContent {}
 

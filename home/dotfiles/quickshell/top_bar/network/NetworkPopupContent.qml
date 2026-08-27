@@ -13,6 +13,7 @@ Item {
   property bool wifiEnabled: true
   property string currentConnectedSsid: ""
   property string currentConnectedSignal: ""
+  property bool isOpen: false // Gestito dal loader del popup se necessario o tracciato
 
   ListModel {
     id: wifiModel
@@ -23,7 +24,18 @@ Item {
     refreshNetworks()
   }
 
-  // Controlla se il Wi-Fi è acceso o spento
+  // Timer di polling periodico (ogni 5 secondi aggiorna la lista reti se aperto)
+  Timer {
+    interval: 5000
+    running: true
+    repeat: true
+    onTriggered: {
+      if (contentRoot.wifiEnabled) {
+        refreshNetworks()
+      }
+    }
+  }
+
   Process {
     id: checkWifiStatus
     command: ["sh", "-c", "nmcli radio wifi"]
@@ -36,14 +48,16 @@ Item {
     }
   }
 
-  // Forza una scansione pulita e poi legge le reti e quella attiva
+  // Processo di scansione e lettura con output di debug in console
   Process {
     id: scanAndReadProcess
-    command: ["sh", "-c", "nmcli device wifi rescan 2>/dev/null; sleep 1; nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
+    command: ["sh", "-c", "nmcli device wifi rescan 2>/dev/null; sleep 0.5; nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
     stdout: SplitParser {
       onRead: data => {
         if (!data || data.trim() === "") return
         
+        console.log("[NetworkWidget] Output grezzo nmcli:\n" + data.trim())
+
         wifiModel.clear()
         currentConnectedSsid = ""
         currentConnectedSignal = ""
@@ -52,12 +66,20 @@ Item {
         let seenSsids = {}
 
         for (let line of lines) {
-          let parts = line.split(":")
-          if (parts.length >= 4) {
-            let inUse = parts[0] === "*"
-            let ssid = parts[1]
-            let signal = parts[2] + "%"
-            let security = parts[3]
+          // nmcli -t usa ':' come separatore, ma a volte gli SSID possono contenere ':' o caratteri speciali. 
+          // Dividiamo prendendo il primo come in-use, gli ultimi due come signal e security, e il mezzo come ssid.
+          let firstColon = line.indexOf(":")
+          let lastColon = line.lastIndexOf(":")
+          let secondLastColon = line.lastIndexOf(":", lastColon - 1)
+
+          if (firstColon !== -1 && lastColon !== -1 && secondLastColon !== -1 && firstColon < secondLastColon) {
+            let inUse = line.substring(0, firstColon) === "*"
+            let ssid = line.substring(firstColon + 1, secondLastColon)
+            let signal = line.substring(secondLastColon + 1, lastColon) + "%"
+            let security = line.substring(lastColon + 1)
+
+            // Pulisce eventuali apici superflui dall'SSID
+            ssid = ssid.replace(/^["']|["']$/g, "").trim()
 
             if (ssid !== "" && !seenSsids[ssid]) {
               seenSsids[ssid] = true
@@ -65,12 +87,14 @@ Item {
               if (inUse) {
                 currentConnectedSsid = ssid
                 currentConnectedSignal = signal
+                console.log("[NetworkWidget] Trovata rete CONNESSA: " + ssid)
               } else {
                 wifiModel.append({
                   "ssid": ssid,
                   "signal": signal,
                   "security": security
                 })
+                console.log("[NetworkWidget] Aggiunta rete disponibile: " + ssid + " (" + signal + ")")
               }
             }
           }
@@ -95,6 +119,7 @@ Item {
   }
 
   function refreshNetworks() {
+    checkWifiStatus.running = true
     scanAndReadProcess.running = true
   }
 
@@ -103,7 +128,7 @@ Item {
     anchors.fill: parent
     spacing: 16
 
-    // Header: "AIRCTL" o titolo + Toggle Wi-Fi + Rotellina impostazioni avanzate
+    // Header con Titolo e Rotellina Impostazioni
     RowLayout {
       Layout.fillWidth: true
 
@@ -115,7 +140,6 @@ Item {
         Layout.fillWidth: true
       }
 
-      // Rotellina per aprire l'editor avanzato di NetworkManager
       Rectangle {
         width: 28
         height: 28
@@ -139,7 +163,7 @@ Item {
       }
     }
 
-    // Sezione interruttore Wi-Fi principale (stile switch della foto)
+    // Toggle Wi-Fi Principale
     Rectangle {
       Layout.fillWidth: true
       height: 48
@@ -159,7 +183,6 @@ Item {
           Layout.fillWidth: true
         }
 
-        // Custom Switch Toggle
         Rectangle {
           width: 40
           height: 22
@@ -187,18 +210,23 @@ Item {
               toggleWifiProcess.command = ["sh", "-c", "nmcli radio wifi " + newState]
               toggleWifiProcess.running = true
               contentRoot.wifiEnabled = !contentRoot.wifiEnabled
-              refreshNetworks()
+              if (!contentRoot.wifiEnabled) {
+                wifiModel.clear()
+                currentConnectedSsid = ""
+              } else {
+                refreshNetworks()
+              }
             }
           }
         }
       }
     }
 
-    // Box della Rete Attuale (se connesso)
+    // Box Rete Attuale
     ColumnLayout {
       Layout.fillWidth: true
       spacing: 6
-      visible: contentRoot.currentConnectedSsid !== ""
+      visible: contentRoot.wifiEnabled && contentRoot.currentConnectedSsid !== ""
 
       Text {
         text: "Connected"
@@ -249,20 +277,15 @@ Item {
             font.pixelSize: Theme.fontSizeSmall
             color: Theme.barDarkColor
           }
-
-          Text {
-            text: "󰁞" // Freccia o indicatore
-            font.pixelSize: 14
-            color: Theme.barDarkColor
-          }
         }
       }
     }
 
-    // Sezione Reti Disponibili con pulsante di aggiornamento (freccia circolare)
+    // Sezione Reti Disponibili
     ColumnLayout {
       Layout.fillWidth: true
       spacing: 6
+      visible: contentRoot.wifiEnabled
 
       RowLayout {
         Layout.fillWidth: true
@@ -275,7 +298,6 @@ Item {
           Layout.fillWidth: true
         }
 
-        // Tasto di refresh manuale (la rotellina/freccia circolare della foto)
         Rectangle {
           width: 22
           height: 22
@@ -299,7 +321,6 @@ Item {
         }
       }
 
-      // Lista delle reti
       ListView {
         id: wifiListView
         Layout.fillWidth: true
@@ -360,7 +381,6 @@ Item {
             onClicked: {
               connectProcess.command = ["sh", "-c", "nmcli dev wifi connect '" + ssid + "'"]
               connectProcess.running = true
-              // Ricarica la lista dopo qualche secondo per aggiornare lo stato
               refreshTimer.restart()
             }
           }
