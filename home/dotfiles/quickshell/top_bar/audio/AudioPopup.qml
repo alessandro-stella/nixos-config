@@ -93,15 +93,26 @@ Scope {
                 Layout.alignment: Qt.AlignVCenter
               }
 
-              Text {
-                text: "󰒓"
-                font.pixelSize: Theme.fontSize
-                color: Theme.barColor
-                font.family: Theme.fontFamily
-                Layout.alignment: Qt.AlignVCenter
+              Rectangle {
+                width: 28
+                height: 28
+                radius: 6
+                color: settingsMouse.containsMouse
+                  ? Theme.widgetLightBackground
+                  : "transparent"
+
+                Text {
+                  text: "󰒓"
+                  font.pixelSize: Theme.fontSize
+                  color: Theme.barColor
+                  font.family: Theme.fontFamily
+                  anchors.centerIn: parent 
+                } 
 
                 MouseArea {
+                  id: settingsMouse 
                   anchors.fill: parent
+                  hoverEnabled: true
                   cursorShape: Qt.PointingHandCursor
                   onClicked: {
                     Quickshell.execDetached(["pavucontrol"])

@@ -11,8 +11,11 @@ Item {
   implicitHeight: mainLayout.implicitHeight
   implicitWidth: 350
 
+  readonly property string spinnerIcon: ""
+
   property bool wifiEnabled: true
   property bool isScanning: false
+  property bool isInitializing: true 
   property string currentConnectedSsid: ""
   property string currentConnectedSignal: ""
 
@@ -27,6 +30,24 @@ Item {
   property string bufferedConnectedSignal: ""
   property var savedSsidsMap: ({})
   property var savedUuidsMap: ({})
+
+  function resetState() {
+    contentRoot.showPasswordInput = false
+    contentRoot.errorMessage = ""
+    contentRoot.errorSsid = ""
+    contentRoot.selectedSsidForPassword = ""
+  }
+
+  onVisibleChanged: {
+    if (visible) {
+      contentRoot.isInitializing = true
+      checkWifiStatus.running = true
+      getSavedNetworks.running = true
+      refreshNetworks()
+    } else {
+      resetState()
+    }
+  }
 
   ListModel {
     id: wifiModel
@@ -47,9 +68,7 @@ Item {
   }
 
   Component.onCompleted: {
-    contentRoot.showPasswordInput = false
-    contentRoot.errorMessage = ""
-    contentRoot.selectedSsidForPassword = ""
+    resetState()
 
     checkWifiStatus.running = true
     getSavedNetworks.running = true
@@ -61,7 +80,7 @@ Item {
     running: true
     repeat: true
     onTriggered: {
-      if (contentRoot.visible && !contentRoot.showPasswordInput && !contentRoot.isScanning) {
+      if (contentRoot.visible && !contentRoot.showPasswordInput && !contentRoot.isScanning && !contentRoot.isInitializing) {
         refreshNetworks()
       }
     }
@@ -133,6 +152,7 @@ Item {
         contentRoot.bufferedConnectedSignal = ""
       } else {
         contentRoot.isScanning = false
+        contentRoot.isInitializing = false 
 
         contentRoot.currentConnectedSsid = contentRoot.bufferedConnectedSsid
         contentRoot.currentConnectedSignal = contentRoot.bufferedConnectedSignal
@@ -271,13 +291,12 @@ Item {
       refreshNetworks()
 
       if (exitCode !== 0) {
-        contentRoot.errorMessage = "Connessione fallita. Riprova."
+        contentRoot.errorMessage = "Connection failed. Wrong password?"
         contentRoot.errorSsid = contentRoot.selectedSsidForPassword
         contentRoot.showPasswordInput = true
       } else {
-        contentRoot.showPasswordInput = false
-        contentRoot.errorMessage = ""
-        contentRoot.errorSsid = ""
+        contentRoot.currentConnectedSsid = contentRoot.selectedSsidForPassword
+        resetState()
       }
     }
   }
@@ -361,6 +380,8 @@ Item {
           onClicked: {
             openEditorProcess.command = ["nm-connection-editor"]
             openEditorProcess.running = true
+
+            StateManager.closeActivePopup()
           }
         }
       }
@@ -379,7 +400,7 @@ Item {
         anchors.rightMargin: 12
 
         Text {
-          text: "Use Wi-Fi"
+          text: "Wi-Fi"
           font.bold: true
           font.pixelSize: Theme.fontSizeSmall
           color: Theme.barColor
@@ -414,20 +435,24 @@ Item {
             cursorShape: Qt.PointingHandCursor
 
             onClicked: {
-              let newState = contentRoot.wifiEnabled ? "off" : "on"
-              let cmd = "nmcli radio wifi " + newState
+              let willBeEnabled = !contentRoot.wifiEnabled
+              contentRoot.wifiEnabled = willBeEnabled
+              let newState = willBeEnabled ? "on" : "off"
 
+              let cmd = "nmcli radio wifi " + newState
               toggleWifiProcess.command = ["sh", "-c", cmd]
               toggleWifiProcess.running = true
 
-              contentRoot.wifiEnabled = !contentRoot.wifiEnabled
-              contentRoot.showPasswordInput = false
+              resetState()
 
-              if (!contentRoot.wifiEnabled) {
+              if (!willBeEnabled) {
                 wifiModel.clear()
                 contentRoot.currentConnectedSsid = ""
               } else {
                 wifiModel.clear()
+                contentRoot.isInitializing = true
+                checkWifiStatus.running = true
+                getSavedNetworks.running = true
                 refreshNetworks()
               }
             }
@@ -436,457 +461,311 @@ Item {
       }
     }
 
-    // Sezione Password
-    ColumnLayout {
+    //  Initial loader 
+    Item {
       Layout.fillWidth: true
-      spacing: 6
-      visible: contentRoot.showPasswordInput
+      Layout.preferredHeight: 120
+      visible: contentRoot.isInitializing && contentRoot.wifiEnabled
 
-      Text {
-        text: "Password Required"
-        font.pixelSize: Theme.fontSizeSmall
-        font.bold: true
-        color: Theme.colYellow
-      }
+      ColumnLayout {
+        anchors.centerIn: parent
+        spacing: 10
 
-      Rectangle {
-        Layout.fillWidth: true
-        height: contentRoot.errorMessage ? 90 : 75
-        radius: 8
-        color: Theme.widgetLightBackground
+        Text {
+          id: globalSpinner
+          text: contentRoot.spinnerIcon
+          font.pixelSize: 22
+          color: Theme.barDarkColor
+          Layout.alignment: Qt.AlignHCenter
+          transformOrigin: Item.Center
 
-        Behavior on height {
-          NumberAnimation {
-            duration: 150
+          RotationAnimation on rotation {
+            running: contentRoot.isInitializing && contentRoot.wifiEnabled
+            from: 0
+            to: 360
+            duration: 1000
+            loops: Animation.Infinite
           }
         }
 
-        ColumnLayout {
-          anchors.fill: parent
-          anchors.margins: 10
-          spacing: 6
+        Text {
+          text: "Loading network settings..."
+          font.pixelSize: Theme.fontSizeSmall
+          color: Theme.barDarkColor
+          Layout.alignment: Qt.AlignHCenter
+        }
+      }
+    }
 
-          RowLayout {
-            Layout.fillWidth: true
+    // Main content 
+    ColumnLayout {
+      Layout.fillWidth: true
+      spacing: 14
+      visible: !contentRoot.isInitializing || !contentRoot.wifiEnabled
 
-            Text {
-              text: contentRoot.selectedSsidForPassword
-              font.pixelSize: 11
-              font.bold: true
-              color: Theme.barColor
-              elide: Text.ElideRight
-              Layout.fillWidth: true
-            }
+      // Password section
+      ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 6
+        visible: contentRoot.showPasswordInput
 
-            Rectangle {
-              width: 18
-              height: 18
-              radius: 4
-              color: closePassMouse.containsMouse
-                     ? Theme.barDarkColor
-                     : "transparent"
+        Text {
+          text: "Password Required"
+          font.pixelSize: Theme.fontSizeSmall
+          font.bold: true
+          color: Theme.colYellow
+        }
 
-              Text {
-                anchors.centerIn: parent
-                text: "✕"
-                font.pixelSize: 10
-                color: Theme.barColor
-              }
+        Rectangle {
+          Layout.fillWidth: true
+          height: contentRoot.errorMessage ? 90 : 75
+          radius: 8
+          color: Theme.widgetLightBackground
 
-              MouseArea {
-                id: closePassMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-
-                onClicked: {
-                  contentRoot.showPasswordInput = false
-                  contentRoot.errorMessage = ""
-                }
-              }
+          Behavior on height {
+            NumberAnimation {
+              duration: 150
             }
           }
 
-          Text {
-            text: contentRoot.errorMessage
-            font.pixelSize: 9
-            color: Theme.colRed
-            visible: contentRoot.errorMessage !== ""
-                     && contentRoot.errorSsid === contentRoot.selectedSsidForPassword
-          }
+          ColumnLayout {
+            anchors.fill: parent
+            anchors.margins: 10
+            spacing: 6
 
-          RowLayout {
-            Layout.fillWidth: true
-            spacing: 8
-
-            Rectangle {
+            RowLayout {
               Layout.fillWidth: true
-              height: 30
-              radius: 6
-              color: Theme.barDarkColor
-              border.color: contentRoot.errorMessage
-                            ? Theme.colRed
-                            : Theme.colBlue
-              border.width: 1
-
-              TextInput {
-                id: passwordInput
-                anchors.fill: parent
-                anchors.leftMargin: 8
-                anchors.rightMargin: 35
-                verticalAlignment: TextInput.AlignVCenter
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.barColor
-                echoMode: passwordInput.showPassword
-                          ? TextInput.Normal
-                          : TextInput.Password
-
-                property bool showPassword: false
-
-                Timer {
-                  interval: 50
-                  running: contentRoot.showPasswordInput
-                  repeat: true
-
-                  onTriggered: {
-                    if (
-                      contentRoot.showPasswordInput &&
-                      !passwordInput.activeFocus
-                    ) {
-                      passwordInput.forceActiveFocus()
-                    }
-                  }
-                }
-
-                onAccepted: {
-                  contentRoot.errorMessage = ""
-
-                  let targetSsid = contentRoot.selectedSsidForPassword
-                  if (targetSsid !== "") {
-                    let updatedMap = contentRoot.savedSsidsMap
-                    updatedMap[targetSsid] = true
-                    contentRoot.savedSsidsMap = updatedMap
-                  }
-
-                  let cmd =
-                    "nmcli dev wifi connect " +
-                    contentRoot.escapeShellArg(targetSsid) +
-                    " password " +
-                    contentRoot.escapeShellArg(text)
-
-                  connectProcess.command = ["sh", "-c", cmd]
-                  connectProcess.running = true
-
-                  text = ""
-                  refreshTimer.restart()
-                }
-              }
 
               Text {
-                anchors.right: parent.right
-                anchors.rightMargin: 8
-                anchors.verticalCenter: parent.verticalCenter
-                text: passwordInput.showPassword ? "󰛐" : "󰈈"
-                font.pixelSize: 14
-                color: eyeMouse.containsMouse
-                       ? Theme.barColor
-                       : Theme.barDarkColor
+                text: contentRoot.selectedSsidForPassword
+                font.pixelSize: 11
+                font.bold: true
+                color: Theme.barColor
+                elide: Text.ElideRight
+                Layout.fillWidth: true
+              }
+
+              Rectangle {
+                width: 18
+                height: 18
+                radius: 4
+                color: closePassMouse.containsMouse
+                       ? Theme.barDarkColor
+                       : "transparent"
+
+                Text {
+                  anchors.centerIn: parent
+                  text: "✕"
+                  font.pixelSize: 10
+                  color: Theme.barColor
+                }
 
                 MouseArea {
-                  id: eyeMouse
+                  id: closePassMouse
                   anchors.fill: parent
-                  anchors.margins: -4
                   hoverEnabled: true
                   cursorShape: Qt.PointingHandCursor
 
                   onClicked: {
-                    passwordInput.showPassword =
-                      !passwordInput.showPassword
+                    resetState()
                   }
-                }
-              }
-
-              MouseArea {
-                anchors.fill: parent
-                acceptedButtons: Qt.LeftButton
-
-                onClicked: {
-                  passwordInput.forceActiveFocus()
                 }
               }
             }
 
-            Rectangle {
-              width: 55
-              height: 30
-              radius: 6
-              color: connectMouse.containsMouse
-                     ? Theme.colGreen
-                     : Theme.barDarkColor
+            Text {
+              text: contentRoot.errorMessage
+              font.pixelSize: 9
+              color: Theme.colRed
+              visible: contentRoot.errorMessage !== ""
+                       && contentRoot.errorSsid === contentRoot.selectedSsidForPassword
+            }
 
-              Text {
-                anchors.centerIn: parent
-                text: "Join"
-                font.pixelSize: 11
-                font.bold: true
-                color: "white"
-              }
+            RowLayout {
+              Layout.fillWidth: true
+              spacing: 8
 
-              MouseArea {
-                id: connectMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
+              Rectangle {
+                Layout.fillWidth: true
+                height: 30
+                radius: 6
+                color: Theme.barDarkColor
+                border.color: contentRoot.errorMessage
+                              ? Theme.colRed
+                              : Theme.colBlue
+                border.width: 1
 
-                onClicked: {
-                  contentRoot.errorMessage = ""
+                TextInput {
+                  id: passwordInput
+                  anchors.fill: parent
+                  anchors.leftMargin: 8
+                  anchors.rightMargin: 35
+                  verticalAlignment: TextInput.AlignVCenter
+                  font.pixelSize: Theme.fontSizeSmall
+                  color: Theme.barColor
+                  echoMode: passwordInput.showPassword
+                            ? TextInput.Normal
+                            : TextInput.Password
 
-                  let targetSsid = contentRoot.selectedSsidForPassword
-                  if (targetSsid !== "") {
-                    let updatedMap = contentRoot.savedSsidsMap
-                    updatedMap[targetSsid] = true
-                    contentRoot.savedSsidsMap = updatedMap
+                  property bool showPassword: false
+
+                  Timer {
+                    interval: 50
+                    running: contentRoot.showPasswordInput
+                    repeat: true
+
+                    onTriggered: {
+                      if (
+                        contentRoot.showPasswordInput &&
+                        !passwordInput.activeFocus
+                      ) {
+                        passwordInput.forceActiveFocus()
+                      }
+                    }
                   }
 
-                  let cmd =
-                    "nmcli dev wifi connect " +
-                    contentRoot.escapeShellArg(targetSsid) +
-                    " password " +
-                    contentRoot.escapeShellArg(passwordInput.text)
+                  onAccepted: {
+                    contentRoot.errorMessage = ""
 
-                  connectProcess.command = ["sh", "-c", cmd]
-                  connectProcess.running = true
+                    let targetSsid = contentRoot.selectedSsidForPassword
+                    if (targetSsid !== "") {
+                      let updatedMap = contentRoot.savedSsidsMap
+                      updatedMap[targetSsid] = true
+                      contentRoot.savedSsidsMap = updatedMap
+                    }
 
-                  passwordInput.text = ""
-                  refreshTimer.restart()
+                    let cmd =
+                      "nmcli dev wifi connect " +
+                      contentRoot.escapeShellArg(targetSsid) +
+                      " password " +
+                      contentRoot.escapeShellArg(text)
+
+                    contentRoot.showPasswordInput = false
+                    connectProcess.command = ["sh", "-c", cmd]
+                    connectProcess.running = true
+
+                    text = ""
+                    refreshTimer.restart()
+                  }
+                }
+
+                Text {
+                  anchors.right: parent.right
+                  anchors.rightMargin: 8
+                  anchors.verticalCenter: parent.verticalCenter
+                  text: passwordInput.showPassword ? "󰛐" : "󰈈"
+                  font.pixelSize: 14
+                  color: eyeMouse.containsMouse
+                         ? Theme.barColor
+                         : Theme.barDarkColor
+
+                  MouseArea {
+                    id: eyeMouse
+                    anchors.fill: parent
+                    anchors.margins: -4
+                    hoverEnabled: true
+                    cursorShape: Qt.PointingHandCursor
+
+                    onClicked: {
+                      passwordInput.showPassword =
+                        !passwordInput.showPassword
+                    }
+                  }
+                }
+
+                MouseArea {
+                  anchors.fill: parent
+                  acceptedButtons: Qt.LeftButton
+
+                  onClicked: {
+                    passwordInput.forceActiveFocus()
+                  }
+                }
+              }
+
+              Rectangle {
+                width: 55
+                height: 30
+                radius: 6
+                color: connectMouse.containsMouse
+                       ? Theme.colGreen
+                       : Theme.barDarkColor
+
+                Text {
+                  anchors.centerIn: parent
+                  text: "Join"
+                  font.pixelSize: 11
+                  font.bold: true
+                  color: "white"
+                }
+
+                MouseArea {
+                  id: connectMouse
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+
+                  onClicked: {
+                    contentRoot.errorMessage = ""
+
+                    let targetSsid = contentRoot.selectedSsidForPassword
+                    if (targetSsid !== "") {
+                      let updatedMap = contentRoot.savedSsidsMap
+                      updatedMap[targetSsid] = true
+                      contentRoot.savedSsidsMap = updatedMap
+                    }
+
+                    let cmd =
+                      "nmcli dev wifi connect " +
+                      contentRoot.escapeShellArg(targetSsid) +
+                      " password " +
+                      contentRoot.escapeShellArg(passwordInput.text)
+
+                    contentRoot.showPasswordInput = false
+                    connectProcess.command = ["sh", "-c", cmd]
+                    connectProcess.running = true
+
+                    passwordInput.text = ""
+                    refreshTimer.restart()
+                  }
                 }
               }
             }
           }
         }
       }
-    }
 
-    // Box Rete Attualmente Connessa o in caricamento
-    ColumnLayout {
-      Layout.fillWidth: true
-      spacing: 6
-
-      visible: contentRoot.wifiEnabled &&
-               (
-                 contentRoot.currentConnectedSsid !== "" ||
-                 connectProcess.running ||
-                 checkAndConnectProcess.running
-               ) &&
-               !contentRoot.showPasswordInput
-
-      Text {
-        text: (
-          connectProcess.running ||
-          checkAndConnectProcess.running
-        )
-        ? "Connecting..."
-        : "Connected"
-
-        font.pixelSize: Theme.fontSizeSmall
-        font.bold: true
-        color: Theme.barDarkColor
-      }
-
-      Rectangle {
+      // Current network, loading or connected 
+      ColumnLayout {
         Layout.fillWidth: true
-        height: 50
-        radius: 8
-        color: Theme.widgetLightBackground
+        spacing: 6
 
-        RowLayout {
-          anchors.fill: parent
-          anchors.leftMargin: 12
-          anchors.rightMargin: 12
-          spacing: 10
-
-          Text {
-            text: getWifiIcon(contentRoot.currentConnectedSignal)
-            font.pixelSize: 18
-            color: (
-              connectProcess.running ||
-              checkAndConnectProcess.running
-            )
-            ? Theme.colYellow
-            : Theme.colGreen
-          }
-
-          ColumnLayout {
-            Layout.fillWidth: true
-            spacing: 2
-
-            Text {
-              text: (
-                connectProcess.running ||
-                checkAndConnectProcess.running
-              )
-              ? (
-                checkAndConnectProcess.targetSsid !== ""
-                ? checkAndConnectProcess.targetSsid
-                : (contentRoot.selectedSsidForPassword !== "" ? contentRoot.selectedSsidForPassword : contentRoot.currentConnectedSsid)
-              )
-              : contentRoot.currentConnectedSsid
-
-              font.bold: true
-              font.pixelSize: Theme.fontSizeSmall
-              color: Theme.barColor
-              elide: Text.ElideRight
-            }
-
-            Text {
-              text: (
-                connectProcess.running ||
-                checkAndConnectProcess.running
-              )
-              ? "Establishing connection..."
-              : "Connected"
-
-              font.pixelSize: 10
-              color: (
-                connectProcess.running ||
-                checkAndConnectProcess.running
-              )
-              ? Theme.colYellow
-              : Theme.colGreen
-            }
-          }
-
-          Text {
-            visible: connectProcess.running ||
-                     checkAndConnectProcess.running
-
-            text: "\u{ee06}"
-            font.pixelSize: 16
-            color: Theme.colYellow
-            Layout.alignment: Qt.AlignVCenter
-            Layout.preferredWidth: 16
-            Layout.preferredHeight: 16
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-          }
-        }
-      }
-    }
-
-    // Lista Reti Disponibili
-    ColumnLayout {
-      Layout.fillWidth: true
-      spacing: 6
-      visible: contentRoot.wifiEnabled
-
-      RowLayout {
-        Layout.fillWidth: true
-        Layout.minimumHeight: 24
+        visible: contentRoot.wifiEnabled &&
+                 (
+                   contentRoot.currentConnectedSsid !== "" ||
+                   connectProcess.running ||
+                   checkAndConnectProcess.running
+                 ) &&
+                 !contentRoot.showPasswordInput
 
         Text {
-          text: "Networks"
+          text: (
+            connectProcess.running ||
+            checkAndConnectProcess.running
+          )
+          ? "Connecting..."
+          : "Current network"
+
           font.pixelSize: Theme.fontSizeSmall
           font.bold: true
           color: Theme.barDarkColor
-          Layout.fillWidth: true
-          Layout.alignment: Qt.AlignVCenter
-        }
-
-        RowLayout {
-          spacing: 6
-          visible: contentRoot.isScanning
-          Layout.alignment: Qt.AlignVCenter
-
-          Text {
-            text: "Ricerca..."
-            font.pixelSize: 10
-            color: Theme.barDarkColor
-          }
-
-          Text {
-            text: "\u{ee06}"
-            font.pixelSize: 14
-            color: Theme.barColor
-            Layout.preferredWidth: 14
-            Layout.preferredHeight: 14
-            horizontalAlignment: Text.AlignHCenter
-            verticalAlignment: Text.AlignVCenter
-          }
         }
 
         Rectangle {
-          width: 24
-          height: 24
-          radius: 4
-          visible: !contentRoot.isScanning
-          color: refreshMouse.containsMouse
-                 ? Theme.widgetLightBackground
-                 : "transparent"
-          Layout.alignment: Qt.AlignVCenter
-
-          Text {
-            anchors.centerIn: parent
-            text: "󰑐"
-            font.pixelSize: 12
-            color: Theme.barColor
-          }
-
-          MouseArea {
-            id: refreshMouse
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-
-            onClicked: {
-              refreshNetworks()
-            }
-          }
-        }
-      }
-
-      Text {
-        text: "Nessuna rete trovata"
-        font.pixelSize: Theme.fontSizeSmall
-        color: Theme.barDarkColor
-
-        visible: wifiModel.count === 0 &&
-                 !contentRoot.isScanning
-
-        Layout.topMargin: 8
-        Layout.bottomMargin: 8
-        Layout.alignment: Qt.AlignHCenter
-      }
-
-      ListView {
-        id: wifiListView
-
-        Layout.fillWidth: true
-        Layout.preferredHeight: Math.min(
-          contentHeight,
-          Screen.height * 0.45
-        )
-
-        model: wifiModel
-        clip: true
-        spacing: 6
-
-        delegate: Rectangle {
-          required property string ssid
-          required property string signal
-          required property string security
-          required property bool saved
-
-          width: wifiListView.width
-          height: 44
+          Layout.fillWidth: true
+          height: 50
           radius: 8
-
-          HoverHandler {
-            id: delegateHover
-          }
-
-          color: delegateHover.hovered
-                 ? Theme.widgetLightBackground
-                 : "transparent"
+          color: Theme.widgetLightBackground
 
           RowLayout {
             anchors.fill: parent
@@ -894,114 +773,337 @@ Item {
             anchors.rightMargin: 12
             spacing: 10
 
-            Item {
+            Text {
+              text: getWifiIcon(contentRoot.currentConnectedSignal)
+              font.pixelSize: 18
+              color: (
+                connectProcess.running ||
+                checkAndConnectProcess.running
+              )
+              ? Theme.colYellow
+              : Theme.colGreen
+            }
+
+            ColumnLayout {
               Layout.fillWidth: true
-              Layout.fillHeight: true
+              spacing: 2
 
-              RowLayout {
-                anchors.fill: parent
-                spacing: 10
+              Text {
+                text: (
+                  connectProcess.running ||
+                  checkAndConnectProcess.running
+                )
+                ? (
+                  checkAndConnectProcess.targetSsid !== ""
+                  ? checkAndConnectProcess.targetSsid
+                  : (contentRoot.selectedSsidForPassword !== "" ? contentRoot.selectedSsidForPassword : contentRoot.currentConnectedSsid)
+                )
+                : contentRoot.currentConnectedSsid
 
-                Text {
-                  text: getWifiIcon(signal)
-                  font.pixelSize: 16
-                  color: Theme.barColor
-                }
-
-                Text {
-                  text: ssid
-                  font.pixelSize: Theme.fontSizeSmall
-                  font.bold: true
-                  color: Theme.barColor
-                  Layout.fillWidth: true
-                  elide: Text.ElideRight
-                }
+                font.bold: true
+                font.pixelSize: Theme.fontSizeSmall
+                color: Theme.barColor
+                elide: Text.ElideRight
               }
 
-              MouseArea {
-                id: connectArea
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
+              Text {
+                text: (
+                  connectProcess.running ||
+                  checkAndConnectProcess.running
+                )
+                ? "Establishing connection..."
+                : "Connected"
 
-                onClicked: {
-                  contentRoot.errorMessage = ""
-
-                  if (security !== "" && security !== "--") {
-                    let safeSsid = contentRoot.escapeShellArg(ssid)
-
-                    if (saved) {
-                      let cmd = "nmcli dev wifi connect " + safeSsid
-                      connectProcess.command = ["sh", "-c", cmd]
-                      connectProcess.running = true
-                      refreshTimer.restart()
-                    } else {
-                      contentRoot.selectedSsidForPassword = ssid
-                      contentRoot.showPasswordInput = true
-                    }
-                  } else {
-                    let safeSsid = contentRoot.escapeShellArg(ssid)
-                    let cmd = "nmcli dev wifi connect " + safeSsid
-
-                    connectProcess.command = ["sh", "-c", cmd]
-                    connectProcess.running = true
-                    refreshTimer.restart()
-                  }
-                }
+                font.pixelSize: 10
+                color: (
+                  connectProcess.running ||
+                  checkAndConnectProcess.running
+                )
+                ? Theme.colYellow
+                : Theme.colGreen
               }
             }
 
             Text {
-              text: security !== "" && security !== "--"
-                    ? ""
-                    : ""
+              id: spinnerIcon
+              visible: connectProcess.running ||
+                       checkAndConnectProcess.running
 
-              font.pixelSize: 12
+              text: contentRoot.spinnerIcon 
+              font.pixelSize: 16
+              color: Theme.colYellow
+              Layout.alignment: Qt.AlignVCenter
+              Layout.preferredWidth: 16
+              Layout.preferredHeight: 16
+              horizontalAlignment: Text.AlignHCenter
+              verticalAlignment: Text.AlignVCenter
+              transformOrigin: Item.Center
+
+              RotationAnimation on rotation {
+                running: spinnerIcon.visible
+                from: 0
+                to: 360
+                duration: 1000
+                loops: Animation.Infinite
+              }
+            }
+          }
+        }
+      }
+
+      // Horizontal divider
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.topMargin: 4
+        Layout.bottomMargin: 4
+        height: 1
+        color: Theme.barDarkColor
+        opacity: 0.25
+        visible: contentRoot.wifiEnabled && (contentRoot.currentConnectedSsid !== "" || connectProcess.running || checkAndConnectProcess.running || contentRoot.showPasswordInput)
+      }
+
+      // Available networks
+      ColumnLayout {
+        Layout.fillWidth: true
+        spacing: 6
+        visible: contentRoot.wifiEnabled
+
+        RowLayout {
+          Layout.fillWidth: true
+          Layout.minimumHeight: 24
+
+          Text {
+            text: "Available networks"
+            font.pixelSize: Theme.fontSizeSmall
+            font.bold: true
+            color: Theme.barDarkColor
+            Layout.fillWidth: true
+            Layout.alignment: Qt.AlignVCenter
+          }
+
+          RowLayout {
+            spacing: 6
+            visible: contentRoot.isScanning
+            Layout.alignment: Qt.AlignVCenter
+
+            Text {
+              text: "Scanning..."
+              font.pixelSize: 10
               color: Theme.barDarkColor
             }
 
-            Rectangle {
-              width: 24
-              height: 24
-              radius: 4
+            Text {
+              id: scanSpinner
+              text: contentRoot.spinnerIcon
+              font.pixelSize: 14
+              color: Theme.barColor
+              Layout.preferredWidth: 14
+              Layout.preferredHeight: 14
+              horizontalAlignment: Text.AlignHCenter
+              verticalAlignment: Text.AlignVCenter
+              transformOrigin: Item.Center
 
-              color: editMouse.containsMouse
-                     ? Theme.barDarkColor
-                     : "transparent"
-
-              visible: delegateHover.hovered && saved
-
-              Text {
-                anchors.centerIn: parent
-                text: ""
-                font.pixelSize: 11
-                color: Theme.barColor
+              RotationAnimation on rotation {
+                running: contentRoot.isScanning
+                from: 0
+                to: 360
+                duration: 1000
+                loops: Animation.Infinite
               }
+            }
+          }
 
-              MouseArea {
-                id: editMouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
+          Rectangle {
+            width: 24
+            height: 24
+            radius: 4
+            visible: !contentRoot.isScanning
+            color: refreshMouse.containsMouse
+                   ? Theme.widgetLightBackground
+                   : "transparent"
+            Layout.alignment: Qt.AlignVCenter
 
-                onClicked: mouse => {
-                console.log("Editing connection")
-                  mouse.accepted = true
+            Text {
+              anchors.centerIn: parent
+              text: "󰑐"
+              font.pixelSize: Theme.fontSize
+              color: Theme.barColor
+            }
 
-                  let uuid = contentRoot.savedUuidsMap[ssid] || ""
-                  let cmd = ""
+            MouseArea {
+              id: refreshMouse
+              anchors.fill: parent
+              hoverEnabled: true
+              cursorShape: Qt.PointingHandCursor
 
-                  if (uuid !== "") {
-                    cmd = "nm-connection-editor --edit " + contentRoot.escapeShellArg(uuid)
-                  } else {
-                    cmd = "nm-connection-editor"
+              onClicked: {
+                refreshNetworks()
+              }
+            }
+          }
+        }
+
+        Text {
+          text: "No networks found"
+          font.pixelSize: Theme.fontSizeSmall
+          color: Theme.barDarkColor
+
+          visible: wifiModel.count === 0 &&
+                   !contentRoot.isScanning
+
+          Layout.topMargin: 8
+          Layout.bottomMargin: 8
+          Layout.alignment: Qt.AlignHCenter
+        }
+
+        ListView {
+          id: wifiListView
+
+          Layout.fillWidth: true
+          Layout.preferredHeight: Math.min(
+            contentHeight,
+            Screen.height * 0.45
+          )
+
+          model: wifiModel
+          clip: true
+          spacing: 6
+
+          delegate: Rectangle {
+            required property string ssid
+            required property string signal
+            required property string security
+            required property bool saved
+
+            width: wifiListView.width
+            height: 44
+            radius: 8
+
+            HoverHandler {
+              id: delegateHover
+            }
+
+            color: delegateHover.hovered
+                   ? Theme.widgetLightBackground
+                   : "transparent"
+
+            RowLayout {
+              anchors.fill: parent
+              anchors.leftMargin: 12
+              anchors.rightMargin: 12
+              spacing: 10
+
+              Item {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+
+                RowLayout {
+                  anchors.fill: parent
+                  spacing: 10
+
+                  Text {
+                    text: getWifiIcon(signal)
+                    font.pixelSize: 16
+                    color: Theme.barColor
                   }
 
-                  openEditorProcess.command = ["sh", "-c", cmd]
-                  openEditorProcess.running = true
-
-                  StateManager.closeActivePopup()
+                  Text {
+                    text: ssid
+                    font.pixelSize: Theme.fontSizeSmall
+                    font.bold: true
+                    color: Theme.barColor
+                    Layout.fillWidth: true
+                    elide: Text.ElideRight
+                  }
                 }
+
+                MouseArea {
+                  id: connectArea
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+
+                  onClicked: {
+                    contentRoot.errorMessage = ""
+                    contentRoot.errorSsid = ""
+                    contentRoot.selectedSsidForPassword = ssid
+
+                    let safeSsid = contentRoot.escapeShellArg(ssid)
+
+                    if (security !== "" && security !== "--") {
+                      if (saved) {
+                        contentRoot.showPasswordInput = false
+                        let cmd = "nmcli dev wifi connect " + safeSsid
+                        connectProcess.command = ["sh", "-c", cmd]
+                        connectProcess.running = true
+                        refreshTimer.restart()
+                      } else {
+                        contentRoot.showPasswordInput = true
+                      }
+                    } else {
+                      contentRoot.showPasswordInput = false
+                      let cmd = "nmcli dev wifi connect " + safeSsid
+                      connectProcess.command = ["sh", "-c", cmd]
+                      connectProcess.running = true
+                      refreshTimer.restart()
+                    }
+                  }
+                }
+              } 
+
+              Rectangle {
+                width: 24
+                height: 24
+                radius: 4
+
+                color: editMouse.containsMouse
+                       ? Theme.barDarkColor
+                       : "transparent"
+
+                visible: delegateHover.hovered && saved
+
+                Text {
+                  anchors.centerIn: parent
+                  text: ""
+                  font.pixelSize: Theme.barFontSizeSmall
+                  color: editMouse.containsMouse
+                       ? Theme.widgetLightBackground
+                       : Theme.barColor
+                }
+
+                MouseArea {
+                  id: editMouse
+                  anchors.fill: parent
+                  hoverEnabled: true
+                  cursorShape: Qt.PointingHandCursor
+
+                  onClicked: mouse => {
+                    mouse.accepted = true
+
+                    let uuid = contentRoot.savedUuidsMap[ssid] || ""
+                    let cmd = ""
+
+                    if (uuid !== "") {
+                      cmd = "nm-connection-editor --edit " + contentRoot.escapeShellArg(uuid)
+                    } else {
+                      cmd = "nm-connection-editor"
+                    }
+
+                    openEditorProcess.command = ["sh", "-c", cmd]
+                    openEditorProcess.running = true
+
+                    StateManager.closeActivePopup()
+                  }
+                }
+              }
+            
+              Text {
+                text: security !== "" && security !== "--"
+                      ? ""
+                      : ""
+
+                font.pixelSize: 12
+                color: Theme.barDarkColor
               }
             }
           }
