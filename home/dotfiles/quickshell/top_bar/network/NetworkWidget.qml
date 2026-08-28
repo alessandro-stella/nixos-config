@@ -31,7 +31,7 @@ Item {
 
   Process {
     id: checkNetwork
-    command: ["sh", "-c", "if [ \"$(nmcli radio wifi)\" = \"disabled\" ]; then echo \"wifi:disabled\"; else nmcli -t -f TYPE,STATE,CONNECTION device | grep '^ethernet:connected\\|^wifi:connected'; fi"]
+    command: ["sh", "-c", "nmcli -t -f TYPE,STATE,CONNECTION device | grep -E '(ethernet|wifi):connected'"]
     stdout: SplitParser {
       onRead: data => {
         if (!data || data.trim() === "") {
@@ -42,35 +42,36 @@ Item {
         }
 
         let cleaned = data.trim()
-        if (cleaned === "wifi:disabled") {
-          root.connectionType = "wifi_off"
-          root.ssidName = "Off"
-          root.wifiStrength = 0
-          return
-        }
 
         let lines = cleaned.split("\n")
         let found = false
+
         for (let line of lines) {
-          if (line.startsWith("ethernet:connected")) {
-            root.connectionType = "ethernet"
-            root.ssidName = "LAN"
-            root.wifiStrength = 0
-            found = true
-            break
-          } else if (line.startsWith("wifi:connected")) {
-            root.connectionType = "wifi"
-            let parts = line.split(":")
+          let parts = line.split(":")
+          
+          if (parts.length >= 2) {
+            let type = parts[0].trim()
+            let state = parts[1].trim()
+            
+            if (type === "ethernet" && state === "connected") {
+              root.connectionType = "ethernet"
+              root.ssidName = "LAN"
+              root.wifiStrength = 0
+              found = true
+              break
+            } else if (type === "wifi" && state === "connected") {
+              root.connectionType = "wifi"
 
-            if (parts.length >= 3) {
-              root.ssidName = parts[2]
+              if (parts.length >= 3) {
+                root.ssidName = parts[2].trim()
+              }
+              checkWifiStrength.running = true
+              found = true
+              break
             }
-
-            checkWifiStrength.running = true
-            found = true
-            break
           }
         }
+
         if (!found) {
           root.connectionType = "disconnected"
           root.ssidName = ""
@@ -116,14 +117,14 @@ Item {
     return "󰤨"
   }
 
-  // Contenitore icona identico a quello blu
+  // Main container
   Item {
     id: iconContainer
     anchors.centerIn: parent
     width: referenceIcon.implicitWidth > 0 ? referenceIcon.implicitWidth : 18
     height: parent.height
 
-    // Icona invisibile di riferimento per bloccare la larghezza corretta
+    // Reference icon
     Text {
       id: referenceIcon
       text: "󰤨"
@@ -133,7 +134,7 @@ Item {
       visible: false
     }
 
-    // Icona reale
+    // Real icon
     Text {
       id: iconText
       text: {
@@ -148,7 +149,7 @@ Item {
     }
   }
 
-  // PopupWindow dell'hover
+  // Small popup
   PopupWindow {
     id: hoverPopup
     
@@ -157,7 +158,13 @@ Item {
     anchor.edges: Edges.Bottom
     anchor.gravity: Edges.Bottom
 
-    visible: !networkPopup.isOpen && (mouseArea.containsMouse || tooltipRect.opacity > 0)
+    // visible: {
+    //   let isVisible = !networkPopup.isOpen && (mouseArea.containsMouse || tooltipRect.opacity > 0)
+    //   return isVisible
+    // }
+
+    visible: true
+
     color: "transparent"  
 
     implicitWidth: tooltipRect.implicitWidth
@@ -212,6 +219,10 @@ Item {
     id: networkPopup
     parentWindow: root.parentWindow
     targetItem: root
+    connectionType: root.connectionType
+    ssidName: root.ssidName
+    ipAddress: root.ipAddress
+    wifiStrength: root.wifiStrength
   }
 
   MouseArea {
@@ -220,7 +231,6 @@ Item {
     hoverEnabled: true
     cursorShape: Qt.PointingHandCursor
     onClicked: {
-      hoverPopup.visible = false
       networkPopup.toggle()
     }
   }

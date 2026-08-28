@@ -145,7 +145,7 @@ Item {
           }
           while (otherTempsModel.count > otherList.length) otherTempsModel.remove(otherTempsModel.count - 1);
         } catch(e) {
-          console.log("JSON parsing error: " + e)
+          console.log("JSON parsing error in TemperaturePopupContent: " + e)
         }
       }
     }

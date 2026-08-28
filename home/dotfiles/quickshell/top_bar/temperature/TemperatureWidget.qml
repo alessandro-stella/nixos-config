@@ -57,7 +57,7 @@ Rectangle {
             root.tempLabel = labelFound;
           }
         } catch(e) {
-          console.log("Errore parsing JSON: " + e)
+          console.log("JSON parsing error in TemperatureWidget: " + e)
         }
       }
     }

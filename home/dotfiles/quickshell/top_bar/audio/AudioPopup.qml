@@ -73,7 +73,7 @@ Scope {
             NumberAnimation { duration: Theme.slowAnimation }
           }
 
-          // Header con Titolo e Pulsante Impostazioni[cite: 2]
+          // Header
           Item {
             Layout.fillWidth: true
             height: titleText.height
@@ -122,7 +122,7 @@ Scope {
             }
           }
 
-          // Area scorribile per i device[cite: 2]
+          // Scrollable area for all devices
           ScrollView {
             id: scrollView
             Layout.fillWidth: true
@@ -136,7 +136,7 @@ Scope {
               width: scrollView.availableWidth
               spacing: 12
 
-              // Output devices[cite: 2]
+              // Output devices
               ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 8
@@ -185,14 +185,14 @@ Scope {
                 }
               }
 
-              // Divider[cite: 2]
+              // Divider
               Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 1
                 color: Theme.widgetLightBackground
               }
 
-              // Input devices[cite: 2]
+              // Input devices
               ColumnLayout {
                 Layout.fillWidth: true
                 spacing: 8

@@ -54,7 +54,7 @@ Item {
             root.isDnd = false;
           }
         } catch (e) {
-          // Ignore parsing errors
+          console.log("JSON parsing error in NotificationWidget: " + e)
         }
       }
     }

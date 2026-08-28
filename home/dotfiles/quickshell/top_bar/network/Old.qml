@@ -11,7 +11,7 @@ Item {
   implicitHeight: mainLayout.implicitHeight
   implicitWidth: 350
 
-  readonly property string spinnerIcon: ""
+  readonly property string spinnerIcon: ""
 
   property bool wifiEnabled: true
   property bool isScanning: false
@@ -32,7 +32,7 @@ Item {
   property var savedUuidsMap: ({})
 
   // Properties from NetworkWidget
-  property string connectionType: "disconnected" // disconnected, wifi, wifi-off, ethernet
+  property string connectionType: "disconnected"
   property string ssidName: ""
   property string ipAddress: "N/A"
   property real wifiStrength: 0
@@ -459,7 +459,8 @@ Item {
                 contentRoot.isInitializing = true
                 checkWifiStatus.running = true
                 getSavedNetworks.running = true
-                refreshNetworks()
+                contentRoot.isScanning = true
+                scanAndReadProcess.running = true
               }
             }
           }
@@ -472,6 +473,7 @@ Item {
       Layout.fillWidth: true
       Layout.preferredHeight: {
         let h = contentRoot.isInitializing && contentRoot.wifiEnabled ? 120 : 0
+        console.log("Loader height:", h, "isInitializing:", contentRoot.isInitializing, "wifiEnabled:", contentRoot.wifiEnabled)
         return h
       }
       visible: contentRoot.isInitializing && contentRoot.wifiEnabled
@@ -484,7 +486,7 @@ Item {
         Text {
           id: globalSpinner
           text: contentRoot.spinnerIcon
-          font.pixelSize: 24
+          font.pixelSize: 22
           color: Theme.barDarkColor
           Layout.alignment: Qt.AlignHCenter
           transformOrigin: Item.Center
@@ -680,7 +682,10 @@ Item {
                     z: 3
 
                     onClicked: {
-                      passwordInput.showPassword = !passwordInput.showPassword
+                      console.log("Eye clicked! Current showPassword:", passwordInput.showPassword)
+                      passwordInput.showPassword =
+                        !passwordInput.showPassword
+                      console.log("After toggle showPassword:", passwordInput.showPassword)
                     }
                   }
                 }
@@ -783,16 +788,16 @@ Item {
             anchors.fill: parent
             anchors.leftMargin: 12
             anchors.rightMargin: 12
-            spacing: 12
+            spacing: 10
 
             Text {
               text: {
                 let isConnecting = connectProcess.running || checkAndConnectProcess.running
-
+                
                 if (isConnecting) {
                   return getWifiIcon(contentRoot.wifiStrength)
                 }
-
+                
                 if (contentRoot.connectionType === "ethernet") return "󰌗"
                 if (contentRoot.connectionType === "wifi") return getWifiIcon(contentRoot.wifiStrength)
                 return getWifiIcon(contentRoot.currentConnectedSignal)
@@ -804,6 +809,14 @@ Item {
               )
               ? Theme.colYellow
               : Theme.colGreen
+              visible: contentRoot.connectionType !== "ethernet" || !(connectProcess.running || checkAndConnectProcess.running)
+              
+              Rectangle {
+                anchors.fill: parent
+                anchors.margins: -4
+                color: "#ff000044"
+                z: -1
+              }
             }
 
             ColumnLayout {
@@ -826,7 +839,6 @@ Item {
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.barColor
                 elide: Text.ElideRight
-                Layout.fillWidth: true
               }
 
               Text {
@@ -835,32 +847,47 @@ Item {
                   checkAndConnectProcess.running
                 )
                 ? "Establishing connection..."
-                : ((contentRoot.connectionType === "ethernet" || contentRoot.connectionType === "wifi") ? contentRoot.ipAddress : "Connected")
+                : (contentRoot.connectionType === "ethernet" ? contentRoot.ipAddress : "Connected")
 
-                font.pixelSize: Theme.barFontSizeSmall
+                font.pixelSize: 10
                 color: (
                   connectProcess.running ||
                   checkAndConnectProcess.running
                 )
                 ? Theme.colYellow
-                : Theme.barColor
+                : Theme.colGreen
+              }
+              
+              Rectangle {
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                color: "#00ff0044"
               }
             }
 
             Text {
               id: spinnerIcon
-              visible: connectProcess.running || checkAndConnectProcess.running
+              visible: true
 
               text: contentRoot.spinnerIcon 
-              font.pixelSize: 24
+              font.pixelSize: 16
               color: Theme.colYellow
               Layout.alignment: Qt.AlignVCenter
+              Layout.preferredWidth: 16
+              Layout.preferredHeight: 16
               horizontalAlignment: Text.AlignHCenter
               verticalAlignment: Text.AlignVCenter
               transformOrigin: Item.Center
+              
+              Rectangle {
+                anchors.fill: parent
+                anchors.margins: -4
+                color: "#0000ff44"
+                z: -1
+              }
 
               RotationAnimation on rotation {
-                running: spinnerIcon.visible
+                running: true
                 from: 0
                 to: 360
                 duration: 1000
@@ -871,21 +898,22 @@ Item {
         }
       }
 
+      // Horizontal divider
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.topMargin: 4
+        Layout.bottomMargin: 4
+        height: 1
+        color: Theme.barDarkColor
+        opacity: 0.25
+        visible: (contentRoot.connectionType === "ethernet") || (contentRoot.wifiEnabled && (contentRoot.currentConnectedSsid !== "" || connectProcess.running || checkAndConnectProcess.running || contentRoot.showPasswordInput))
+      }
+
       // Available networks
       ColumnLayout {
         Layout.fillWidth: true
         spacing: 6
         visible: contentRoot.wifiEnabled
-
-        // Horizontal divider
-        Rectangle {
-          Layout.fillWidth: true
-          Layout.topMargin: 4
-          Layout.bottomMargin: 4
-          height: 1
-          color: Theme.barDarkColor
-          opacity: 0.25
-        }
 
         RowLayout {
           Layout.fillWidth: true
@@ -1083,7 +1111,7 @@ Item {
 
                 Text {
                   anchors.centerIn: parent
-                  text: ""
+                  text: ""
                   font.pixelSize: Theme.barFontSizeSmall
                   color: editMouse.containsMouse
                        ? Theme.widgetLightBackground
@@ -1118,12 +1146,14 @@ Item {
             
               Text {
                 text: security !== "" && security !== "--"
-                      ? ""
+                      ? ""
                       : ""
 
                 font.pixelSize: 12
                 color: Theme.barDarkColor
-              }            }
+                visible: (security !== "" && security !== "--") || saved
+              }
+            }
           }
         }
       }

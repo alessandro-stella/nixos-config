@@ -9,6 +9,11 @@ Scope {
 
   required property Item targetItem
   required property PanelWindow parentWindow
+  
+  property string connectionType: "disconnected"
+  property string ssidName: ""
+  property string ipAddress: "N/A"
+  property real wifiStrength: 0
 
   property bool isOpen: false
   property bool _isLoaded: false
@@ -53,7 +58,19 @@ Scope {
       targetItem: popupScope.targetItem
       popupWidth: 380
 
-      contentComponent: NetworkPopupContent {}
+      contentComponent: Item {
+        implicitWidth: networkContent.implicitWidth
+        implicitHeight: networkContent.implicitHeight
+
+        NetworkPopupContent {
+          id: networkContent
+          anchors.fill: parent
+          connectionType: popupScope.connectionType
+          ssidName: popupScope.ssidName
+          ipAddress: popupScope.ipAddress
+          wifiStrength: popupScope.wifiStrength
+        }
+      }
 
       onIsOpenChanged: {
         if (popupScope.isOpen !== isOpen) {
