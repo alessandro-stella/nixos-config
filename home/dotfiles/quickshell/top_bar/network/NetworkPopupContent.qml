@@ -372,7 +372,7 @@ Item {
 
         Text {
           anchors.centerIn: parent
-          text: ""
+          text: ""
           font.pixelSize: Theme.fontSizeSmall
           color: Theme.barColor
         }
@@ -1084,7 +1084,7 @@ Item {
                 Text {
                   anchors.centerIn: parent
                   text: ""
-                  font.pixelSize: Theme.barFontSizeSmall
+                  font.pixelSize: Theme.barFontSize
                   color: editMouse.containsMouse
                        ? Theme.widgetLightBackground
                        : Theme.barColor
@@ -1117,13 +1117,13 @@ Item {
               }
             
               Text {
-                text: security !== "" && security !== "--"
-                      ? ""
-                      : ""
+                text: ""
 
-                font.pixelSize: 12
+                font.pixelSize: Theme.barFontSize
                 color: Theme.barDarkColor
-              }            }
+                visible: security !== "" && security !== "--"
+              }            
+            }
           }
         }
       }
