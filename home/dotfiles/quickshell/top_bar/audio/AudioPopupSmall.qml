@@ -171,7 +171,7 @@ Scope {
                   anchors.left: parent.left
                   anchors.right: parent.right
                   height: parent.height * smallPopupRoot.currentVolume
-                  color: smallPopupRoot.currentMuted ? Theme.colRed : Theme.colGreen
+                  color: smallPopupRoot.currentMuted ? Theme.colRed : Theme.barColor
                   radius: 8
 
                   Behavior on height {

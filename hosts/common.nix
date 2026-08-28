@@ -40,6 +40,7 @@ in
     psmisc
     fzf
     ntfs3g
+    networkmanagerapplet
 
     polkit_gnome
     (writeShellScriptBin "start-polkit" ''
