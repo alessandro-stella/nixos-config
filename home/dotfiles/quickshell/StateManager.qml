@@ -49,6 +49,13 @@ QtObject {
     popup.isOpen = false
   }
 
+  function closeActivePopup() {
+    if (activePopup !== null) {
+      activePopup.isOpen = false
+      activePopup = null
+    }
+  }
+
   function closeAllWidgets() {
     for (const widget of activeWidgets)
       if (widget)

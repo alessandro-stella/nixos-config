@@ -5,14 +5,13 @@ import Quickshell.Services.Pipewire
 import QtQuick.Controls.impl
 import "../.."
 
-Rectangle {
+Item {
   id: root
 
   required property PanelWindow parentWindow
 
   implicitWidth: referenceIcon.width
   implicitHeight: parent.height
-  color: "transparent"
 
   readonly property real scrollStep: 0.01
 
@@ -44,15 +43,14 @@ Rectangle {
 
   readonly property bool isMuted: (root.defaultSink && root.defaultSink.ready && root.defaultSink.audio) ? root.defaultSink.audio.muted : false
 
-  readonly property string audioIconSource: {
-    if (root.isMuted) return "./icons/mute.svg";
+  readonly property string audioIconText: {
+    if (root.isMuted) return "";
 
     const vol = root.volumePercent;
 
-    if (vol === 0) return "./icons/off.svg";
-    if (vol <= 33) return "./icons/one.svg";
-    if (vol <= 66) return "./icons/two.svg";
-    return "./icons/three.svg";
+    if (vol === 0) return "";
+    if (vol <= 50) return "";
+    return "";
   }
 
   readonly property color activeColor: Theme.barColor
@@ -65,23 +63,21 @@ Rectangle {
       Layout.preferredHeight: Theme.barHeight 
       Layout.alignment: Qt.AlignVCenter
 
-      // Invisible image to force max width 
-      Image {
+      // Invisible text to force max width 
+      Text {
         id: referenceIcon
-        source: "./icons/three.svg"
+        text: ""
         anchors.centerIn: parent
-        height: Theme.barHeight * 0.5
-        fillMode: Image.PreserveAspectFit
+        font.pixelSize: Theme.barFontSize
         visible: false
       }
       
       // Actual icon
-      IconImage {
-        id: iconImage
-        source: root.audioIconSource
+      Text {
+        id: iconText
+        text: root.audioIconText
         anchors.centerIn: parent
-        height: Theme.barHeight * 0.5
-        fillMode: Image.PreserveAspectFit
+        font.pixelSize: Theme.barFontSize
         color: Theme.barColor
       }
     }

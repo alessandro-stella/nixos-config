@@ -9,7 +9,7 @@ Scope {
 
   required property Item targetItem
   required property PanelWindow parentWindow
-  
+
   property bool isOpen: false
   property bool _isLoaded: false
 
@@ -48,11 +48,11 @@ Scope {
 
     GenericPopup {
       id: genericPopup
-      
+
       parentWindow: popupScope.parentWindow
       targetItem: popupScope.targetItem
       popupWidth: 380
-      
+
       contentComponent: NetworkPopupContent {}
 
       onIsOpenChanged: {
@@ -61,5 +61,5 @@ Scope {
         }
       }
     }
-  } 
+  }
 }

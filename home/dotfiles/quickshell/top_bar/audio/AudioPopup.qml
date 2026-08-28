@@ -13,10 +13,11 @@ Scope {
   required property PanelWindow parentWindow
 
   property bool isOpen: false
+  property bool _isLoaded: false
 
   function toggle() {
-    isOpen = !isOpen
-    if (isOpen) {
+    if (!isOpen) {
+      _isLoaded = true
       StateManager.requestOpen(popupScope)
     } else {
       StateManager.requestClose(popupScope)
@@ -25,185 +26,213 @@ Scope {
 
   readonly property real dynamicWidth: 440
 
-  // Istanziamo direttamente il GenericPopup incorporando la logica del contenuto
-  GenericPopup {
-    id: genericPopup
-    
-    parentWindow: popupScope.parentWindow
-    targetItem: popupScope.targetItem
-    popupWidth: popupScope.dynamicWidth
-    
-    isOpen: popupScope.isOpen
+  Loader {
+    id: popupLoader
+    active: popupScope._isLoaded
+    sourceComponent: popupContentComponent
 
-    onIsOpenChanged: {
-      if (popupScope.isOpen !== isOpen) {
-        popupScope.isOpen = isOpen
+    onLoaded: {
+      if (item) {
+        item.isOpen = popupScope.isOpen
       }
     }
+  }
 
-    contentComponent: Component {
-      ColumnLayout {
-        id: contentRoot
-        spacing: 12
-        
-        opacity: Pipewire.ready ? 1 : 0
-        Behavior on opacity {
-          NumberAnimation { duration: Theme.slowAnimation }
+  Connections {
+    target: popupScope
+    function onIsOpenChanged() {
+      if (popupLoader.item && popupLoader.item.isOpen !== popupScope.isOpen) {
+        popupLoader.item.isOpen = popupScope.isOpen
+      }
+    }
+  }
+
+  Component {
+    id: popupContentComponent
+
+    GenericPopup {
+      id: genericPopup
+      
+      parentWindow: popupScope.parentWindow
+      targetItem: popupScope.targetItem
+      popupWidth: popupScope.dynamicWidth
+
+      onIsOpenChanged: {
+        if (popupScope.isOpen !== isOpen) {
+          popupScope.isOpen = isOpen
         }
+      }
 
-        // Header con Titolo e Pulsante Impostazioni[cite: 2]
-        RowLayout {
-          Layout.fillWidth: true
-          spacing: 8
+      contentComponent: Component {
+        ColumnLayout {
+          id: contentRoot
+          spacing: 12
+          
+          opacity: Pipewire.ready ? 1 : 0
+          Behavior on opacity {
+            NumberAnimation { duration: Theme.slowAnimation }
+          }
 
-          Text {
-            text: "Audio Devices"
-            font.bold: true
-            font.pixelSize: Theme.fontSize
-            color: Theme.barColor
-            font.family: Theme.fontFamily
+          // Header con Titolo e Pulsante Impostazioni[cite: 2]
+          Item {
             Layout.fillWidth: true
-          }
+            height: titleText.height
 
-          Text {
-            text: "󰒓"
-            font.pixelSize: Theme.fontSize
-            color: Theme.barDarkColor
-            font.family: Theme.fontFamily
-
-            MouseArea {
+            RowLayout {
               anchors.fill: parent
-              cursorShape: Qt.PointingHandCursor
-              onClicked: {
-                Quickshell.execDetached(["pavucontrol"])
+              spacing: 8
+
+              Text {
+                id: titleText
+                text: "Audio Devices"
+                font.bold: true
+                font.pixelSize: Theme.fontSize
+                color: Theme.barColor
+                font.family: Theme.fontFamily
+                Layout.fillWidth: true
+                Layout.alignment: Qt.AlignVCenter
               }
-              onEntered: parent.color = Theme.colCyan
-              onExited: parent.color = Theme.barDarkColor
+
+              Text {
+                text: "󰒓"
+                font.pixelSize: Theme.fontSize
+                color: Theme.barColor
+                font.family: Theme.fontFamily
+                Layout.alignment: Qt.AlignVCenter
+
+                MouseArea {
+                  anchors.fill: parent
+                  cursorShape: Qt.PointingHandCursor
+                  onClicked: {
+                    Quickshell.execDetached(["pavucontrol"])
+                  }
+                }
+              }
             }
           }
-        }
 
-        // Area scorribile per i device[cite: 2]
-        ScrollView {
-          id: scrollView
-          Layout.fillWidth: true
-          Layout.preferredHeight: Math.min((Screen.height / 2) - 50, listContainer.implicitHeight)
-          clip: true
+          // Area scorribile per i device[cite: 2]
+          ScrollView {
+            id: scrollView
+            Layout.fillWidth: true
+            Layout.preferredHeight: Math.min((Screen.height / 2) - 50, listContainer.implicitHeight)
+            clip: true
 
-          contentWidth: availableWidth
+            contentWidth: availableWidth
 
-          ColumnLayout {
-            id: listContainer
-            width: scrollView.availableWidth
-            spacing: 12
-
-            // Output devices[cite: 2]
             ColumnLayout {
-              Layout.fillWidth: true
-              spacing: 8
+              id: listContainer
+              width: scrollView.availableWidth
+              spacing: 12
 
-              Text {
-                text: "Output"
-                font.bold: true
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.barDarkColor
-                font.family: Theme.fontFamily
-              }
+              // Output devices[cite: 2]
+              ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 8
 
-              Repeater {
-                id: outputRepeater
-                model: ScriptModel {
-                  values: Pipewire.ready ? Pipewire.nodes.values.filter(node => {
-                    if (!node.isSink || node.isStream || !node.audio) return false;
-                    return true;
-                  }) : []
+                Text {
+                  text: "Output"
+                  font.bold: true
+                  font.pixelSize: Theme.fontSizeSmall
+                  color: Theme.barDarkColor
+                  font.family: Theme.fontFamily
                 }
 
-                delegate: Component {
-                  AudioDeviceItem {
-                    required property var modelData
+                Repeater {
+                  id: outputRepeater
+                  model: ScriptModel {
+                    values: Pipewire.ready ? Pipewire.nodes.values.filter(node => {
+                      if (!node.isSink || node.isStream || !node.audio) return false;
+                      return true;
+                    }) : []
+                  }
 
-                    Layout.fillWidth: true
-                    device: modelData
-                    isActive: modelData === Pipewire.defaultAudioSink
-                    
-                    onSetAsActive: {
-                      if (device && device.ready) {
-                        Pipewire.preferredDefaultAudioSink = device
+                  delegate: Component {
+                    AudioDeviceItem {
+                      required property var modelData
+
+                      Layout.fillWidth: true
+                      device: modelData
+                      isActive: modelData === Pipewire.defaultAudioSink
+                      
+                      onSetAsActive: {
+                        if (device && device.ready) {
+                          Pipewire.preferredDefaultAudioSink = device
+                        }
                       }
                     }
                   }
                 }
+
+                Text {
+                  visible: outputRepeater.count === 0
+                  text: "No output device found"
+                  font.pixelSize: 12
+                  color: Theme.barMutedColor
+                  font.family: Theme.fontFamily
+                  font.italic: true
+                }
               }
 
-              Text {
-                visible: outputRepeater.count === 0
-                text: "No output device found"
-                font.pixelSize: 12
-                color: Theme.barMutedColor
-                font.family: Theme.fontFamily
-                font.italic: true
-              }
-            }
-
-            // Divider[cite: 2]
-            Rectangle {
-              Layout.fillWidth: true
-              Layout.preferredHeight: 1
-              color: Theme.widgetLightBackground
-            }
-
-            // Input devices[cite: 2]
-            ColumnLayout {
-              Layout.fillWidth: true
-              spacing: 8
-
-              Text {
-                text: "Input"
-                font.bold: true
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.barDarkColor
-                font.family: Theme.fontFamily
+              // Divider[cite: 2]
+              Rectangle {
+                Layout.fillWidth: true
+                Layout.preferredHeight: 1
+                color: Theme.widgetLightBackground
               }
 
-              Repeater {
-                id: inputRepeater
-                model: ScriptModel {
-                  values: Pipewire.ready ? Pipewire.nodes.values.filter(node => {
-                    if (!node.audio || node.isSink || node.isStream) return false;
-                    
-                    const name = (node.description || node.name || "").toLowerCase();
-                    if (name.includes("dummy") || name.includes("freewheel") || name.includes("midi") || name.includes("bridge")) {
-                      return false;
-                    }
-                    return true;
-                  }) : []
+              // Input devices[cite: 2]
+              ColumnLayout {
+                Layout.fillWidth: true
+                spacing: 8
+
+                Text {
+                  text: "Input"
+                  font.bold: true
+                  font.pixelSize: Theme.fontSizeSmall
+                  color: Theme.barDarkColor
+                  font.family: Theme.fontFamily
                 }
 
-                delegate: Component {
-                  AudioDeviceItem {
-                    required property var modelData
+                Repeater {
+                  id: inputRepeater
+                  model: ScriptModel {
+                    values: Pipewire.ready ? Pipewire.nodes.values.filter(node => {
+                      if (!node.audio || node.isSink || node.isStream) return false;
+                      
+                      const name = (node.description || node.name || "").toLowerCase();
+                      if (name.includes("dummy") || name.includes("freewheel") || name.includes("midi") || name.includes("bridge")) {
+                        return false;
+                      }
+                      return true;
+                    }) : []
+                  }
 
-                    Layout.fillWidth: true
-                    device: modelData
-                    isActive: modelData === Pipewire.defaultAudioSource
-                    
-                    onSetAsActive: {
-                      if (device && device.ready) {
-                        Pipewire.preferredDefaultAudioSource = device
+                  delegate: Component {
+                    AudioDeviceItem {
+                      required property var modelData
+
+                      Layout.fillWidth: true
+                      device: modelData
+                      isActive: modelData === Pipewire.defaultAudioSource
+                      
+                      onSetAsActive: {
+                        if (device && device.ready) {
+                          Pipewire.preferredDefaultAudioSource = device
+                        }
                       }
                     }
                   }
                 }
-              }
 
-              Text {
-                visible: inputRepeater.count === 0
-                text: "No input device found"
-                font.pixelSize: 12
-                color: Theme.barMutedColor
-                font.family: Theme.fontFamily
-                font.italic: true
+                Text {
+                  visible: inputRepeater.count === 0
+                  text: "No input device found"
+                  font.pixelSize: 12
+                  color: Theme.barMutedColor
+                  font.family: Theme.fontFamily
+                  font.italic: true
+                }
               }
             }
           }

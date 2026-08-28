@@ -72,19 +72,20 @@ Item {
     command: ["swaync-client", "-t", "-sw"]
   }
 
-  RowLayout {
-    id: contentRow
-    anchors.centerIn: parent
-    spacing: 2
+  Item {
+    width: root.maxIconWidth
+    height: parent.height
 
     Text {
       text: root.notifIcon
       font.pixelSize: Theme.barFontSize
       font.family: Theme.fontFamily
-      color: root.isDnd ? Theme.colRed : Theme.barColor
-      
-      horizontalAlignment: Text.AlignHCenter 
-      Layout.preferredWidth: root.maxIconWidth
+      color: root.isDnd ? Theme.colRedStrong : Theme.barColor
+       
+      anchors.centerIn: parent
+        
+      horizontalAlignment: Text.AlignHCenter
+      verticalAlignment: Text.AlignVCenter
     }
   }
 

@@ -15,6 +15,8 @@ import "./network"
 PanelWindow {
   id: root
 
+  WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+  
   required property int monitorId
   required property var modelData
 

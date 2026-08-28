@@ -72,10 +72,10 @@ Rectangle {
   }
 
   readonly property color activeColor: {
-    if (isCharging) return Theme.colGreen ?? "#a6e3a1"
-    if (isAC) return Theme.colBlue ?? "#89b4fa"
-    if (percent <= (Theme.batteryCritical ?? 15)) return Theme.colRed ?? "#f38ba8"
-    if (percent <= (Theme.batteryWarning ?? 30)) return Theme.colYellow ?? "#fab387"
+    if (isCharging) return Theme.colGreen
+    if (isAC) return Theme.colBlue
+    if (percent <= (Theme.batteryCritical ?? 15)) return Theme.colRed
+    if (percent <= (Theme.batteryWarning ?? 30)) return Theme.colYellow
     return Theme.barColor
   }
 
@@ -86,7 +86,7 @@ Rectangle {
 
     Text {
       text: root.batteryIcon
-      font.pixelSize: Theme.barFontSize
+      font.pixelSize: Theme.fontSize
       font.family: Theme.fontFamily
       color: root.activeColor
     }

@@ -13,6 +13,7 @@ QtObject {
   readonly property color colGreen: "#a6e3a1"
   readonly property color widgetDarkBackground: "#1a1b26"
   readonly property color widgetLightBackground: "#313244"
+  readonly property color colRedStrong: "#e92d4d"
 
   readonly property string fontFamily: "JetBrainsMono Nerd Font Propo"
   readonly property int fontSize: 16

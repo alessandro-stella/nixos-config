@@ -59,10 +59,17 @@ Rectangle {
     spacing: 4
 
     Text {
-      text: " " + Math.round(root.cpuUsage * 100) + "%"
+      text: ""
       font.pixelSize: Theme.barFontSize
       font.family: Theme.fontFamily
       color: Theme.barColor
+    }
+
+    Text {
+      text: Math.round(root.cpuUsage * 100) + "%"
+      font.pixelSize: Theme.barFontSize
+      color: Theme.barColor
+      font.family: Theme.fontFamily
     }
   }
 
