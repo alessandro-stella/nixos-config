@@ -22,7 +22,6 @@
   environment.systemPackages = with pkgs; [
     brightnessctl
     powertop
-    networkmanagerapplet
   ];
 
   # Power management
