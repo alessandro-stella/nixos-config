@@ -60,7 +60,7 @@
 
   # Disable trackpoint (hardware damage causes drift, I suppose)
   systemd.services.trackpoint-filter = {
-    description = "Filtro per bloccare il drift del TrackPoint";
+    description = "Filter trackpoint drift";
     wantedBy = [ "multi-user.target" ];
     after = [ "systemd-udev-settle.service" ];
 
