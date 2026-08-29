@@ -90,13 +90,4 @@
       RestartSec = "3s";
     };
   };
-
-  # Testing SDDM with fingerprint
-  services.fprintd.enable = true;
-  security.pam.services.sddm = {
-    text = ''
-      auth sufficient pam_fprintd.so
-      auth include login
-    '';
-  };
 }
