@@ -11,6 +11,7 @@ QtObject {
 
   // Variable for lockscreen
   property bool isLocked: false
+  property bool gracePeriodFinished: false
 
   function clearNewThemeState() {
     newThemeImagePath = ""

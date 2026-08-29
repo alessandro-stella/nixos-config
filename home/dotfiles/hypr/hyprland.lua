@@ -8,7 +8,7 @@ require("modules.dynamic-border")
 -- Starting scripts
 hl.on("hyprland.start", function()
 	hl.exec_cmd("start-polkit") -- graphical sudo elevation
-	hl.exec_cmd("waybar") -- Status bar
+	-- hl.exec_cmd("waybar") -- Status bar
 	hl.exec_cmd(
 		"awww-daemon && awww img ~/.config/themes/current_theme/wallpaper.png --transition-type fade --transition-duration 0.5"
 	) -- Wallpaper
