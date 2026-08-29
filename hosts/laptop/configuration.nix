@@ -40,6 +40,8 @@
 
       START_CHARGE_THRESH_BAT0 = 75;
       STOP_CHARGE_THRESH_BAT0 = 90;
+
+      DEVICES_TO_DISABLE_ON_STARTUP = "bluetooth";
     };
   };
 
@@ -87,5 +89,14 @@
       Restart = "always";
       RestartSec = "3s";
     };
+  };
+
+  # Testing SDDM with fingerprint
+  services.fprintd.enable = true;
+  security.pam.services.sddm = {
+    text = ''
+      auth sufficient pam_fprintd.so
+      auth include login
+    '';
   };
 }

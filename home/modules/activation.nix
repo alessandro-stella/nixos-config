@@ -35,13 +35,4 @@ in
     export PATH=${activationPath}:$PATH
     ${./bootstrap/fix-sddm-permissions.sh} ${username}
   '';
-
-  # Create custom files for hyprland
-  # home.activation.setupHyprModules =
-  # config.lib.dag.entryAfter [ "linkGeneration" ] ''
-  #   export PATH=${activationPath}:$PATH
-  #   export DOTFILES_DIR="${dotfilesPath}"
-  #   export TEMPLATE_DIR="${dotfilesPath}/hypr/${hostType}"
-  #   ${./bootstrap/setup-hyprland.sh} 
-  # '';
 }
