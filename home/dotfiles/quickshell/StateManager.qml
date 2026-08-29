@@ -9,6 +9,9 @@ QtObject {
   property string newThemeColor2: "#000000"
   property var newThemePalette: []
 
+  // Variable for lockscreen
+  property bool isLocked: false
+
   function clearNewThemeState() {
     newThemeImagePath = ""
     newThemeColor1 = "#000000"
@@ -78,5 +81,12 @@ QtObject {
     }
 
     clearNewThemeState()
+  }
+
+  function toggleLockscreen() {
+    isLocked = !isLocked
+    if (isLocked) {
+      closeEverything()
+    }
   }
 }

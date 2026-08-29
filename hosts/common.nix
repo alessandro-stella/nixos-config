@@ -1,4 +1,4 @@
-{ pkgs, username, ... }:
+{ pkgs, lib, username, ... }:
 
 let
   sddmTheme = pkgs.stdenv.mkDerivation {
@@ -17,6 +17,8 @@ let
   };
 in
 {
+  system.stateVersion = "26.05";
+
   # Use system hardware configuration
   imports = [
     /etc/nixos/hardware-configuration.nix
@@ -198,8 +200,4 @@ in
 
   # Turn on experimental commands
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
-
-  # Current nix version 
-  system.stateVersion = "26.05";
 }
-

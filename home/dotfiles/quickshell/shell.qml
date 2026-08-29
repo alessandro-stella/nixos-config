@@ -1,5 +1,6 @@
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Hyprland
 import QtQuick
 
 import "./top_bar/"
@@ -7,6 +8,7 @@ import "./app_launcher/"
 import "./clipboard/"
 import "./logout_menu/"
 import "./theme_changer/"
+import "./lockscreen/"
 
 ShellRoot {
   id: root
@@ -70,6 +72,21 @@ ShellRoot {
     model: root.monitorModel
 
     CreateNewTheme {
+      monitorId: modelData
+      screen: Quickshell.screens[modelData]
+    }
+  }
+
+  // Lockscreen
+  GlobalShortcut {
+    name: "toggleLockscreen"
+    onPressed: StateManager.toggleLockscreen()
+  }
+
+  Variants {
+    model: root.monitorModel
+
+    Lockscreen {
       monitorId: modelData
       screen: Quickshell.screens[modelData]
     }

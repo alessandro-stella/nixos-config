@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, username, ... }:
 
 {
   imports = [
@@ -90,4 +90,76 @@
       RestartSec = "3s";
     };
   };
+
+  # === FINGERPRINT READER CONFIGURATION ===
+  # Fprintd è abilitato come servizio INDIPENDENTE
+  # Coesiste con PAM senza conflitti - usano due canali diversi
+  
+  services.fprintd = {
+    enable = true;
+    # Nota: non disabilitare PAM integration - lascviamo che quickshell
+    # chiami fprintd-verify direttamente, indipendentemente da PAM
+  };
+
+  # === PAM CONFIGURATION ===
+  # PAM rimane interamente responsabile dell'autenticazione password
+  # Fprintd NON interfere con PAM perché quickshell lo chiama direttamente
+  security.pam.services = {
+    login.fprintAuth = false;    # ← Fprintd non parte da PAM
+    su.fprintAuth = false;
+    sudo.fprintAuth = false;
+    polkit-1.fprintAuth = false;
+    ghdm.fprintAuth = false;
+    sddm.fprintAuth = false;
+    xdg-desktop-portal.fprintAuth = false;
+  };
+
+  # === PERMISSIONS FOR QUICKSHELL ===
+  # Permetti a quickshell di:
+  # 1. Chiamare fprintd-verify/fprintd-list senza sudo
+  # 2. Accedere direttamente al device biometrico
+  
+  security.sudo.extraRules = [
+    {
+      users = [ username ];
+      commands = [
+        {
+          command = "${pkgs.fprintd}/bin/fprintd-verify";
+          options = [ "NOPASSWD" "NOEXEC" ];
+        }
+        {
+          command = "${pkgs.fprintd}/bin/fprintd-list";
+          options = [ "NOPASSWD" "NOEXEC" ];
+        }
+        {
+          command = "${pkgs.bash}/bin/bash";
+          options = [ "NOPASSWD" "NOEXEC" ];  # Per il comando di detection
+        }
+      ];
+    }
+  ];
+
+  # === UDEV RULES FOR FINGERPRINT DEVICE ===
+  # Assicura che il lettore di impronte sia accessibile senza richiedere sudo
+  services.udev.extraRules = ''
+    # Fingerprint reader - make accessible to 'input' group
+    SUBSYSTEMS=="usb", KERNEL=="*", ATTRS{type}=="*", TAG="uaccess"
+    SUBSYSTEM=="input", KERNEL=="event*", TAG="uaccess"
+  '';
+
+  # Aggiungi l'utente al gruppo input
+  users.groups.input.members = [ username ];  # ← SOSTITUISCI CON IL TUO USERNAME
+
+  # === OPTIONAL: POLKIT RULES ===
+  # Se vuoi permettere a quickshell di chiamare fprintd senza alcun prompt
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if ((action.id == "net.reactivated.Fingerprint.Device.VerifyStart" ||
+           action.id == "net.reactivated.Fingerprint.Device.ListStart") &&
+          subject.user == "${username}") {
+        return polkit.Result.YES;
+      }
+    });
+  '';
 }
+

@@ -109,6 +109,17 @@ hl.window_rule({
 -- Disable rofi animation for resizing
 hl.layer_rule({ name = "rofi-no-anim", match = { namespace = "rofi" }, no_anim = true })
 
+-- Blur lockscreen
+hl.layer_rule({
+	match = { namespace = "quickshell-lock" },
+	blur = true,
+})
+
+-- Quickshell submap to catch all binds
+hl.define_submap("quickshell-lock", function()
+	hl.bind("SUPER + CTRL + ALT + SHIFT + F12", function() end)
+end)
+
 -- Keybinds
 _G.mainMod = "SUPER"
 require("keybinds")
