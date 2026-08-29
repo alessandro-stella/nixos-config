@@ -16,35 +16,58 @@ Item {
   property string ssidName: ""
   property string ipAddress: "N/A"
   property real wifiStrength: 0
+  property bool isConnecting: false
   readonly property bool isWifi: connectionType === "wifi"
 
-  Timer {
-    interval: 3000
+  // Lettura iniziale
+  Component.onCompleted: {
+    checkNetwork.running = true
+  }
+
+  // Processo Sentinella silenzioso
+  Process {
+    id: networkMonitor
+    command: ["nmcli", "monitor"]
     running: true
-    repeat: true
-    triggeredOnStart: true
-    onTriggered: {
-      checkNetwork.running = true
-      getIp.running = true
+
+    stdout: SplitParser {
+      onRead: data => {
+        if (!data) return
+        let line = data.trim().toLowerCase()
+        
+        if (line.includes("connected") || 
+            line.includes("disconnected") || 
+            line.includes("unavailable") || 
+            line.includes("primary connection") ||
+            line.includes("connection profile changed") ||
+            line.includes("connecting")) {
+          
+          checkNetwork.running = true
+        }
+      }
     }
   }
 
   Process {
     id: checkNetwork
-    command: ["sh", "-c", "nmcli -t -f TYPE,STATE,CONNECTION device | grep -E '(ethernet|wifi):connected'"]
-    stdout: SplitParser {
-      onRead: data => {
-        if (!data || data.trim() === "") {
+    command: ["nmcli", "-t", "-f", "TYPE,STATE,CONNECTION", "device"]
+    property string accumulatedOutput: ""
+
+    onRunningChanged: {
+      if (running) {
+        accumulatedOutput = ""
+      } else {
+        if (accumulatedOutput.trim() === "") {
           root.connectionType = "disconnected"
           root.ssidName = ""
           root.wifiStrength = 0
+          root.isConnecting = false
           return
         }
 
-        let cleaned = data.trim()
-
-        let lines = cleaned.split("\n")
-        let found = false
+        let lines = accumulatedOutput.trim().split("\n")
+        let isConnected = false
+        let isWifiUnavailable = false
 
         for (let line of lines) {
           let parts = line.split(":")
@@ -53,33 +76,60 @@ Item {
             let type = parts[0].trim()
             let state = parts[1].trim()
             
+            // Gestione della LAN (Ethernet)
             if (type === "ethernet" && state === "connected") {
               root.connectionType = "ethernet"
               root.ssidName = "LAN"
               root.wifiStrength = 0
-              found = true
+              root.isConnecting = false
+              isConnected = true
               break
-            } else if (type === "wifi" && state === "connected") {
-              root.connectionType = "wifi"
-
-              if (parts.length >= 3) {
-                root.ssidName = parts[2].trim()
+            } else if (type === "wifi") {
+              if (state === "connected") {
+                root.connectionType = "wifi"
+                if (parts.length >= 3) {
+                  root.ssidName = parts[2].trim()
+                }
+                root.isConnecting = false
+                checkWifiStrength.running = true
+                isConnected = true
+                break
+              } else if (state.startsWith("connecting")) {
+                root.connectionType = "wifi"
+                if (parts.length >= 3) {
+                  root.ssidName = parts[2].trim()
+                }
+                root.isConnecting = true
+                isConnected = true
+                break
+              } else if (state === "unavailable") {
+                isWifiUnavailable = true
               }
-              checkWifiStrength.running = true
-              found = true
-              break
             }
           }
         }
 
-        if (!found) {
-          root.connectionType = "disconnected"
+        // Valutazione finale (Staffetta con getIp)
+        if (!isConnected) {
+          root.connectionType = isWifiUnavailable ? "wifi_off" : "disconnected"
           root.ssidName = ""
           root.wifiStrength = 0
+          root.ipAddress = "Disconnected"
+          root.isConnecting = false
+        } else if (!root.isConnecting) {
+          getIp.running = true
         }
       }
     }
-  }
+
+    stdout: SplitParser {
+      onRead: data => {
+        if (data) {
+          checkNetwork.accumulatedOutput += data + "\n"
+        }
+      }
+    } 
+  } 
 
   Process {
     id: checkWifiStrength
@@ -98,6 +148,11 @@ Item {
     command: ["sh", "-c", "hostname -I | awk '{print $1}'"]
     stdout: SplitParser {
       onRead: data => {
+        if (root.connectionType === "disconnected" || root.connectionType === "wifi_off") {
+          root.ipAddress = "Disconnected"
+          return
+        }
+        
         if (data && data.trim() !== "") {
           root.ipAddress = data.trim()
         } else {
@@ -117,14 +172,12 @@ Item {
     return "󰤨"
   }
 
-  // Main container
   Item {
     id: iconContainer
     anchors.centerIn: parent
     width: referenceIcon.implicitWidth > 0 ? referenceIcon.implicitWidth : 18
     height: parent.height
 
-    // Reference icon
     Text {
       id: referenceIcon
       text: "󰤨"
@@ -134,7 +187,6 @@ Item {
       visible: false
     }
 
-    // Real icon
     Text {
       id: iconText
       text: {
@@ -149,7 +201,6 @@ Item {
     }
   }
 
-  // Small popup
   PopupWindow {
     id: hoverPopup
     
@@ -158,13 +209,7 @@ Item {
     anchor.edges: Edges.Bottom
     anchor.gravity: Edges.Bottom
 
-    // visible: {
-    //   let isVisible = !networkPopup.isOpen && (mouseArea.containsMouse || tooltipRect.opacity > 0)
-    //   return isVisible
-    // }
-
-    visible: true
-
+    visible: !networkPopup.isOpen && (mouseArea.containsMouse || tooltipRect.opacity > 0)
     color: "transparent"  
 
     implicitWidth: tooltipRect.implicitWidth
@@ -186,17 +231,10 @@ Item {
       scale: (!networkPopup.isOpen && mouseArea.containsMouse) ? 1 : 0.94
 
       Behavior on opacity {
-        NumberAnimation {
-          duration: Theme.fastAnimation
-          easing.type: Easing.OutCubic
-        }
+        NumberAnimation { duration: Theme.fastAnimation; easing.type: Easing.OutCubic }
       }
-
       Behavior on scale {
-        NumberAnimation {
-          duration: Theme.fastAnimation
-          easing.type: Easing.OutCubic
-        }
+        NumberAnimation { duration: Theme.fastAnimation; easing.type: Easing.OutCubic }
       }
 
       Text {
@@ -205,6 +243,9 @@ Item {
         text: {
           if (root.connectionType === "disconnected" || root.connectionType === "wifi_off") {
             return "Disconnected"
+          }
+          if (root.isConnecting) {
+            return "Connecting to " + root.ssidName + "..."
           }
           let name = root.connectionType === "ethernet" ? "LAN" : root.ssidName
           return name + " (" + root.ipAddress + ")"
@@ -223,6 +264,7 @@ Item {
     ssidName: root.ssidName
     ipAddress: root.ipAddress
     wifiStrength: root.wifiStrength
+    isConnecting: root.isConnecting // <-- Non dimentichiamolo!
   }
 
   MouseArea {

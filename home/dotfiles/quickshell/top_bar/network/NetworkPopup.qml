@@ -14,6 +14,7 @@ Scope {
   property string ssidName: ""
   property string ipAddress: "N/A"
   property real wifiStrength: 0
+  property bool isConnecting: false // <-- Aggiunto
 
   property bool isOpen: false
   property bool _isLoaded: false
@@ -69,6 +70,7 @@ Scope {
           ssidName: popupScope.ssidName
           ipAddress: popupScope.ipAddress
           wifiStrength: popupScope.wifiStrength
+          isConnecting: popupScope.isConnecting // <-- Passato al contenuto
         }
       }
 

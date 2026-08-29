@@ -32,10 +32,12 @@ Item {
   property var savedUuidsMap: ({})
 
   // Properties from NetworkWidget
-  property string connectionType: "disconnected" // disconnected, wifi, wifi-off, ethernet
+  property string connectionType: "disconnected" 
   property string ssidName: ""
   property string ipAddress: "N/A"
   property real wifiStrength: 0
+  property bool isConnecting: false
+  readonly property bool isCurrentlyConnecting: contentRoot.isConnecting || connectProcess.running
 
   function resetState() {
     contentRoot.showPasswordInput = false
@@ -44,12 +46,16 @@ Item {
     contentRoot.selectedSsidForPassword = ""
   }
 
+  // Initial read
+  Component.onCompleted: {
+    resetState()
+    refreshNetworks(false) 
+  }
+
   onVisibleChanged: {
     if (visible) {
       contentRoot.isInitializing = true
-      checkWifiStatus.running = true
-      getSavedNetworks.running = true
-      refreshNetworks()
+      refreshNetworks(false)
     } else {
       resetState()
     }
@@ -71,25 +77,6 @@ Item {
     if (strength <= 50) return "󰤢"
     if (strength <= 75) return "󰤥"
     return "󰤨"
-  }
-
-  Component.onCompleted: {
-    resetState()
-
-    checkWifiStatus.running = true
-    getSavedNetworks.running = true
-    refreshNetworks()
-  }
-
-  Timer {
-    interval: 10000
-    running: true
-    repeat: true
-    onTriggered: {
-      if (contentRoot.visible && !contentRoot.showPasswordInput && !contentRoot.isScanning && !contentRoot.isInitializing) {
-        refreshNetworks()
-      }
-    }
   }
 
   Process {
@@ -131,7 +118,6 @@ Item {
             }
           }
         }
-
         contentRoot.savedSsidsMap = nameMap
         contentRoot.savedUuidsMap = uuidMap
       }
@@ -148,7 +134,7 @@ Item {
 
   Process {
     id: scanAndReadProcess
-    command: ["sh", "-c", "nmcli device wifi rescan 2>/dev/null; sleep 0.5; nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
+    command: ["sh", "-c", "nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
 
     onRunningChanged: {
       if (running) {
@@ -186,7 +172,6 @@ Item {
         for (let i = wifiModel.count - 1; i >= 0; i--) {
           let existingSsid = wifiModel.get(i).ssid
           let exists = networksArray.find(n => n.ssid === existingSsid)
-
           if (!exists) {
             wifiModel.remove(i)
           }
@@ -208,10 +193,8 @@ Item {
 
             if (currentItem.signal !== net.signal)
               wifiModel.setProperty(existingIndex, "signal", net.signal)
-
             if (currentItem.security !== net.security)
               wifiModel.setProperty(existingIndex, "security", net.security)
-
             if (currentItem.saved !== net.saved)
               wifiModel.setProperty(existingIndex, "saved", net.saved)
 
@@ -277,7 +260,6 @@ Item {
             }
           }
         }
-
         contentRoot.scanBuffer = currentBuffer
       }
     }
@@ -286,6 +268,21 @@ Item {
   Process {
     id: toggleWifiProcess
     command: ["sh", "-c", ""]
+    
+    onExited: {
+      if (contentRoot.wifiEnabled) {
+        turnOnDelay.restart()
+      }
+    }
+  }
+
+  // Wait for NIC to turn on
+  Timer {
+    id: turnOnDelay
+    interval: 3500
+    onTriggered: {
+      refreshNetworks(true)
+    }
   }
 
   Process {
@@ -294,14 +291,13 @@ Item {
 
     onExited: (exitCode) => {
       getSavedNetworks.running = true
-      refreshNetworks()
+      refreshNetworks(false)
 
       if (exitCode !== 0) {
         contentRoot.errorMessage = "Connection failed. Wrong password?"
         contentRoot.errorSsid = contentRoot.selectedSsidForPassword
         contentRoot.showPasswordInput = true
       } else {
-        contentRoot.currentConnectedSsid = contentRoot.selectedSsidForPassword
         resetState()
       }
     }
@@ -312,35 +308,17 @@ Item {
     command: ["nm-connection-editor"]
   }
 
-  Process {
-    id: checkAndConnectProcess
-    property string targetSsid: ""
-    command: ["sh", "-c", ""]
-
-    onRunningChanged: {
-      if (!running && targetSsid !== "") {
-        refreshTimer.restart()
-      }
-    }
-
-    onExited: (exitCode) => {
-      getSavedNetworks.running = true
-      refreshNetworks()
-
-      if (exitCode !== 0) {
-        contentRoot.errorMessage = ""
-        contentRoot.errorSsid = ""
-        contentRoot.selectedSsidForPassword = targetSsid
-        contentRoot.showPasswordInput = true
-      }
-    }
-  }
-
-  function refreshNetworks() {
+  // Refresh network data
+  function refreshNetworks(forceRescan = false) {
     checkWifiStatus.running = true
     getSavedNetworks.running = true
 
     if (!scanAndReadProcess.running) {
+      if (forceRescan) {
+        scanAndReadProcess.command = ["sh", "-c", "nmcli device wifi rescan 2>/dev/null; sleep 0.5; nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
+      } else {
+        scanAndReadProcess.command = ["sh", "-c", "nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
+      }
       scanAndReadProcess.running = true
     }
   }
@@ -386,7 +364,6 @@ Item {
           onClicked: {
             openEditorProcess.command = ["nm-connection-editor"]
             openEditorProcess.running = true
-
             StateManager.closeActivePopup()
           }
         }
@@ -453,13 +430,16 @@ Item {
 
               if (!willBeEnabled) {
                 wifiModel.clear()
-                contentRoot.currentConnectedSsid = ""
+                contentRoot.scanBuffer = {}
+                contentRoot.bufferedConnectedSsid = ""
+                contentRoot.bufferedConnectedSignal = ""
+                contentRoot.savedSsidsMap = {}
+                contentRoot.savedUuidsMap = {}
+                contentRoot.isScanning = false
+                contentRoot.isInitializing = false
               } else {
                 wifiModel.clear()
                 contentRoot.isInitializing = true
-                checkWifiStatus.running = true
-                getSavedNetworks.running = true
-                refreshNetworks()
               }
             }
           }
@@ -509,12 +489,18 @@ Item {
 
     // Main content 
     ColumnLayout {
+      id: mainContentCol
       Layout.fillWidth: true
       spacing: 14
-      visible: !contentRoot.isInitializing || !contentRoot.wifiEnabled
+      
+      visible: {
+        if (contentRoot.isInitializing && contentRoot.wifiEnabled) return false
+        return contentRoot.wifiEnabled || contentRoot.connectionType === "ethernet"
+      }
 
       // Password section
       ColumnLayout {
+        id: passwordSection
         Layout.fillWidth: true
         spacing: 6
         visible: contentRoot.showPasswordInput
@@ -548,13 +534,14 @@ Item {
 
               Text {
                 text: contentRoot.selectedSsidForPassword
-                font.pixelSize: 11
+                font.pixelSize: Theme.barFontSizeSmall
                 font.bold: true
                 color: Theme.barColor
                 elide: Text.ElideRight
                 Layout.fillWidth: true
               }
 
+              // Close password section
               Rectangle {
                 width: 18
                 height: 18
@@ -599,10 +586,10 @@ Item {
                 Layout.fillWidth: true
                 height: 30
                 radius: 6
-                color: Theme.barDarkColor
+                color: Theme.widgetDarkBackground
                 border.color: contentRoot.errorMessage
                               ? Theme.colRed
-                              : Theme.colBlue
+                              : Theme.barDarkColor
                 border.width: 1
 
                 TextInput {
@@ -617,6 +604,7 @@ Item {
                             ? TextInput.Normal
                             : TextInput.Password
 
+                  clip: true
                   property bool showPassword: false
 
                   Timer {
@@ -655,7 +643,6 @@ Item {
                     connectProcess.running = true
 
                     text = ""
-                    refreshTimer.restart()
                   }
                 }
 
@@ -665,11 +652,9 @@ Item {
                   anchors.verticalCenter: parent.verticalCenter
                   text: passwordInput.showPassword ? "󰛐" : "󰈈"
                   font.pixelSize: 14
-                  color: eyeMouse.containsMouse
-                         ? Theme.barColor
-                         : Theme.barDarkColor
+                  color: Theme.barColor
                   z: 2
-                  visible: passwordInput.activeFocus || eyeMouse.containsMouse
+                  visible: true 
 
                   MouseArea {
                     id: eyeMouse
@@ -696,7 +681,7 @@ Item {
               }
 
               Rectangle {
-                width: 55
+                width: connectButtonText.width + 16
                 height: 30
                 radius: 6
                 color: connectMouse.containsMouse
@@ -704,11 +689,12 @@ Item {
                        : Theme.barDarkColor
 
                 Text {
+                  id: connectButtonText
                   anchors.centerIn: parent
-                  text: "Join"
-                  font.pixelSize: 11
+                  text: "Connect"
+                  font.pixelSize: Theme.barFontSizeSmall
                   font.bold: true
-                  color: "white"
+                  color: Theme.widgetDarkBackground
                 }
 
                 MouseArea {
@@ -738,7 +724,6 @@ Item {
                     connectProcess.running = true
 
                     passwordInput.text = ""
-                    refreshTimer.restart()
                   }
                 }
               }
@@ -749,25 +734,18 @@ Item {
 
       // Current network, loading or connected 
       ColumnLayout {
+        id: currentNetworkSection
         Layout.fillWidth: true
         spacing: 6
 
         visible: (
-                   (contentRoot.connectionType === "ethernet") ||
-                   (contentRoot.wifiEnabled && contentRoot.connectionType === "wifi" && contentRoot.currentConnectedSsid !== "") ||
-                   connectProcess.running ||
-                   checkAndConnectProcess.running
-                 ) &&
-                 !contentRoot.showPasswordInput
+                   contentRoot.connectionType === "ethernet" ||
+                   (contentRoot.connectionType === "wifi" && contentRoot.ssidName !== "") ||
+                   isCurrentlyConnecting
+                 ) && !contentRoot.showPasswordInput
 
         Text {
-          text: (
-            connectProcess.running ||
-            checkAndConnectProcess.running
-          )
-          ? "Connecting..."
-          : "Current network"
-
+          text: isCurrentlyConnecting ? "Connecting..." : "Current network"
           font.pixelSize: Theme.fontSizeSmall
           font.bold: true
           color: Theme.barDarkColor
@@ -786,24 +764,9 @@ Item {
             spacing: 12
 
             Text {
-              text: {
-                let isConnecting = connectProcess.running || checkAndConnectProcess.running
-
-                if (isConnecting) {
-                  return getWifiIcon(contentRoot.wifiStrength)
-                }
-
-                if (contentRoot.connectionType === "ethernet") return "󰌗"
-                if (contentRoot.connectionType === "wifi") return getWifiIcon(contentRoot.wifiStrength)
-                return getWifiIcon(contentRoot.currentConnectedSignal)
-              }
+              text: contentRoot.connectionType === "ethernet" ? "󰌗" : getWifiIcon(contentRoot.wifiStrength)
               font.pixelSize: 18
-              color: (
-                connectProcess.running ||
-                checkAndConnectProcess.running
-              )
-              ? Theme.colYellow
-              : Theme.colGreen
+              color: isCurrentlyConnecting ? Theme.colYellow : Theme.colGreen
             }
 
             ColumnLayout {
@@ -811,17 +774,7 @@ Item {
               spacing: 2
 
               Text {
-                text: (
-                  connectProcess.running ||
-                  checkAndConnectProcess.running
-                )
-                ? (
-                  checkAndConnectProcess.targetSsid !== ""
-                  ? checkAndConnectProcess.targetSsid
-                  : (contentRoot.selectedSsidForPassword !== "" ? contentRoot.selectedSsidForPassword : contentRoot.currentConnectedSsid)
-                )
-                : (contentRoot.connectionType === "ethernet" ? "LAN" : contentRoot.currentConnectedSsid)
-
+                text: contentRoot.connectionType === "ethernet" ? "LAN" : (contentRoot.ssidName !== "" ? contentRoot.ssidName : contentRoot.selectedSsidForPassword)
                 font.bold: true
                 font.pixelSize: Theme.fontSizeSmall
                 color: Theme.barColor
@@ -830,27 +783,15 @@ Item {
               }
 
               Text {
-                text: (
-                  connectProcess.running ||
-                  checkAndConnectProcess.running
-                )
-                ? "Establishing connection..."
-                : ((contentRoot.connectionType === "ethernet" || contentRoot.connectionType === "wifi") ? contentRoot.ipAddress : "Connected")
-
+                text: isCurrentlyConnecting ? "Establishing connection..." : contentRoot.ipAddress
                 font.pixelSize: Theme.barFontSizeSmall
-                color: (
-                  connectProcess.running ||
-                  checkAndConnectProcess.running
-                )
-                ? Theme.colYellow
-                : Theme.barColor
+                color: isCurrentlyConnecting ? Theme.colYellow : Theme.barColor
               }
             }
 
             Text {
               id: spinnerIcon
-              visible: connectProcess.running || checkAndConnectProcess.running
-
+              visible: isCurrentlyConnecting
               text: contentRoot.spinnerIcon 
               font.pixelSize: 24
               color: Theme.colYellow
@@ -873,9 +814,10 @@ Item {
 
       // Available networks
       ColumnLayout {
+        id: availableNetworksSection
         Layout.fillWidth: true
         spacing: 6
-        visible: contentRoot.wifiEnabled
+        visible: contentRoot.wifiEnabled && contentRoot.connectionType !== "ethernet" 
 
         // Horizontal divider
         Rectangle {
@@ -956,7 +898,7 @@ Item {
               cursorShape: Qt.PointingHandCursor
 
               onClicked: {
-                refreshNetworks()
+                refreshNetworks(true) 
               }
             }
           }
@@ -979,10 +921,7 @@ Item {
           id: wifiListView
 
           Layout.fillWidth: true
-          Layout.preferredHeight: Math.min(
-            contentHeight,
-            Screen.height * 0.45
-          )
+          Layout.preferredHeight: wifiModel.count > 0 ? Math.min(contentHeight, Screen.height * 0.45) : 0
 
           model: wifiModel
           clip: true
@@ -1055,16 +994,14 @@ Item {
                         let cmd = "nmcli dev wifi connect " + safeSsid
                         connectProcess.command = ["sh", "-c", cmd]
                         connectProcess.running = true
-                        refreshTimer.restart()
                       } else {
                         contentRoot.showPasswordInput = true
                       }
                     } else {
                       contentRoot.showPasswordInput = false
                       let cmd = "nmcli dev wifi connect " + safeSsid
-                      connectProcess.command = ["sh", "-c", cmd]
-                      connectProcess.running = true
-                      refreshTimer.restart()
+                        connectProcess.command = ["sh", "-c", cmd]
+                        connectProcess.running = true
                     }
                   }
                 }
@@ -1098,7 +1035,6 @@ Item {
 
                   onClicked: mouse => {
                     mouse.accepted = true
-
                     let uuid = contentRoot.savedUuidsMap[ssid] || ""
                     let cmd = ""
 
@@ -1110,7 +1046,6 @@ Item {
 
                     openEditorProcess.command = ["sh", "-c", cmd]
                     openEditorProcess.running = true
-
                     StateManager.closeActivePopup()
                   }
                 }
@@ -1118,7 +1053,6 @@ Item {
             
               Text {
                 text: ""
-
                 font.pixelSize: Theme.barFontSize
                 color: Theme.barDarkColor
                 visible: security !== "" && security !== "--"
@@ -1128,11 +1062,5 @@ Item {
         }
       }
     }
-  }
-
-  Timer {
-    id: refreshTimer
-    interval: 3000
-    onTriggered: refreshNetworks()
   }
 }
