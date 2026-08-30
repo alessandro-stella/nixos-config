@@ -27,6 +27,6 @@ hl.on("hyprland.start", function()
 
 	-- Set btop as sensor panel
 	hl.exec_cmd(
-		'sleep 5 && hyprctl dispatch \'hl.dsp.exec_cmd("foot --title=btop-panel btop", { workspace = "9 silent", fullscreen = true })\''
+		'sleep 8 && hyprctl dispatch \'hl.dsp.exec_cmd("foot --title=btop-panel btop", { workspace = "9 silent", fullscreen = true })\''
 	)
 end)

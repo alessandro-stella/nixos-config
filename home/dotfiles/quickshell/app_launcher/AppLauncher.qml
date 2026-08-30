@@ -122,14 +122,14 @@ GenericModal {
             
             color: "transparent" 
             
-            border.color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
+            border.color: root.selectedIndex === delegateRoot.index ? Theme.colFg : Theme.colMuted
             border.width: 1
             radius: 4
 
             Text {
               anchors.centerIn: parent
               text: delegateRoot.modelData.name ? delegateRoot.modelData.name.charAt(0).toUpperCase() : ""
-              color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
+              color: root.selectedIndex === delegateRoot.index ? Theme.colFg : Theme.colMuted
               font.pixelSize: Theme.fontSize
               font.family: Theme.fontFamily
               font.bold: true
@@ -140,7 +140,7 @@ GenericModal {
         // Name
         Text {
           text: delegateRoot.modelData.name ?? ""
-          color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colFg
+          color: root.selectedIndex === delegateRoot.index ? Theme.colFg : Theme.colFg
           font.pixelSize: Theme.fontSizeSmall
           font.family: Theme.fontFamily
           font.bold: root.selectedIndex === delegateRoot.index

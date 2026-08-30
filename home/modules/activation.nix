@@ -22,13 +22,6 @@ in
     ${./bootstrap/theme-links.sh}
   '';
 
-  # Synchronize wallpapers repository and generate thumbnails
-  home.activation.setupWallpapers =
-  config.lib.dag.entryAfter [ "linkGeneration" ] ''
-    export PATH=${activationPath}:$PATH
-    ${./bootstrap/setup-wallpapers.sh}
-  '';
-
   # Allow SDDM to read current theme
   home.activation.fixSddmPermissions =
   config.lib.dag.entryAfter [ "linkGeneration" ] ''

@@ -5,8 +5,6 @@ hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("foot"))
 hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.exec_cmd("foot -e sh -c 'tmux a || tmux'")) -- Reconnect to last tmux session or create a new one
 hl.bind(mainMod .. " + Q", hl.dsp.window.close())
 hl.bind(mainMod .. " + SHIFT + Q", hl.dsp.window.kill())
--- hl.bind(mainMod .. " + SHIFT + L", hl.dsp.exec_cmd("swaylock -K"))
-hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("wlogout --protocol layer-shell"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("nautilus"))
 hl.bind(mainMod .. " + F", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ action = "toggle", mode = "fullscreen" }))
@@ -16,7 +14,14 @@ hl.bind(mainMod .. " + PRINT", hl.dsp.exec_cmd("hyprshot -m window -o ~/Pictures
 hl.bind(mainMod .. " + SHIFT + PRINT", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("hyprshot -m region -o ~/Pictures/Screenshots"))
 hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t"))
-hl.bind(mainMod .. " + SHIFT + T", hl.dsp.exec_cmd("bash -c ~/.config/scripts/theme_changer/theme_chooser.sh"))
+
+-- Quickshell widgets
+hl.bind(mainMod .. " + SPACE", hl.dsp.global("quickshell:toggleLauncher"))
+hl.bind(mainMod .. " + V", hl.dsp.global("quickshell:toggleClipboard"))
+hl.bind(mainMod .. " + M", hl.dsp.global("quickshell:toggleLogoutMenu"))
+hl.bind(mainMod .. " + SHIFT + T", hl.dsp.global("quickshell:toggleThemeChanger"))
+hl.bind(mainMod .. " + CTRL + SHIFT + T", hl.dsp.global("quickshell:toggleCreateNewTheme"))
+hl.bind(mainMod .. " + SHIFT + L", hl.dsp.global("quickshell:toggleLockscreen"))
 
 -- Move focus with mainMod + vim keys
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "l" }))
@@ -42,11 +47,3 @@ hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("brave-origin --password-store=basic 
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("brave-origin --password-store=basic --app=https://web.whatsapp.com/"))
 
 require("modules.custom-keybinds")
-
--- Testing quickshell
-hl.bind(mainMod .. " + SPACE", hl.dsp.global("quickshell:toggleLauncher"))
-hl.bind(mainMod .. " + V", hl.dsp.global("quickshell:toggleClipboard"))
-hl.bind(mainMod .. " + SHIFT + M", hl.dsp.global("quickshell:toggleLogoutMenu"))
-hl.bind(mainMod .. " + P", hl.dsp.global("quickshell:toggleThemeChanger"))
-hl.bind(mainMod .. " + SHIFT + P", hl.dsp.global("quickshell:toggleCreateNewTheme"))
-hl.bind(mainMod .. " + SHIFT + L", hl.dsp.global("quickshell:toggleLockscreen"))

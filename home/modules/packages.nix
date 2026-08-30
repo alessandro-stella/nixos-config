@@ -27,17 +27,11 @@
     hyprland
     awww
     swaynotificationcenter
-    swaylock-effects
-    wlogout
     hyprshot
     cliphist
     wtype
     wl-clipboard
     wallust
-    waybar
-    rofi
-
-    # TESTING
     quickshell
     lm_sensors
     zenity

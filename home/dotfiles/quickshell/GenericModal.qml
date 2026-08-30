@@ -90,7 +90,7 @@ ModalBackdrop {
         // Header
         Text {
           text: root.title
-          color: Theme.accent2
+          color: Theme.colFg
           font.pixelSize: Theme.fontSize
           font.family: Theme.fontFamily
           font.bold: true

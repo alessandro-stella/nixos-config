@@ -24,6 +24,16 @@ ModalBackdrop {
   property string termFg: ""
 
   property var initialPalette: []
+  property bool applyThemeOnCreate: false
+
+  onClosed: {
+    root.initialPalette = []
+    root.activeColorPicker = 0
+    root.showTerminalPreview = false
+    root.tempFilePath = ""
+    root.fullPalette = []
+    StateManager.clearNewThemeState()
+  }
 
   Process {
     id: filePickerProcess
@@ -58,7 +68,7 @@ ModalBackdrop {
         colorExtractor.command = [
           "sh",
           Quickshell.env("HOME")
-            + "/.config/quickshell/theme_changer/get_palette.sh",
+            + "/.config/quickshell/theme_changer/scripts/get_palette.sh",
           StateManager.newThemeImagePath
         ]
 
@@ -139,6 +149,58 @@ ModalBackdrop {
         root.activeColorPicker = 0
       }
     }
+  }
+
+  Process {
+    id: themeCreator
+
+    stdout: SplitParser {
+      onRead: data => {
+        if (data.includes("[✓]")) {
+          console.log("✓ " + data)
+        } else if (data.includes("[INFO]")) {
+          console.log("ℹ " + data)
+        }
+      }
+    }
+
+    stderr: SplitParser {
+      onRead: data => {
+        console.error("✗ Theme error: " + data)
+      }
+    }
+
+    onExited: {
+      console.log("=== Theme creation completed ===")
+    }
+  }
+
+  function createTheme(apply) {
+    const wallpaperPath = StateManager.newThemeImagePath
+    const paletteArray = StateManager.newThemePalette
+    const accent1 = StateManager.newThemeColor1
+    const accent2 = StateManager.newThemeColor2
+
+    const paletteJson = JSON.stringify(paletteArray)
+
+    const args = [
+      "bash",
+      Quickshell.env("HOME") + "/.config/quickshell/theme_changer/create_theme.sh",
+      "--wallpaper", wallpaperPath,
+      "--palette", paletteJson,
+      "--accent1", accent1,
+      "--accent2", accent2
+    ]
+
+    if (apply) {
+      args.push("--apply")
+    }
+
+    themeCreator.command = args
+    themeCreator.running = true
+
+    StateManager.clearNewThemeState()
+    StateManager.closeAllWidgets()
   }
 
   FocusScope {
@@ -512,7 +574,6 @@ ModalBackdrop {
             }
           }
 
-          // Buttons under image
           RowLayout {
             Rectangle {
               Layout.fillWidth: true
@@ -1040,17 +1101,10 @@ ModalBackdrop {
             }
           }
 
-          // Reset palette
-
-
-          // Spacer
           Item {
             Layout.fillHeight: true
             width: 1
           }
-
-
-          // Bottom buttons
 
           RowLayout {
           Rectangle {
@@ -1226,29 +1280,7 @@ ModalBackdrop {
                 StateManager.newThemeImagePath !== ""
 
               onClicked: {
-                console.log("=== THEME DATA ===")
-                console.log(
-                  "Wallpaper:",
-                  StateManager.newThemeImagePath
-                )
-                console.log(
-                  "Color 1:",
-                  StateManager.newThemeColor1
-                )
-                console.log(
-                  "Color 2:",
-                  StateManager.newThemeColor2
-                )
-                console.log(
-                  "Palette:",
-                  JSON.stringify(
-                    StateManager.newThemePalette
-                  )
-                )
-                console.log("==================")
-
-                StateManager.clearNewThemeState()
-                StateManager.closeAllWidgets()
+                root.createTheme(false)
               }
             }
           }
@@ -1306,29 +1338,7 @@ ModalBackdrop {
                 StateManager.newThemeImagePath !== ""
 
               onClicked: {
-                console.log("=== THEME DATA ===")
-                console.log(
-                  "Wallpaper:",
-                  StateManager.newThemeImagePath
-                )
-                console.log(
-                  "Color 1:",
-                  StateManager.newThemeColor1
-                )
-                console.log(
-                  "Color 2:",
-                  StateManager.newThemeColor2
-                )
-                console.log(
-                  "Palette:",
-                  JSON.stringify(
-                    StateManager.newThemePalette
-                  )
-                )
-                console.log("==================")
-
-                StateManager.clearNewThemeState()
-                StateManager.closeAllWidgets()
+                root.createTheme(true)
               }
             }
           }
@@ -1337,4 +1347,3 @@ ModalBackdrop {
     }
   }
 }
-

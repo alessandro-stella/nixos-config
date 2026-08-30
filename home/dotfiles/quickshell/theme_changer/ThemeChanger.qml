@@ -8,7 +8,7 @@ import "../"
 GenericModal {
   id: root
 
-  preferredWidth: 1200
+  preferredWidth: 1000
 
   required property int monitorId
   required property var modelData
@@ -23,8 +23,11 @@ GenericModal {
   property int carouselIndex: 0
   property string currentThemeName: ""
   property bool themeConfirmed: false
+  
+  // Skip animations during initial load
+  property bool skipAnimations: false
 
-  property real tileWidth: 180
+  property real tileWidth: 120
   property real selectedTileWidth: 500
   property real tileHeight: 320
   property int imageSourceWidth: 800
@@ -35,6 +38,7 @@ GenericModal {
     path: Quickshell.env("HOME") + "/.config/themes/current_theme/name"
     onLoaded: {
       root.currentThemeName = currentThemeFile.text().trim()
+      console.log("Current theme:", root.currentThemeName)
       root.tryCenteringCurrentWallpaper()
     }
   }
@@ -55,6 +59,7 @@ GenericModal {
 
   onOpened: {
     root.themeConfirmed = false
+    root.skipAnimations = true
     currentThemeFile.reload()
     fetchThemes()
   }
@@ -73,9 +78,19 @@ GenericModal {
       if (baseCount > 1) {
         const middleRepetition = Math.floor(filteredThemes.repetitions / 2)
         const targetIndex = middleRepetition * baseCount
+        
+        // Turn off animation during filtering on search bar
+        const oldDuration = carousel.highlightMoveDuration
+        carousel.highlightMoveDuration = 0
+        
         root.carouselIndex = targetIndex
         carousel.currentIndex = targetIndex
         carousel.positionViewAtIndex(targetIndex, ListView.Center)
+        
+        Qt.callLater(() => {
+          carousel.positionViewAtIndex(targetIndex, ListView.Center)
+          carousel.highlightMoveDuration = oldDuration
+        })
       }
     })
   }
@@ -132,12 +147,36 @@ GenericModal {
     command: ["sh", "-c", ""]
   }
 
-  // Funzione centralizzata per il cambio tema
+  Process {
+    id: applyThemeProcess
+
+    stdout: SplitParser {
+      onRead: data => {
+        console.log("Applying theme: " + data)
+      }
+    }
+
+    stderr: SplitParser {
+      onRead: data => {
+        console.error("Error while changing theme: " + data)
+      }
+    }
+  }
+
   function changeTheme(theme) {
     if (!theme) return
     root.themeConfirmed = true
-    console.log("change theme to " + theme.name)
-    // Qui in futuro potrai aggiungere altra logica
+    
+    console.log("Changing theme to: " + theme.name)
+
+    applyThemeProcess.command = [
+      "bash",
+      Quickshell.env("HOME") + "/.config/quickshell/theme_changer/scripts/apply_theme.sh",
+      theme.name
+    ]
+    
+    applyThemeProcess.running = true
+
     StateManager.closeAllWidgets()
   }
 
@@ -169,34 +208,71 @@ GenericModal {
       }
 
       const middleRepetition = Math.floor(filteredThemes.repetitions / 2)
-      root.carouselIndex = (middleRepetition * baseCount) + targetRealIndex
+      const finalIndex = (middleRepetition * baseCount) + targetRealIndex
+      
+      // Turn off animations at start
+      const oldDuration = carousel.highlightMoveDuration
+      carousel.highlightMoveDuration = 0
 
-      carousel.currentIndex = root.carouselIndex
-      carousel.positionViewAtIndex(root.carouselIndex, ListView.Center)
+      root.carouselIndex = finalIndex
+      carousel.currentIndex = finalIndex
+      carousel.positionViewAtIndex(finalIndex, ListView.Center)
+      
+      Qt.callLater(() => {
+        carousel.positionViewAtIndex(finalIndex, ListView.Center)
+        carousel.highlightMoveDuration = oldDuration
+        
+        Qt.callLater(() => {
+          root.skipAnimations = false
+        })
+      })
     })
   }
 
   function selectIndex(index) {
+    if (root.skipAnimations) return 
+
     const baseCount = filteredThemes.baseCount
     if (baseCount <= 1) return
 
-    let targetIndex = index
-    const totalItems = filteredThemes.values.length
-    const lowThreshold = baseCount * 2
-    const highThreshold = totalItems - (baseCount * 2)
+    // 1 = moving right, -1 = moving left
+    const dir = index > root.carouselIndex ? 1 : (index < root.carouselIndex ? -1 : 0)
+    if (dir === 0) return
 
-    if (targetIndex < lowThreshold || targetIndex >= highThreshold) {
-      const realIndex = ((targetIndex % baseCount) + baseCount) % baseCount
-      const middleRepetition = Math.floor(filteredThemes.repetitions / 2)
-      targetIndex = (middleRepetition * baseCount) + realIndex
+    let targetIndex = index
+    
+    const middleRep = Math.floor(filteredThemes.repetitions / 2)
+    const middleStart = middleRep * baseCount
+    const middleEnd = middleStart + baseCount
+
+    const needsRecenter = targetIndex < middleStart || targetIndex >= middleEnd
+
+    if (needsRecenter) {
+      const currentReal = ((root.carouselIndex % baseCount) + baseCount) % baseCount
+      const teleportSource = middleStart + currentReal
+
+      root.skipAnimations = true
+      const oldDuration = carousel.highlightMoveDuration
+      carousel.highlightMoveDuration = 0
+      
+      root.carouselIndex = teleportSource
+      carousel.currentIndex = teleportSource
+      carousel.positionViewAtIndex(teleportSource, ListView.Center)
+      
+      carousel.highlightMoveDuration = oldDuration
+      
+      Qt.callLater(() => {
+        root.skipAnimations = false
+        const finalTarget = teleportSource + dir
+        root.carouselIndex = finalTarget
+        carousel.currentIndex = finalTarget
+      })
+      
+      return
     }
 
     root.carouselIndex = targetIndex
     carousel.currentIndex = targetIndex
-    carousel.positionViewAtIndex(targetIndex, ListView.Center)
-    Qt.callLater(() => {
-      carousel.positionViewAtIndex(targetIndex, ListView.Center)
-    })
   }
 
   ScriptModel {
@@ -215,7 +291,11 @@ GenericModal {
     }
 
     property int baseCount: baseValues.length
-    property int repetitions: baseCount === 2 ? 5 : (baseCount < 6 ? 15 : 3)
+    property int repetitions: {
+      if (baseCount === 1) return 1
+      if (baseCount <= 3) return 5
+      return 3
+    } 
 
     values: {
       if (baseCount <= 1) return baseValues
@@ -239,7 +319,6 @@ GenericModal {
       anchors.bottom: bottomBar.top
       anchors.bottomMargin: 10
 
-      // Only one wallpaper 
       Item {
         anchors.centerIn: parent
         width: root.selectedTileWidth
@@ -284,7 +363,6 @@ GenericModal {
         }
       }
 
-      // More than one wallpaper 
       ListView {
         id: carousel
 
@@ -300,8 +378,26 @@ GenericModal {
         cacheBuffer: Math.max(width * 3, 3000)
 
         highlightRangeMode: ListView.StrictlyEnforceRange
-        preferredHighlightBegin: (width - root.selectedTileWidth) / 2
-        preferredHighlightEnd: (width + root.selectedTileWidth) / 2
+        highlightMoveDuration: 220
+        highlightMoveVelocity: -1
+        preferredHighlightBegin: (width - root.tileWidth) / 2
+        preferredHighlightEnd: (width + root.tileWidth) / 2
+
+        onWidthChanged: {
+          if (width > 0 && count > 0) {
+            Qt.callLater(() => {
+              positionViewAtIndex(currentIndex, ListView.Center)
+            })
+          }
+        }
+
+        onCountChanged: {
+          if (width > 0 && count > 0) {
+            Qt.callLater(() => {
+              positionViewAtIndex(currentIndex, ListView.Center)
+            })
+          }
+        }
 
         delegate: Item {
           id: delegateRoot
@@ -310,60 +406,92 @@ GenericModal {
           required property int index
 
           property bool active: ListView.isCurrentItem
+          
+          property int dist: index - carousel.currentIndex
+          
+          property real shiftX: {
+            if (dist === 0) return 0
+            const offset = (root.selectedTileWidth - root.tileWidth) / 2
+            return dist > 0 ? offset : -offset
+          }
 
-          width: active ? root.selectedTileWidth : root.tileWidth
+          width: root.tileWidth
           height: carouselContainer.height
+          z: active ? 1 : 0
 
-          Image {
-            id: img
-            anchors.fill: parent
-            fillMode: Image.PreserveAspectCrop
-            asynchronous: true
-            cache: true
-            
-            source: "file://" + delegateRoot.modelData.thumbnail
-            sourceSize.width: root.imageSourceWidth
-            sourceSize.height: root.imageSourceHeight
-
-            transform: Shear { xFactor: -0.25 }
-
-            opacity: delegateRoot.active ? 1.0 : 0.55
-
-            Behavior on opacity {
-              NumberAnimation { duration: 120 }
-            }
-          }
-
-          BusyIndicator {
+          Item {
+            id: visualContent
             anchors.centerIn: parent
-            running: img.status === Image.Loading
-            visible: running
-            z: 5
-          }
+            
+            anchors.horizontalCenterOffset: delegateRoot.shiftX
 
-          Rectangle {
-            id: borderRect
-            z: 10
-            anchors.fill: parent
-            visible: delegateRoot.active
-            color: "transparent"
-            border.width: Theme.borderWidth
-            border.color: Theme.accent1
-            transform: Shear { xFactor: -0.25 }
-          }
+            Behavior on anchors.horizontalCenterOffset {
+              enabled: !root.skipAnimations
+              NumberAnimation { duration: 150 }
+            }
 
-          MouseArea {
-            anchors.fill: parent
-            cursorShape: Qt.PointingHandCursor
-            onClicked: {
-              const baseCount = filteredThemes.baseCount
-              if (baseCount > 1) {
-                if (!delegateRoot.active) {
-                  root.selectIndex(delegateRoot.index)
-                } else {
-                  const realIndex = ((delegateRoot.index % baseCount) + baseCount) % baseCount
-                  const theme = filteredThemes.baseValues[realIndex]
-                  if (theme) root.changeTheme(theme)
+            width: delegateRoot.active ? root.selectedTileWidth : root.tileWidth
+            height: delegateRoot.active ? parent.height : parent.height * 0.85
+
+            Behavior on width {
+              enabled: !root.skipAnimations
+              NumberAnimation { duration: 150 }
+            }
+
+            Behavior on height {
+              enabled: !root.skipAnimations
+              NumberAnimation { duration: 150 }
+            }
+
+            Image {
+              id: img
+              anchors.fill: parent
+              fillMode: Image.PreserveAspectCrop
+              asynchronous: true
+              cache: true
+              
+              source: "file://" + delegateRoot.modelData.thumbnail
+              sourceSize.width: root.imageSourceWidth
+              sourceSize.height: root.imageSourceHeight
+
+              opacity: delegateRoot.active ? 1.0 : 0.55
+
+              Behavior on opacity {
+                enabled: !root.skipAnimations
+                NumberAnimation { duration: 120 }
+              }
+            }
+
+            BusyIndicator {
+              anchors.centerIn: parent
+              running: img.status === Image.Loading
+              visible: running
+              z: 5
+            }
+
+            Rectangle {
+              id: borderRect
+              z: 10
+              anchors.fill: parent
+              visible: delegateRoot.active
+              color: "transparent"
+              border.width: Theme.borderWidth
+              border.color: Theme.accent1
+            }
+
+            MouseArea {
+              anchors.fill: parent
+              cursorShape: Qt.PointingHandCursor
+              onClicked: {
+                const baseCount = filteredThemes.baseCount
+                if (baseCount > 1) {
+                  if (!delegateRoot.active) {
+                    root.selectIndex(delegateRoot.index)
+                  } else {
+                    const realIndex = ((delegateRoot.index % baseCount) + baseCount) % baseCount
+                    const theme = filteredThemes.baseValues[realIndex]
+                    if (theme) root.changeTheme(theme)
+                  }
                 }
               }
             }
@@ -373,7 +501,7 @@ GenericModal {
         WheelHandler {
           acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
           onWheel: event => {
-            if (filteredThemes.baseCount <= 1) return
+            if (filteredThemes.baseCount <= 1 || root.skipAnimations) return
             if (event.angleDelta.y > 0) {
               root.selectIndex(root.carouselIndex - 1)
             } else if (event.angleDelta.y < 0) {
@@ -384,7 +512,6 @@ GenericModal {
         }
       }
 
-      // Left arrow
       Rectangle {
         id: leftButton
         anchors.left: parent.left
@@ -415,7 +542,6 @@ GenericModal {
         }
       }
 
-      // Right arrow
       Rectangle {
         id: rightButton
         anchors.right: parent.right
@@ -447,7 +573,6 @@ GenericModal {
       }
     }
 
-    // Bottom bar
     RowLayout {
       id: bottomBar
       anchors.bottom: parent.bottom
@@ -456,10 +581,10 @@ GenericModal {
       height: 45
       spacing: 15
 
-      // Preview button
       Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: parent.height
+        Layout.preferredWidth: 1 
         radius: Theme.radiusInner
         color: previewMouseArea.containsMouse ? Theme.accent1 : Theme.colBg
         border.width: Theme.borderWidth
@@ -501,7 +626,6 @@ GenericModal {
             if (baseCount === 1) {
               const theme = filteredThemes.baseValues[0]
               if (theme) {
-                console.log("Previewing theme wallpaper: " + theme.wallpaper)
                 awwwProcess.command = ["awww", "img", "--transition-type", "fade", "--transition-duration", "1.0", "--transition-step", "90", theme.wallpaper]
                 awwwProcess.running = true
               }
@@ -509,7 +633,6 @@ GenericModal {
               const realIndex = ((root.carouselIndex % baseCount) + baseCount) % baseCount
               const theme = filteredThemes.baseValues[realIndex]
               if (theme) {
-                console.log("Previewing theme wallpaper: " + theme.wallpaper)
                 awwwProcess.command = ["awww", "img", "--transition-type", "fade", "--transition-duration", "1.0", "--transition-step", "90", theme.wallpaper]
                 awwwProcess.running = true
               }
@@ -518,10 +641,51 @@ GenericModal {
         }
       }
 
-      // Create new theme
       Rectangle {
         Layout.fillWidth: true
         Layout.preferredHeight: parent.height
+        Layout.preferredWidth: 1
+        radius: Theme.radiusInner
+        color: applyMouseArea.containsMouse ? Theme.accent1 : Theme.colBg
+        border.width: Theme.borderWidth
+        border.color: Theme.accent1
+
+        Behavior on color {
+          ColorAnimation { duration: Theme.fastAnimation }
+        }
+
+        Text {
+          anchors.centerIn: parent
+          text: "Apply theme"
+          color: applyMouseArea.containsMouse ? Theme.colBg : Theme.accent1
+          font.pixelSize: Theme.fontSizeSmall
+          font.family: Theme.fontFamily
+        }
+
+        MouseArea {
+          id: applyMouseArea
+          anchors.fill: parent
+          hoverEnabled: true
+          cursorShape: Qt.PointingHandCursor
+          onClicked: {
+            const baseCount = filteredThemes.baseCount
+            
+            if (baseCount === 1) {
+              const theme = filteredThemes.baseValues[0]
+              if (theme) root.changeTheme(theme)
+            } else if (baseCount > 1 && root.carouselIndex >= 0) {
+              const realIndex = ((root.carouselIndex % baseCount) + baseCount) % baseCount
+              const theme = filteredThemes.baseValues[realIndex]
+              if (theme) root.changeTheme(theme)
+            }
+          }
+        } 
+      }
+
+      Rectangle {
+        Layout.fillWidth: true
+        Layout.preferredHeight: parent.height
+        Layout.preferredWidth: 1
         radius: Theme.radiusInner
         color: createMouseArea.containsMouse ? Theme.accent1 : Theme.colBg
         border.width: Theme.borderWidth

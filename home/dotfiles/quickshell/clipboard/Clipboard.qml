@@ -146,7 +146,7 @@ GenericModal {
 
         Text {
           text: ""
-          color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colMuted
+          color: root.selectedIndex === delegateRoot.index ? Theme.colFg : Theme.colMuted
           font.pixelSize: Theme.fontSizeSmall
           font.family: Theme.fontFamily
           Layout.alignment: Qt.AlignVCenter
@@ -154,7 +154,7 @@ GenericModal {
 
         Text {
           text: delegateRoot.displayText
-          color: root.selectedIndex === delegateRoot.index ? Theme.accent2 : Theme.colFg
+          color: root.selectedIndex === delegateRoot.index ? Theme.colFg : Theme.colFg
           font.pixelSize: Theme.fontSizeSmall
           font.family: Theme.fontFamily
           font.bold: root.selectedIndex === delegateRoot.index

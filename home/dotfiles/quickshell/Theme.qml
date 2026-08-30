@@ -1,10 +1,12 @@
 pragma Singleton
 import QtQuick
+import "./"
 
 QtObject {
   readonly property color colBg: "#1a1b26"
   readonly property color colFg: "#a9b1d6"
   readonly property color colMuted: "#444b6a"
+
   readonly property color colCyan: "#0db9d7"
   readonly property color colPurple: "#ad8ee6"
   readonly property color colRed: "#f7768e"
@@ -28,8 +30,8 @@ QtObject {
   readonly property int radiusInner: 5
   readonly property int radiusOuter: radiusInner + borderWidth
 
-  readonly property color accent1: "#E7E7EF"
-  readonly property color accent2: "#D4D5DF"
+  readonly property color accent1: Accents.accent1 
+  readonly property color accent2: Accents.accent2
 
   // Top bar properties
   readonly property color barBackground: Qt.rgba(32/255, 28/255, 39/255, 0.6) 
