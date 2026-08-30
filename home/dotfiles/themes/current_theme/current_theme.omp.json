@@ -150,21 +150,22 @@
   "patch_pwsh_bleed": true,
   "final_space": true,
   "palette": {
-    "color0": "#3d3943",
-    "color1": "#14043A",
-    "color2": "#400D75",
-    "color3": "#791D7B",
-    "color4": "#3F2CD2",
-    "color5": "#8644C8",
-    "color6": "#9E549E",
-    "color7": "#C6A1C6",
-    "color8": "#8B718B",
-    "color9": "#14043A",
-    "color10": "#400D75",
-    "color11": "#791D7B",
-    "color12": "#3F2CD2",
-    "color13": "#8644C8",
-    "color14": "#9E549E",
-    "color15": "#C6A1C6"
+    "color0": "#3A393C",
+    "color1": "#13101D",
+    "color2": "#312F43",
+    "color3": "#4E556E",
+    "color4": "#6C7A97",
+    "color5": "#929EBB",
+    "color6": "#BBBBD0",
+    "color7": "#D4D5DF",
+    "color8": "#95959C",
+    "color9": "#3A393C",
+    "color10": "#13101D",
+    "color11": "#312F43",
+    "color12": "#4E556E",
+    "color13": "#6C7A97",
+    "color14": "#929EBB",
+    "color15": "#BBBBD0"
   }
 }
+

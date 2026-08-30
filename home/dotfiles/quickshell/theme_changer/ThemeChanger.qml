@@ -499,7 +499,7 @@ GenericModal {
         }
 
         WheelHandler {
-          acceptedDevices: PointerDevice.Mouse | PointerDevice.TouchPad
+          acceptedDevices: PointerDevice.Mouse
           onWheel: event => {
             if (filteredThemes.baseCount <= 1 || root.skipAnimations) return
             if (event.angleDelta.y > 0) {

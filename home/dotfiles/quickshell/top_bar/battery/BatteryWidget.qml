@@ -34,7 +34,6 @@ Rectangle {
   readonly property var dev: sysfsBatteryExists ? UPower.displayDevice : null
   readonly property bool hasUPower: dev && dev.ready
   
-  // Se sysfs non ha batteria, niente UPower
   readonly property bool isBatteryPresent: sysfsBatteryExists
 
   readonly property int percent: hasUPower ? Math.round(dev.percentage * 100) : 0
@@ -79,6 +78,68 @@ Rectangle {
     return Theme.barColor
   }
 
+  property bool _notifiedLow: false
+  property bool _notifiedFull: false
+  property bool _notifiedCritical: false
+
+  // Thresholds
+  readonly property int chargedPercentage: 90
+  readonly property int warningPercentage: 30
+  readonly property int criticalPercentage: 10
+
+  onPercentChanged: {
+    if (!hasUPower) return;
+
+    // Warning
+    if (percent <= root.warningPercentage && percent > root.criticalPercentage && !isCharging && !isAC) {
+      if (!_notifiedLow) {
+        notificationProcess.command = [
+          "sh", "-c", 
+          "notify-send -i " + Quickshell.env("HOME") + "/.config/quickshell/top_bar/battery/resources/battery-low.svg -u normal 'Low battery'"
+        ] 
+        notificationProcess.running = true
+        _notifiedLow = true
+      }
+    } else {
+      _notifiedLow = false
+    }
+
+    // Critical 
+    if (percent <= root.criticalPercentage && !isCharging && !isAC) {
+      if (!_notifiedCritical) {
+        notificationProcess.command = [
+          "sh", "-c", 
+          "notify-send -i " + Quickshell.env("HOME") + "/.config/quickshell/top_bar/battery/resources/battery-critical.svg -u critical 'Battery critically low'"
+        ] 
+        notificationProcess.running = true
+        _notifiedCritical = true
+      }
+    } else {
+      _notifiedCritical = false
+    }
+
+    if (percent >= root.chargedPercentage && (isCharging || isAC)) {
+      if (!_notifiedFull) {
+        notificationProcess.command = [
+          "notify-send", 
+          "-u", "normal", 
+          "-i", "battery-full", 
+          "Battery charged", 
+          "You can unplug the charger"
+        ]
+        notificationProcess.running = true
+        _notifiedFull = true
+      }
+    } else {
+      _notifiedFull = false
+    }
+  }
+
+  Process {
+    id: notificationProcess
+  }
+
+  // Widget layout
   RowLayout {
     id: contentRow
     anchors.centerIn: parent
