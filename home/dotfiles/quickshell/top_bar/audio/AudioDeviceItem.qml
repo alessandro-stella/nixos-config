@@ -83,14 +83,14 @@ Rectangle {
         Layout.fillWidth: true
         Text {
           text: "Volume"
-          font.pixelSize: 11
+          font.pixelSize: Theme.barFontSizeSmall
           color: Theme.barDarkColor
           font.family: Theme.fontFamily
         }
         Item { Layout.fillWidth: true }
         Text {
-          text: Math.round(root.deviceVolume * 100) + "%"
-          font.pixelSize: 11
+          text: root.deviceMuted ? "Muted" : Math.round(root.deviceVolume * 100) + "%"
+          font.pixelSize: Theme.barFontSizeSmall
           color: Theme.barColor
           font.bold: true
           font.family: Theme.fontFamily
@@ -160,7 +160,7 @@ Rectangle {
         Text {
           anchors.centerIn: parent
           text: root.deviceMuted ? "󰖁 Unmute" : "󰕾 Mute"
-          font.pixelSize: 11
+          font.pixelSize: Theme.barFontSizeSmall
           font.bold: true
           // Scritta scura per farla leggere sul rosso acceso
           color: root.deviceMuted ? Theme.widgetDarkBackground : Theme.barColor
@@ -193,7 +193,7 @@ Rectangle {
         Text {
           anchors.centerIn: parent
           text: root.isActive ? "✓ Active" : "Set"
-          font.pixelSize: 11
+          font.pixelSize: Theme.barFontSizeSmall
           font.bold: true
           color: root.isActive ? Theme.accent2 : Theme.barColor
           font.family: Theme.fontFamily

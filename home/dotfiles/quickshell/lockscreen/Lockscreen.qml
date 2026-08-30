@@ -4,7 +4,7 @@ import Quickshell.Io
 import Quickshell.Services.Pam
 import Quickshell.Wayland
 import Quickshell.Hyprland
-import ".."
+import "../"
 
 // Main lock screen window
 PanelWindow {
@@ -114,11 +114,12 @@ PanelWindow {
       // Check for available biometric sensors
       Process {
         id: detectBiometricProcess
-        command: ["bash", "-c", "fprintd-list $USER 2>/dev/null | grep -q 'has fingerprints' && echo 'available' || echo 'unavailable'"]
+        command: ["bash", "-c", "fprintd-list $USER 2>/dev/null | grep -q 'Fingerprints for user' && echo 'available' || echo 'unavailable'"]
         running: true 
 
         stdout: SplitParser {
           onRead: data => {
+            console.log("data from checking fprintd:", data)
             if (data.trim() === "available") {
               hasBiometricSensor = true
               authMode = "parallel"
@@ -143,7 +144,7 @@ PanelWindow {
             
             if (data.includes("verify-match")) {
               biometricState = "matched"
-              unlockSystem()
+              successTimer.start()
             } else if (data.includes("no match") || data.includes("verify-no-match")) {
               biometricState = "no_match"
               if (StateManager.isLocked) {
@@ -155,7 +156,7 @@ PanelWindow {
         }
 
         onExited: (code, status) => {
-          if (StateManager.isLocked && hasBiometricSensor && !fprintProcess.running) {
+          if (StateManager.isLocked && hasBiometricSensor && !fprintProcess.running && biometricState !== "matched") {
             biometricState = "waiting"
             fprintProcess.running = true
           }
@@ -170,7 +171,7 @@ PanelWindow {
         onCompleted: (result) => {
           if (result === PamResult.Success) {
             passwordState = "success"
-            unlockSystem()
+            successTimer.start()
           } else {
             passwordState = "error"
             pwdBuffer = ""
@@ -190,6 +191,12 @@ PanelWindow {
             if (pamPassword.active) pamPassword.abort()
           }
         }
+      }
+
+      Timer {
+        id: successTimer
+        interval: 800
+        onTriggered: unlockSystem()
       }
 
       // System unlock helper
@@ -217,7 +224,7 @@ PanelWindow {
             return;
           }
 
-          if (passwordState === "error" || passwordState === "verifying") return;
+          if (passwordState === "error" || passwordState === "verifying" || passwordState === "success" || biometricState === "matched") return;
 
           if (event.key === Qt.Key_Return || event.key === Qt.Key_Enter) {
             if (pwdBuffer.length > 0) {
@@ -277,13 +284,12 @@ PanelWindow {
         border.width: passwordState === "verifying" ? 0 : Theme.borderWidth * 4
         
         border.color: {
+          if (biometricState === "matched" || passwordState === "success") return Theme.colGreen ?? Theme.accent1
           if (passwordState === "error" || biometricState === "no_match") return Theme.colRed
-          if (biometricState === "matched") return Theme.colGreen ?? Theme.accent1
           if (isTyping) return Theme.accent1
           return Theme.colMuted
         }
 
-        // Animazione fluida per i cambi di colore (inclusa l'illuminazione durante la digitazione)
         Behavior on border.color {
           ColorAnimation {
             duration: 250
@@ -344,7 +350,7 @@ PanelWindow {
 
         Column {
           anchors.centerIn: parent
-          spacing: 15
+          spacing: 0
 
           Text {
             text: Qt.formatDateTime(new Date(), "hh:mm")
@@ -355,43 +361,59 @@ PanelWindow {
             anchors.horizontalCenter: parent.horizontalCenter
           }
 
+          // Password dots
           Row {
             anchors.horizontalCenter: parent.horizontalCenter
             spacing: 10
             height: 20 
+            visible: passwordState === "idle" && biometricState === "waiting" && pwdBuffer.length > 0
 
             property int maxDots: 10
             
             Repeater {
-              model: pwdBuffer.length > 0 ? Math.min(pwdBuffer.length, parent.maxDots) : 0
+              model: Math.min(pwdBuffer.length, parent.maxDots)
               Rectangle {
                 width: 14; height: 14; radius: 7
                 color: Theme.colFg
                 anchors.verticalCenter: parent.verticalCenter
               }
             }
-          }
+          } 
 
+          // Fingerprint icon
           Text {
-            visible: hasBiometricSensor && pwdBuffer.length === 0
+            visible: (hasBiometricSensor && passwordState === "idle" && biometricState === "waiting" && pwdBuffer.length === 0) || biometricState === "matched"
             text: "󰈷" 
             font.family: Theme.fontFamily
-            font.pixelSize: 40
-            color: Theme.colFg
-            opacity: 0.6
+            font.pixelSize: 30
+            color: biometricState === "matched" ? (Theme.colGreen ?? Theme.accent1) : Theme.colFg
+            opacity: biometricState === "matched" ? 1.0 : 0.6
             anchors.horizontalCenter: parent.horizontalCenter
+            
+            Behavior on color {
+              ColorAnimation {
+                duration: 250
+                easing.type: Easing.InOutQuad
+              }
+            }
           }
           
+          // State text, handles only password state
           Text {
-            visible: passwordState === "error" || biometricState === "no_match" || passwordState === "verifying"
+            visible: passwordState === "verifying" || passwordState === "error" || passwordState === "success" || biometricState === "no_match"
             text: {
+              if (passwordState === "success") return "Success"
               if (passwordState === "verifying") return "Verifying..."
               if (passwordState === "error" || biometricState === "no_match") return "Try again"
               return ""
             }
             font.family: Theme.fontFamily
             font.pixelSize: Theme.fontSize
-            color: (passwordState === "error" || biometricState === "no_match") ? Theme.colRed : Theme.colFg
+            color: {
+              if (passwordState === "success") return Theme.colGreen ?? Theme.accent1
+              if (passwordState === "error" || biometricState === "no_match") return Theme.colRed
+              return Theme.colFg
+            }
             anchors.horizontalCenter: parent.horizontalCenter
           }
         }
