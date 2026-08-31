@@ -101,6 +101,9 @@
         fi
       }
 
+      nixos-clean() {
+        sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5 && sudo nix-collect-garbage -d
+      }
 
       # Oh My Posh
       eval "$(oh-my-posh --init --shell zsh --config ~/.config/oh-my-posh/themes/current_theme.omp.json)"
@@ -109,8 +112,6 @@
       if command -v fastfetch >/dev/null; then
         fastfetch -c ~/.config/fastfetch/config.jsonc
       fi
-
-      # TEST!!!
     '';
   };
 }

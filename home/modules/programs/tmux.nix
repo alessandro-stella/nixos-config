@@ -45,7 +45,7 @@
       set-option -g allow-rename off
      
       # Create a new window in the current directory
-      bind c new-window -c "#{pane_current_path}"
+      bind c new-window -c "#{pane_current_path}" \; set status on
      
       # Close the current window
       bind x kill-window
