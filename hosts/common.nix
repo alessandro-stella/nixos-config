@@ -10,7 +10,7 @@ let
 
       substituteInPlace theme.conf \
         --replace-fail "@THEME_BACKGROUND@" \
-        "/home/${username}/.config/themes/current_theme/wallpaper.png"
+        "/var/lib/current-theme/wallpaper.png"
 
       cp -R ./* $out/share/sddm/themes/pixie-better
     '';
@@ -128,6 +128,38 @@ in
     };
 
     defaultSession = "hyprland";
+  };
+
+  systemd.services.sddm-wallpaper-seed = {
+    description = "Seed SDDM wallpaper and accents, clear cache if changed";
+
+    serviceConfig = {
+      Type = "oneshot";
+      ExecStart = pkgs.writeShellScript "sddm-wallpaper-seed" ''
+        SRC_WALLPAPER="/home/${username}/.config/themes/current_theme/wallpaper.png"
+        DEST_WALLPAPER="/var/lib/current-theme/wallpaper.png"
+
+        SRC_ACCENTS="/home/${username}/.config/themes/current_theme/AccentsSDDM.qml"
+        DEST_ACCENTS="/var/lib/current-theme/AccentsSDDM.qml"
+
+        CHANGED=0
+
+        if [ -f "$SRC_WALLPAPER" ] && ! cmp -s "$SRC_WALLPAPER" "$DEST_WALLPAPER"; then
+          cp -f "$SRC_WALLPAPER" "$DEST_WALLPAPER"
+          CHANGED=1
+        fi
+
+        if [ -f "$SRC_ACCENTS" ] && ! cmp -s "$SRC_ACCENTS" "$DEST_ACCENTS"; then
+          cp -f "$SRC_ACCENTS" "$DEST_ACCENTS"
+          CHANGED=1
+        fi
+
+        if [ "$CHANGED" -eq 1 ]; then
+          rm -rf /var/lib/sddm/.cache
+          rm -rf ~/.cache/sddm-greeter-qt6
+        fi
+      '';
+    };
   };
 
   # Extra sudo settings

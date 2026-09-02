@@ -338,6 +338,23 @@ EOF
 log_success "Generated Accents.qml"
 
 # ==============================================================================
+# Generate AccentsSDDM.qml
+# ==============================================================================
+
+log_info "Generating AccentsSDDM.qml..."
+
+cat > "$THEME_DIR/AccentsSDDM.qml" << EOF
+import QtQuick
+
+QtObject {
+    readonly property color accent1: "$ACCENT1"
+    readonly property color accent2: "$ACCENT2"
+}
+EOF
+
+log_success "Generated AccentsSDDM.qml"
+
+# ==============================================================================
 # Generate dynamic-border.lua from template
 # ==============================================================================
 
@@ -374,6 +391,7 @@ echo "  ✓ colors.json"
 echo "  ✓ swaync.css"
 echo "  ✓ theme.omp.json"
 echo "  ✓ Accents.qml"
+echo "  ✓ AccentsSDDM.qml"
 echo "  ✓ dynamic-border.lua"
 
 # ==============================================================================

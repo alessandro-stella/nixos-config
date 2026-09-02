@@ -62,23 +62,53 @@ ModalBackdrop {
         StateManager.newThemeImagePath = root.tempFilePath
         root.tempFilePath = ""
 
-        if (colorExtractor.running)
-          colorExtractor.kill()
+        if (sddmAccentExtractor.running)
+          sddmAccentExtractor.kill()
 
-        colorExtractor.command = [
+        sddmAccentExtractor.command = [
           "sh",
-          Quickshell.env("HOME")
-            + "/.config/quickshell/theme_changer/scripts/get_palette.sh",
+          Quickshell.env("HOME") + "/.config/quickshell/theme_changer/scripts/get_sddm_accents.sh",
           StateManager.newThemeImagePath
         ]
+        sddmAccentExtractor.running = true
 
-        colorExtractor.running = true
+        if (paletteExtractor.running)
+          paletteExtractor.kill()
+
+        paletteExtractor.command = [
+          "sh",
+          Quickshell.env("HOME") + "/.config/quickshell/theme_changer/scripts/get_palette.sh",
+          StateManager.newThemeImagePath
+        ]
+        paletteExtractor.running = true
       }
     }
   }
 
   Process {
-    id: colorExtractor
+    id: sddmAccentExtractor
+
+    stdout: SplitParser {
+      onRead: data => {
+        try {
+          const parsed = JSON.parse(data.trim())
+          if (parsed.accent1) StateManager.newThemeColor1 = parsed.accent1
+          if (parsed.accent2) StateManager.newThemeColor2 = parsed.accent2
+        } catch (e) {
+          console.log("SDDM Accents JSON error:", e)
+        }
+      }
+    }
+
+    stderr: SplitParser {
+      onRead: data => {
+        console.log("SDDM Accent extractor error:", data)
+      }
+    }
+  }
+
+  Process {
+    id: paletteExtractor
 
     stdout: SplitParser {
       onRead: data => {
@@ -95,11 +125,6 @@ ModalBackdrop {
 
             root.termBg = parsed.background || ""
             root.termFg = parsed.foreground || ""
-
-            if (parsed.palette.length >= 5) {
-              StateManager.newThemeColor1 = parsed.palette[1]
-              StateManager.newThemeColor2 = parsed.palette[4]
-            }
           }
         } catch (e) {
           console.log("Palette JSON error:", e)

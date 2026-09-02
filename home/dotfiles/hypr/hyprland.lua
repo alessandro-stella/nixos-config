@@ -8,7 +8,7 @@ require("modules.dynamic-border")
 -- Starting scripts
 hl.on("hyprland.start", function()
 	hl.exec_cmd("start-polkit") -- graphical sudo elevation
-	-- hl.exec_cmd("waybar") -- Status bar
+	hl.exec_cmd("quickshell")
 	hl.exec_cmd(
 		"awww-daemon && awww img ~/.config/themes/current_theme/wallpaper.png --transition-type fade --transition-duration 0.5"
 	) -- Wallpaper
@@ -21,9 +21,6 @@ hl.on("hyprland.start", function()
 	-- Clipboard
 	hl.exec_cmd("cliphist wipe")
 	hl.exec_cmd("wl-paste --type text -w cliphist store")
-
-	-- Testing
-	hl.exec_cmd("quickshell")
 end)
 
 hl.config({

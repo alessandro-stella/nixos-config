@@ -52,6 +52,15 @@ update_file "$THEME_DIR/theme.omp.json" "$CURRENT_THEME_DIR/current_theme.omp.js
 update_file "$THEME_DIR/Accents.qml" "$CURRENT_THEME_DIR/Accents.qml"
 update_file "$THEME_DIR/dynamic-border.lua" "$CURRENT_THEME_DIR/dynamic-border.lua"
 update_file "$THEME_DIR/colors.json" "$CURRENT_THEME_DIR/colors.json"
+update_file "$THEME_DIR/AccentsSDDM.qml" "$CURRENT_THEME_DIR/AccentsSDDM.qml"
+
+cp -f "$THEME_DIR/wallpaper.png" "/var/lib/current-theme/wallpaper.png" 2>/dev/null \
+  || log_error "Couldn't update SDDM wallpaper"
+
+cp -f "$THEME_DIR/AccentsSDDM.qml" "/var/lib/current-theme/AccentsSDDM.qml" 2>/dev/null \
+  || log_error "Couldn't update SDDM accents"
+
+rm -rf "$HOME/.cache/sddm-greeter-qt6"
 
 echo "$THEME_NAME" > "$CURRENT_THEME_DIR/name"
 log_success "Current theme name saved in $CURRENT_THEME_DIR/name"

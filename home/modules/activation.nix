@@ -21,11 +21,4 @@ in
     export PATH=${activationPath}:$PATH
     ${./bootstrap/theme-links.sh}
   '';
-
-  # Allow SDDM to read current theme
-  home.activation.fixSddmPermissions =
-  config.lib.dag.entryAfter [ "linkGeneration" ] ''
-    export PATH=${activationPath}:$PATH
-    ${./bootstrap/fix-sddm-permissions.sh} ${username}
-  '';
 }
