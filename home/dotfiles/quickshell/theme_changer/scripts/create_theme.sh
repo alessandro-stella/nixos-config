@@ -177,7 +177,8 @@ COLORS=("${CORRECTED_COLORS[@]}")
 # ==============================================================================
 
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-TEMPLATES_DIR="$SCRIPT_DIR/templates"
+MODULE_DIR="$(dirname "$SCRIPT_DIR")"
+TEMPLATES_DIR="$MODULE_DIR/templates"
 THEME_BASE_DIR="$HOME/.config/themes"
 CURRENT_THEME_DIR="$THEME_BASE_DIR/current_theme"
 

@@ -210,7 +210,7 @@ ModalBackdrop {
 
     const args = [
       "bash",
-      Quickshell.env("HOME") + "/.config/quickshell/theme_changer/create_theme.sh",
+      Quickshell.env("HOME") + "/.config/quickshell/theme_changer/scripts/create_theme.sh",
       "--wallpaper", wallpaperPath,
       "--palette", paletteJson,
       "--accent1", accent1,
