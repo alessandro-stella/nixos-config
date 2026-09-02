@@ -28,7 +28,6 @@ in
   environment.systemPackages = with pkgs; [
     neovim
     foot
-
     git
     wget
     curl
