@@ -38,6 +38,10 @@
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
       set-environment -g COLORTERM "truecolor"
 
+      # Add support to extended keys
+      set -s extended-keys on
+      set -as terminal-features 'xterm*:extkeys'
+
       # Toggle status bar
       bind-key b set-option status
      
