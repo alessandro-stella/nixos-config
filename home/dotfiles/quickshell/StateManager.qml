@@ -89,4 +89,22 @@ QtObject {
       closeEverything()
     }
   }
+
+  // Shared counter for widgets that need Hyprland shortcuts blocked
+  property int shortcutBlockCount: 0
+
+  signal shortcutBlockRequested()
+  signal shortcutBlockReleased()
+
+  function requestShortcutBlock() {
+    shortcutBlockCount++
+    if (shortcutBlockCount === 1)
+      shortcutBlockRequested()
+  }
+
+  function releaseShortcutBlock() {
+    shortcutBlockCount = Math.max(0, shortcutBlockCount - 1)
+    if (shortcutBlockCount === 0)
+      shortcutBlockReleased()
+  }
 }

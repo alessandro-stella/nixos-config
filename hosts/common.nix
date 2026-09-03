@@ -129,9 +129,22 @@ in
     defaultSession = "hyprland";
   };
 
+  systemd.paths.sddm-wallpaper-seed = {
+    description = "Monitor changes for SDDM";
+    wantedBy = [ "multi-user.target" ];
+
+    pathConfig = {
+      PathChanged = "/home/${username}/.config/themes/current_theme/name";
+    };
+  };
+  
   systemd.services.sddm-wallpaper-seed = {
     description = "Seed SDDM wallpaper and accents, clear cache if changed";
-
+    wantedBy = [ "graphical.target" ];
+    before = [ "display-manager.service" ]; 
+    
+    path = with pkgs; [ coreutils diffutils ];
+    
     serviceConfig = {
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "sddm-wallpaper-seed" ''
@@ -140,6 +153,8 @@ in
 
         SRC_ACCENTS="/home/${username}/.config/themes/current_theme/AccentsSDDM.qml"
         DEST_ACCENTS="/var/lib/current-theme/AccentsSDDM.qml"
+
+        mkdir -p /var/lib/current-theme
 
         CHANGED=0
 
@@ -155,7 +170,7 @@ in
 
         if [ "$CHANGED" -eq 1 ]; then
           rm -rf /var/lib/sddm/.cache
-          rm -rf ~/.cache/sddm-greeter-qt6
+          rm -rf "/home/${username}/.cache/sddm-greeter-qt6"
         fi
       '';
     };

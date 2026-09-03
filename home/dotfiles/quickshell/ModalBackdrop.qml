@@ -17,9 +17,18 @@ Scope {
   signal opened()
   signal closed()
 
+  // Tracks whether THIS instance is the one that incremented
+  // StateManager.shortcutBlockCount, so we release it correctly even
+  // if the focused monitor changes between open() and close().
+  property bool _shortcutBlockOwned: false
+
   function open(): void {
     root.isVisible = true
     launcherPanel.visible = true
+    if (root.isFocusedMonitor()) {
+      StateManager.requestShortcutBlock()
+      root._shortcutBlockOwned = true
+    }
     root.opened()
   } 
 
@@ -27,6 +36,10 @@ Scope {
     if (!root.isVisible) return
     root.isVisible = false
     closeTimer.start()
+    if (root._shortcutBlockOwned) {
+      StateManager.releaseShortcutBlock()
+      root._shortcutBlockOwned = false
+    }
     root.closed()
   }
 
@@ -55,6 +68,8 @@ Scope {
 
   Component.onDestruction: {
     StateManager.unregisterWidget(root)
+    if (root._shortcutBlockOwned)
+      StateManager.releaseShortcutBlock()
   }
 
   GlobalShortcut {

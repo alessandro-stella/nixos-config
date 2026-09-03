@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Io
 import Quickshell.Wayland
 import Quickshell.Hyprland
 import QtQuick
@@ -75,6 +76,23 @@ ShellRoot {
       monitorId: modelData
       screen: Quickshell.screens[modelData]
     }
+  }
+
+  // Blocks Hyprland's own keybinds while a ModalBackdrop-based widget
+  Process {
+    id: enterShortcutBlockSubmap
+    command: ["bash", "-c", "hyprctl dispatch 'hl.dsp.submap(\"quickshell-lock\")'"]
+  }
+
+  Process {
+    id: exitShortcutBlockSubmap
+    command: ["bash", "-c", "hyprctl dispatch 'hl.dsp.submap(\"reset\")'"]
+  }
+
+  Connections {
+    target: StateManager
+    function onShortcutBlockRequested() { enterShortcutBlockSubmap.running = true }
+    function onShortcutBlockReleased() { exitShortcutBlockSubmap.running = true }
   }
 
   // Lockscreen
