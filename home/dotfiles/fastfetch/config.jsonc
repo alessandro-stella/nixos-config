@@ -8,6 +8,7 @@
     }
   },
   "display": {
+    "separator": " ",
     "percent": {
       "color": {
         "green": "",
@@ -28,7 +29,7 @@
     },
     {
       "type": "cpu",
-      "key": "│ ├"
+      "key": "│ ├󰍛"
     },
     {
       "type": "gpu",
@@ -61,21 +62,17 @@
     },
     {
       "type": "command",
+      "key": "│ ├",
+      "text": "hyprctl version | awk 'NR==1 {print \"Hyprland\", $2, \"(Wayland)\"}'"
+    },
+    {
+      "type": "command",
       "key": "│ ├󰏖",
-      "text": "echo '~5000 (nix)'"
+      "text": "cat ~/.local/share/nix-installed-packages"
     },
     {
       "type": "shell",
       "key": "│ ├"
-    },
-    {
-      "type": "display",
-      "key": "│ ├"
-    },
-    {
-      "type": "command",
-      "key": "│ ├",
-      "text": "echo 'Hyprland 0.55.4 (Wayland)'"
     },
     {
       "type": "terminal",

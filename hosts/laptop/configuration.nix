@@ -57,9 +57,6 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
-  # Tailscale integration
-  services.tailscale.enable = true;
-
   # Disable trackpoint (hardware damage causes drift, I suppose)
   systemd.services.trackpoint-filter = {
     description = "Filter trackpoint drift";

@@ -244,6 +244,9 @@ in
   # Disable xterm
   services.xserver.excludePackages = [ pkgs.xterm ];
 
+  # Tailscale integration
+  services.tailscale.enable = true;
+
   # Turn on experimental commands
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
