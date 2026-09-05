@@ -3,7 +3,7 @@
   "logo": {
     "type": "builtin",
     "padding": {
-      "top": 2,
+      "top": 1,
       "left": 3
     }
   },
