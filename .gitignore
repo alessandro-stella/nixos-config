@@ -1,9 +1,5 @@
-home/dotfiles/kitty/colors-kitty.conf
 home/dotfiles/foot/colors-foot.ini
 home/dotfiles/oh-my-posh/themes/current_theme.omp.json
-home/dotfiles/rofi/colors.rasi
 home/dotfiles/swaync/style.css
-home/dotfiles/waybar/style.css
-home/dotfiles/wlogout/style.css
 
 home/dotfiles/quickshell/.qmlls.ini

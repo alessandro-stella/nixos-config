@@ -9,6 +9,7 @@
     pavucontrol
     apostrophe
     bruno 
+    brave-origin
 
     # Tool CLI
     btop

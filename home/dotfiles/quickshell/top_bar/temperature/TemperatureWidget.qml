@@ -39,16 +39,18 @@ Rectangle {
 
             for (let sensorName in sensorsData[adapter]) {
               let sensor = sensorsData[adapter][sensorName];
+              
               for (let key in sensor) {
-                if (key.endsWith("_input")) {
+                if (key.startsWith("temp") && key.endsWith("_input")) {
                   let val = parseFloat(sensor[key]);
+                  
                   if (sensorName.match(/Tctl|Tccd|Package|Core/i)) {
                     tempFound = Math.max(tempFound, val);
                   } else if (tempFound === 0.0) {
                     tempFound = val;
                   }
                 }
-              }
+              }  
             }
           }
 

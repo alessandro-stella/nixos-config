@@ -14,7 +14,6 @@ in
     ./modules/xdg.nix
     ./modules/activation.nix
     
-    ./modules/programs/brave.nix
     ./modules/programs/tmux.nix
     ./modules/programs/zshell.nix
   ];

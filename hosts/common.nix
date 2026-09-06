@@ -42,6 +42,7 @@ in
     fzf
     ntfs3g
     networkmanagerapplet
+    gsettings-desktop-schemas
 
     polkit_gnome
     (writeShellScriptBin "start-polkit" ''
@@ -50,6 +51,24 @@ in
 
     sddmTheme
   ];
+
+  # Portal magic
+  xdg.portal = {
+    enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+    config.common.default = [ "hyprland" "gtk" ];
+  }; 
+
+  systemd.user.services.xdg-desktop-portal = {
+    unitConfig.Requires = [ "graphical-session.target" ];
+    unitConfig.Wants = [ "graphical-session.target" ];
+    unitConfig.After = [ "graphical-session.target" ];
+  };
+
+  programs.dconf.enable = true;
 
   # Set tmp files to be saved in RAM
   boot.tmp.useTmpfs = true;

@@ -11,6 +11,7 @@ import "./cpu"
 import "./temperature"
 import "./audio"
 import "./network"
+import "./logo"
 
 PanelWindow {
   id: root
@@ -55,6 +56,7 @@ PanelWindow {
           LogoWidget {
             Layout.fillHeight: true
             Layout.preferredWidth: Theme.barHeight 
+            parentWindow: root
           }
 
           WorkspacesWidget {

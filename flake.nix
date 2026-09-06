@@ -9,8 +9,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    brave-origin.url = "github:Daniel-42-z/brave-origin-flake";
-
     minegrub-world-sel-theme = {
       url = "github:Lxtharia/minegrub-world-sel-theme";
       inputs.nixpkgs.follows = "nixpkgs";
