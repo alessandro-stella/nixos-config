@@ -55,7 +55,7 @@ Item {
 
   Process {
     id: checkUpdatesProcess
-    command: ["bash", "-c", "~/.config/quickshell/top_bar/logo/check-updates.sh"]
+    command: ["zsh", "-i", "-c", "~/.config/quickshell/top_bar/logo/check-updates.sh"]
 
     stdout: SplitParser {
       onRead: data => {

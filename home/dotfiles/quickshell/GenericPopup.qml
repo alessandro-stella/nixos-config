@@ -157,9 +157,9 @@ Scope {
               id: contentLoader
 
               Layout.fillWidth: true
-
               Layout.preferredHeight: item ? item.implicitHeight : 0
 
+              active: genericPopupRoot.isOpen
               sourceComponent: genericPopupRoot.contentComponent
 
               onLoaded: {
