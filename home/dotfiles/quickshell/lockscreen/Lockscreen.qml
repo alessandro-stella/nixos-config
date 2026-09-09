@@ -94,6 +94,7 @@ PanelWindow {
       property string pwdBuffer: ""
       property bool hasBiometricSensor: false
       property bool isTyping: false
+      property string currentTime: Qt.formatDateTime(new Date(), "hh:mm")
 
       // Grace period timer
       Timer {
@@ -109,6 +110,35 @@ PanelWindow {
         id: typingTimer
         interval: 350
         onTriggered: isTyping = false
+      }
+
+      // Sync to next minute
+      Timer {
+        id: initialSyncTimer
+        onTriggered: {
+          currentTime = Qt.formatDateTime(new Date(), "hh:mm")
+          regularClockTimer.start()
+        }
+      }
+
+      // Main timer
+      Timer {
+        id: regularClockTimer
+        interval: 60000
+        repeat: true
+        onTriggered: {
+          currentTime = Qt.formatDateTime(new Date(), "hh:mm")
+        }
+      }
+
+      // Check remaining time to next minute
+      function syncClockToNextMinute() {
+        const now = new Date()
+        const secondsRemaining = 60 - now.getSeconds()
+        const millisecondsUntilNextMinute = (secondsRemaining * 1000) - now.getMilliseconds()
+        
+        initialSyncTimer.interval = millisecondsUntilNextMinute
+        initialSyncTimer.start()
       }
 
       // Check for available biometric sensors
@@ -207,6 +237,7 @@ PanelWindow {
 
       Component.onCompleted: {
         keyInterceptor.forceActiveFocus()
+        syncClockToNextMinute()
       }
 
       // Keyboard input handling
@@ -353,7 +384,8 @@ PanelWindow {
           spacing: 0
 
           Text {
-            text: Qt.formatDateTime(new Date(), "hh:mm")
+            id: clockDisplay
+            text: currentTime
             font.family: Theme.fontFamily
             font.pixelSize: 72
             font.weight: Font.Bold
