@@ -5,6 +5,7 @@
     spotify
     discord
     gimp
+    inkscape
   ];
 
   # Configuration for PhotoGimp

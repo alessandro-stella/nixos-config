@@ -5,8 +5,8 @@
  * gimp.css file instead (/home/alessandro/.config/GIMP/3.2/gimp.css).
  */
 
-@import url("file:///nix/store/5kqs542kza55g4hmmn8i5ciaqhb13zxg-gimp-3.2.4/share/gimp/3.0/themes/Default/gimp-dark.css");
-@import url("file:///nix/store/5kqs542kza55g4hmmn8i5ciaqhb13zxg-gimp-3.2.4/etc/gimp/3.0/gimp.css");
+@import url("file:///nix/store/xc6qg0mf4hd4ij9z4hmy9vy3sd5sc41n-gimp-3.2.4/share/gimp/3.0/themes/Default/gimp-dark.css");
+@import url("file:///nix/store/xc6qg0mf4hd4ij9z4hmy9vy3sd5sc41n-gimp-3.2.4/etc/gimp/3.0/gimp.css");
 
 * { -gtk-icon-style: symbolic; }
 

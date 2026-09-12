@@ -3559,6 +3559,473 @@
         (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
         (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
         (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-dicom/file-dicom" 1
+    (proc-def "file-dicom-load" 1
+         "Loads files of the dicom file format"
+         "Load a file in the DICOM standard format. The standard is defined at http://medical.nema.org/. The plug-in currently only supports reading images with uncompressed pixel sections."
+         "Dov Grobgeld"
+         "Dov Grobgeld <dov@imagic.weizmann.ac.il>"
+         "2003"
+         "DICOM image"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "dcm,dicom")
+            (magics "128,string,DICM")
+            (mime-types "image/x-dcm"))
+         ""
+         2147483647
+         2 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
+    (proc-def "file-dicom-export" 1
+         "Save file in the DICOM file format"
+         "Save an image in the medical standard DICOM image formats. The standard is defined at http://medical.nema.org/. The file format is defined in section 10 of the standard. The files are saved uncompressed and the compulsory DICOM tags are filled with default dummy values."
+         "Dov Grobgeld"
+         "Dov Grobgeld <dov@imagic.weizmann.ac.il>"
+         "2003"
+         "Digital Imaging and Communications in Medicine image"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "dcm,dicom")
+            (mime-types "image/x-dcm"))
+         "RGB, GRAY"
+         2147483647
+         4 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-desktop-link/file-desktop-link" 1
+    (proc-def "file-desktop-link-load" 1
+         "Follows a link to an image in a .desktop file"
+         "Opens a .desktop file and if it is a link, it asks GIMP to open the file the link points to."
+         "Sven Neumann"
+         "Sven Neumann"
+         "2006"
+         "Desktop Link"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "desktop"))
+         ""
+         2147483647
+         2 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-dds/file-dds" 1
+    (proc-def "file-dds-load" 1
+         "Loads files in DDS image format"
+         "Loads files in DDS image format"
+         "Shawn Kirst"
+         "Shawn Kirst"
+         "2008"
+         "DDS image"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "dds")
+            (magics "0,string,DDS")
+            (mime-types "image/dds"))
+         ""
+         2147483647
+         4 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 5 "GParamBoolean" "gboolean" "load-mipmaps" "Load _mipmaps" "Load mipmaps if present" 3 1)
+        (proc-arg 5 "GParamBoolean" "gboolean" "flip-image" "Flip image _vertically" "Flip the image vertically on import" 3 0)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
+    (proc-def "file-dds-export" 1
+         "Saves files in DDS image format"
+         "Saves files in DDS image format"
+         "Shawn Kirst"
+         "Shawn Kirst"
+         "2008"
+         "DDS image"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "dds")
+            (mime-types "image/dds"))
+         "INDEXED, GRAY, RGB"
+         2147483647
+         19 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)
+        (proc-arg 4 "GimpParamChoice" "gchararray" "compression-format" "Compressio_n" "Compression format" 3 "none" 12 "none" 0 "None" "" "bc1" 1 "BC1 / DXT1" "" "bc2" 2 "BC2 / DXT3" "" "bc3, " 3 "BC3 / DXT5" "" "bc3n" 4 "BC3nm / DXT5nm" "" "bc4" 5 "BC4 / ATI1 (3Dc+)" "" "bc5" 6 "BC5 / ATI2 (3Dc)" "" "bc7" 8 "BC7" "" "rxgb" 9 "RXGB (DXT5)" "" "aexp" 10 "Alpha Exponent (DXT5)" "" "ycocg" 11 "YCoCg (DXT5)" "" "ycocgs" 12 "YCoCg scaled (DXT5)" "")
+        (proc-arg 5 "GParamBoolean" "gboolean" "perceptual-metric" "Use percept_ual error metric" "Use a perceptual error metric during compression" 3 0)
+        (proc-arg 4 "GimpParamChoice" "gchararray" "format" "_Format" "Pixel format" 3 "default" 15 "default" 0 "Default" "" "rgb8" 1 "RGB8" "" "rgba8" 2 "RGBA8" "" "bgr8" 3 "BGR8" "" "abgr8, " 4 "ABGR8" "" "r5g6b5" 5 "R5G6B5" "" "rgba4" 6 "RGBA4" "" "rgb5a1" 7 "RGB5A1" "" "rgb10a2" 8 "RGB10A2" "" "r3g3b2" 9 "R3G3B2" "" "a8" 10 "A8" "" "l8" 11 "L8" "" "l8a8" 12 "L8A8" "" "aexp" 13 "AEXP" "" "ycocg" 14 "YCOCG" "")
+        (proc-arg 4 "GimpParamChoice" "gchararray" "save-type" "Sav_e type" "How to save the image" 3 "layer" 5 "layer" 0 "Selected layer" "" "canvas" 4 "All visible layers" "" "cube" 1 "As cube map" "" "volume" 2 "As volume map" "" "array" 3 "As texture array" "")
+        (proc-arg 5 "GParamBoolean" "gboolean" "flip-image" "Flip image _vertically on export" "Flip the image vertically on export" 3 0)
+        (proc-arg 5 "GParamBoolean" "gboolean" "transparent-color" "Set _transparent color" "Make an indexed color transparent" 3 0)
+        (proc-arg 1 "GParamInt" "gint" "transparent-index" "Transparent inde_x" "Index of transparent color or -1 to disable (for indexed images only)." 3 0 255 0)
+        (proc-arg 4 "GimpParamChoice" "gchararray" "mipmaps" "_Mipmaps" "How to handle mipmaps" 3 "none" 3 "none" 0 "No mipmaps" "" "generate" 1 "Generate mipmaps" "" "existing" 2 "Use existing mipmaps" "")
+        (proc-arg 4 "GimpParamChoice" "gchararray" "mipmap-filter" "F_ilter" "Filtering to use when generating mipmaps" 3 "default" 10 "default" 0 "Default" "" "nearest" 1 "Nearest" "" "box" 2 "Box" "" "triangle" 3 "Triangle" "" "quadratic" 4 "Quadratic" "" "bspline" 5 "B-Spline" "" "mitchell" 6 "Mitchell" "" "catrom" 7 "Catmull-Rom" "" "lanczos" 8 "Lanczos" "" "kaiser" 9 "Kaiser" "")
+        (proc-arg 4 "GimpParamChoice" "gchararray" "mipmap-wrap" "_Wrap mode" "Wrap mode to use when generating mipmaps" 3 "default" 4 "default" 0 "Default" "" "mirror" 1 "Mirror" "" "repeat" 2 "Repeat" "" "clamp" 3 "Clamp" "")
+        (proc-arg 5 "GParamBoolean" "gboolean" "gamma-correct" "Appl_y gamma correction" "Use gamma correct mipmap filtering" 3 0)
+        (proc-arg 5 "GParamBoolean" "gboolean" "srgb" "Use sRG_B colorspace" "Use sRGB colorspace for gamma correction" 3 0)
+        (proc-arg 6 "GParamDouble" "gdouble" "gamma" "_Gamma" "Gamma value to use for gamma correction (e.g. 2.2)" 3 0 10 0)
+        (proc-arg 5 "GParamBoolean" "gboolean" "preserve-alpha-coverage" "Preserve al_pha test coverage" "Preserve alpha test coverage for alpha channel maps" 3 0)
+        (proc-arg 6 "GParamDouble" "gdouble" "alpha-test-threshold" "Alp_ha test threshold" "Alpha test threshold value for which alpha test coverage should be preserved" 3 0 1 0.5)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-csource/file-csource" 1
+    (proc-def "file-csource-export" 1
+         "Dump image data in RGB(A) format for C source"
+         "Dump image data in RGB(A) format for C source"
+         "Tim Janik"
+         "Tim Janik"
+         "1999"
+         "C source code"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "c")
+            (mime-types "image/x-csrc")
+            (handles-remote))
+         "*"
+         2147483647
+         4 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-compressor/file-compressor" 1
+    (proc-def "file-gz-load" 1
+         "Loads files compressed with gzip"
+         "This procedure loads files in the gzip compressed format."
+         "Daniel Risacher"
+         "Daniel Risacher, Spencer Kimball and Peter Mattis"
+         "1995-1997"
+         "gzip archive"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "xcf.gz,xcfgz")
+            (meta-extensions "gz")
+            (magics "0,string,\037‹")
+            (mime-types "application/x-gzip"))
+         ""
+         2147483647
+         2 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
+    (proc-def "file-gz-export" 1
+         "Exports files compressed with gzip"
+         "This procedure exports files in the gzip compressed format."
+         "Daniel Risacher"
+         "Daniel Risacher, Spencer Kimball and Peter Mattis"
+         "1995-1997"
+         "gzip archive"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "xcf.gz,xcfgz")
+            (meta-extensions "gz")
+            (mime-types "application/x-gzip"))
+         "RGB*, GRAY*, INDEXED*"
+         2147483647
+         4 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3))
+    (proc-def "file-bz2-load" 1
+         "Loads files compressed with bzip2"
+         "This procedure loads files in the bzip2 compressed format."
+         "Daniel Risacher"
+         "Daniel Risacher, Spencer Kimball and Peter Mattis"
+         "1995-1997"
+         "bzip archive"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "xcf.bz2,xcfbz2")
+            (meta-extensions "bz2")
+            (magics "0,string,BZh")
+            (mime-types "application/x-bzip"))
+         ""
+         2147483647
+         2 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
+    (proc-def "file-bz2-export" 1
+         "Exports files compressed with bzip2"
+         "This procedure exports files in the bzip2 compressed format."
+         "Daniel Risacher"
+         "Daniel Risacher, Spencer Kimball and Peter Mattis"
+         "1995-1997"
+         "bzip archive"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "xcf.bz2,xcfbz2")
+            (meta-extensions "bz2")
+            (mime-types "application/x-bzip"))
+         "RGB*, GRAY*, INDEXED*"
+         2147483647
+         4 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3))
+    (proc-def "file-xz-load" 1
+         "Loads files compressed with xz"
+         "This procedure loads files in the xz compressed format."
+         "Daniel Risacher"
+         "Daniel Risacher, Spencer Kimball and Peter Mattis"
+         "1995-1997"
+         "xz archive"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "xcf.xz,xcfxz")
+            (meta-extensions "xz")
+            (magics "0,string,ý7zXZ")
+            (mime-types "application/x-xz"))
+         ""
+         2147483647
+         2 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
+    (proc-def "file-xz-export" 1
+         "Exports files compressed with xz"
+         "This procedure exports files in the xz compressed format."
+         "Daniel Risacher"
+         "Daniel Risacher, Spencer Kimball and Peter Mattis"
+         "1995-1997"
+         "xz archive"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "xcf.xz,xcfxz")
+            (meta-extensions "xz")
+            (mime-types "application/x-xz"))
+         "RGB*, GRAY*, INDEXED*"
+         2147483647
+         4 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3))
+    (proc-def "file-zip-load" 1
+         "Loads files compressed with zip"
+         "This procedure loads files in the zip compressed format."
+         "Daniel Risacher"
+         "Daniel Risacher, Spencer Kimball and Peter Mattis"
+         "1995-1997"
+         "zip archive"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "hgt.zip")
+            (meta-extensions "zip")
+            (magics "0,string,PK\003\004")
+            (mime-types "application/zip"))
+         ""
+         2147483647
+         2 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-cel/file-cel" 1
+    (proc-def "file-cel-load" 1
+         "Loads files in KISS CEL file format"
+         "This plug-in loads individual KISS cell files."
+         "Nick Lamb"
+         "Nick Lamb <njl195@zepler.org.uk>"
+         "May 1998"
+         "KISS CEL"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "cel")
+            (magics "0,string,KiSS\\040"))
+         ""
+         2147483647
+         3 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 13 "GimpParamFile" "GFile" "palette-file" "_Palette file" "KCF file to load palette from" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
+    (proc-def "file-cel-export" 1
+         "Exports files in KISS CEL file format"
+         "This plug-in exports individual KISS cell files."
+         "Nick Lamb"
+         "Nick Lamb <njl195@zepler.org.uk>"
+         "May 1998"
+         "KISS CEL"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "cel")
+            (handles-remote))
+         "RGB*, INDEXED*"
+         2147483647
+         5 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)
+        (proc-arg 13 "GimpParamFile" "GFile" "palette-file" "_Palette file" "File to save palette to" 3 1 0 "")))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-bmp/file-bmp" 1
+    (proc-def "file-bmp-load" 1
+         "Loads files of Windows BMP file format"
+         "Loads files of Windows BMP file format"
+         "Alexander Schulz"
+         "Alexander Schulz"
+         "1997"
+         "Windows BMP image"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "bmp")
+            (magics "0,string,BM")
+            (mime-types "image/bmp"))
+         ""
+         2147483647
+         2 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
+    (proc-def "file-bmp-export" 1
+         "Saves files in Windows BMP file format"
+         "Saves files in Windows BMP file format"
+         "Alexander Schulz"
+         "Alexander Schulz"
+         "1997"
+         "Windows BMP image"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "bmp")
+            (mime-types "image/bmp"))
+         "INDEXED, GRAY, RGB*"
+         2147483647
+         7 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)
+        (proc-arg 5 "GParamBoolean" "gboolean" "use-rle" "Ru_n-Length Encoded" "Use run-length-encoding compression (only valid for 4 and 8-bit indexed images)" 3 0)
+        (proc-arg 5 "GParamBoolean" "gboolean" "write-color-space" "_Write color space information" "Whether or not to write BITMAPV5HEADER color space data" 3 1)
+        (proc-arg 4 "GimpParamChoice" "gchararray" "rgb-format" "R_GB format" "Export format for RGB images" 3 "rgb-888" 6 "rgb-565" 0 "16 bit (R5 G6 B5)" "" "rgba-5551" 1 "16 bit (A1 R5 G5 B5)" "" "rgb-555" 2 "16 bit (X1 R5 G5 B5)" "" "rgb-888" 3 "24 bit (R8 G8 B8)" "" "rgba-8888" 4 "32 bit (A8 R8 G8 B8)" "" "rgbx-8888" 5 "32 bit (X8 R8 G8 B8)" "")))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-aa/file-aa" 1
+    (proc-def "file-aa-export" 1
+         "Saves grayscale image in various text formats"
+         "This plug-in uses aalib to save grayscale image as ascii art into a variety of text formats"
+         "Tim Newsome <nuisance@cmu.edu>"
+         "Tim Newsome <nuisance@cmu.edu>"
+         "1997"
+         "ASCII art"
+         0
+        (icon icon-name -1 "")
+        (save-proc
+            (extensions "txt,ansi,text")
+            (mime-types "text/plain"))
+         "*"
+         2147483647
+         5 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
+        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)
+        (proc-arg 1 "GParamInt" "gint" "file-type" "_Format" "File type to use" 3 0 11 0)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/destripe/destripe" 1
+    (proc-def "plug-in-destripe" 1
+         "Remove vertical stripe artifacts from the image"
+         "This plug-in tries to remove vertical stripes from an image."
+         "Marc Lehmann <pcg@goof.com>"
+         "Marc Lehmann <pcg@goof.com>"
+         "0.2"
+         "Des_tripe..."
+         1
+        (menu-path "<Image>/Colors/Tone Mapping")
+        (icon icon-name -1 "")
+         "RGB*, GRAY*"
+         1
+         5 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The input image" 3 0)
+        (proc-arg 10 "GimpParamCoreObjectArray" "GimpCoreObjectArray" "drawables" "Drawables" "The input drawables" 259 "GimpDrawable")
+        (proc-arg 1 "GParamInt" "gint" "avg-width" "_Width" "Averaging filter width" 3 2 100 36)
+        (proc-arg 5 "GParamBoolean" "gboolean" "create-histogram" "Create _histogram" "Output a histogram" 3 0)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/despeckle/despeckle" 1
+    (proc-def "plug-in-despeckle" 1
+         "Remove speckle noise from the image"
+         "This plug-in selectively performs a median or adaptive box filter on an image."
+         "Michael Sweet <mike@easysw.com>"
+         "Copyright 1997-1998 by Michael Sweet"
+         "May 2010"
+         "Des_peckle..."
+         1
+        (menu-path "<Image>/Filters/Enhance")
+        (icon icon-name -1 "")
+         "RGB*, GRAY*"
+         1
+         7 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The input image" 3 0)
+        (proc-arg 10 "GimpParamCoreObjectArray" "GimpCoreObjectArray" "drawables" "Drawables" "The input drawables" 259 "GimpDrawable")
+        (proc-arg 1 "GParamInt" "gint" "radius" "R_adius" "Filter box radius" 3 1 30 3)
+        (proc-arg 4 "GimpParamChoice" "gchararray" "type" "_Filter type" "Filter type" 3 "adaptive" 4 "median" 0 "Median" "" "adaptive" 1 "Adaptive" "" "recursive-median" 2 "Recursive-Median" "" "recursive-adaptive" 3 "Recursive-Adaptive" "")
+        (proc-arg 1 "GParamInt" "gint" "black" "_Black level" "Black level" 3 -1 255 7)
+        (proc-arg 1 "GParamInt" "gint" "white" "_White level" "White level" 3 0 256 248)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/depth-merge/depth-merge" 1
+    (proc-def "plug-in-depth-merge" 1
+         "Combine two images using depth maps (z-buffers)"
+         "Taking as input two full-color, full-alpha images and two corresponding grayscale depth maps, this plug-in combines the images based on which is closer (has a lower depth map value) at each point."
+         "Sean Cier"
+         "Sean Cier"
+         "August 1998"
+         "_Depth Merge..."
+         1
+        (menu-path "<Image>/Filters/Combine")
+        (icon icon-name -1 "")
+         "RGB*, GRAY*"
+         1
+         11 0
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The input image" 3 0)
+        (proc-arg 10 "GimpParamCoreObjectArray" "GimpCoreObjectArray" "drawables" "Drawables" "The input drawables" 259 "GimpDrawable")
+        (proc-arg 9 "GimpParamDrawable" "GimpDrawable" "source-1" "Source _1" "Source 1" 3 1)
+        (proc-arg 9 "GimpParamDrawable" "GimpDrawable" "depth-map-1" "_Depth map 1" "Depth map 1" 3 1)
+        (proc-arg 9 "GimpParamDrawable" "GimpDrawable" "source-2" "Source _2" "Source 2" 3 1)
+        (proc-arg 9 "GimpParamDrawable" "GimpDrawable" "depth-map-2" "Depth _map 2" "Depth map 2" 3 1)
+        (proc-arg 6 "GParamDouble" "gdouble" "overlap" "O_verlap" "Overlap" 3 0 2 0)
+        (proc-arg 6 "GParamDouble" "gdouble" "offset" "O_ffset" "Depth relative offset" 3 -1 1 0)
+        (proc-arg 6 "GParamDouble" "gdouble" "scale-1" "Sc_ale 1" "Depth relative scale 1" 3 -1 1 1)
+        (proc-arg 6 "GParamDouble" "gdouble" "scale-2" "Scal_e 2" "Depth relative scale 2" 3 -1 1 1)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/decompose/decompose" 1
+    (proc-def "plug-in-decompose" 1
+         "Decompose an image into separate colorspace components"
+         "This function creates new gray images with different channel information in each of them"
+         "Peter Kirchgessner"
+         "Peter Kirchgessner, Clarence Risher"
+         "1997"
+         "_Decompose..."
+         1
+        (menu-path "<Image>/Colors/Components")
+        (icon icon-name -1 "")
+         "RGB*"
+         1
+         6 4
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The input image" 3 0)
+        (proc-arg 10 "GimpParamCoreObjectArray" "GimpCoreObjectArray" "drawables" "Drawables" "The input drawables" 259 "GimpDrawable")
+        (proc-arg 4 "GimpParamChoice" "gchararray" "decompose-type" "Color _model" "The model to decompose to" 3 "rgb" 12 "rgb" 0 "RGB" "" "rgba" 1 "RGBA" "" "alpha" 2 "Alpha" "" "hsv" 3 "HSV" "" "hsl" 4 "HSL" "" "cmyk" 5 "CMYK" "" "lab" 6 "LAB" "" "lch" 7 "LCH" "" "ycbcr470" 8 "YCbCr ITU R470" "" "ycbcr709" 9 "YCbCr ITU R709" "" "ycbcr470f" 10 "YCbCr ITU R470 256" "" "ycbcr709f" 11 "YCbCr ITU R709 256" "")
+        (proc-arg 5 "GParamBoolean" "gboolean" "layers-mode" "_Decompose to layers" "Create channels as layers in a single image" 3 1)
+        (proc-arg 5 "GParamBoolean" "gboolean" "use-registration" "_Foreground as registration color" "When enabled, pixels in the foreground color will appear black in all output images. This can be used for things like crop marks that have to show up on all channels." 3 0)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "new-image-1" "New image 1" "Output gray image 1" 3 0)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "new-image-2" "New image 2" "Output gray image 2 (N/A for single channel extract)" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "new-image-3" "New image 3" "Output gray image 3 (N/A for single channel extract)" 3 1)
+        (proc-arg 9 "GimpParamImage" "GimpImage" "new-image-4" "New image 4" "Output gray image 4 (N/A for single channel extract)" 3 1)))
 (plug-in-def "${gimp_plug_in_dir}/plug-ins/file-ico/file-ico" 1
     (proc-def "file-ico-load-thumb" 1
          "Loads a preview from a Windows ICO or CUR files"
@@ -4209,493 +4676,6 @@
         (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
         (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
         (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-exr/file-exr" 1
-    (proc-def "file-exr-load" 1
-         "Loads files in the OpenEXR file format"
-         "This plug-in loads OpenEXR files. "
-         "Dominik Ernst <dernst@gmx.de>, Mukund Sivaraman <muks@banu.com>"
-         "Dominik Ernst <dernst@gmx.de>, Mukund Sivaraman <muks@banu.com>"
-         ""
-         "OpenEXR image"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "exr")
-            (magics "0,long,0x762f3101")
-            (mime-types "image/x-exr"))
-         ""
-         2147483647
-         2 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-dicom/file-dicom" 1
-    (proc-def "file-dicom-load" 1
-         "Loads files of the dicom file format"
-         "Load a file in the DICOM standard format. The standard is defined at http://medical.nema.org/. The plug-in currently only supports reading images with uncompressed pixel sections."
-         "Dov Grobgeld"
-         "Dov Grobgeld <dov@imagic.weizmann.ac.il>"
-         "2003"
-         "DICOM image"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "dcm,dicom")
-            (magics "128,string,DICM")
-            (mime-types "image/x-dcm"))
-         ""
-         2147483647
-         2 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
-    (proc-def "file-dicom-export" 1
-         "Save file in the DICOM file format"
-         "Save an image in the medical standard DICOM image formats. The standard is defined at http://medical.nema.org/. The file format is defined in section 10 of the standard. The files are saved uncompressed and the compulsory DICOM tags are filled with default dummy values."
-         "Dov Grobgeld"
-         "Dov Grobgeld <dov@imagic.weizmann.ac.il>"
-         "2003"
-         "Digital Imaging and Communications in Medicine image"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "dcm,dicom")
-            (mime-types "image/x-dcm"))
-         "RGB, GRAY"
-         2147483647
-         4 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-desktop-link/file-desktop-link" 1
-    (proc-def "file-desktop-link-load" 1
-         "Follows a link to an image in a .desktop file"
-         "Opens a .desktop file and if it is a link, it asks GIMP to open the file the link points to."
-         "Sven Neumann"
-         "Sven Neumann"
-         "2006"
-         "Desktop Link"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "desktop"))
-         ""
-         2147483647
-         2 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-dds/file-dds" 1
-    (proc-def "file-dds-load" 1
-         "Loads files in DDS image format"
-         "Loads files in DDS image format"
-         "Shawn Kirst"
-         "Shawn Kirst"
-         "2008"
-         "DDS image"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "dds")
-            (magics "0,string,DDS")
-            (mime-types "image/dds"))
-         ""
-         2147483647
-         4 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 5 "GParamBoolean" "gboolean" "load-mipmaps" "Load _mipmaps" "Load mipmaps if present" 3 1)
-        (proc-arg 5 "GParamBoolean" "gboolean" "flip-image" "Flip image _vertically" "Flip the image vertically on import" 3 0)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
-    (proc-def "file-dds-export" 1
-         "Saves files in DDS image format"
-         "Saves files in DDS image format"
-         "Shawn Kirst"
-         "Shawn Kirst"
-         "2008"
-         "DDS image"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "dds")
-            (mime-types "image/dds"))
-         "INDEXED, GRAY, RGB"
-         2147483647
-         19 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)
-        (proc-arg 4 "GimpParamChoice" "gchararray" "compression-format" "Compressio_n" "Compression format" 3 "none" 12 "none" 0 "None" "" "bc1" 1 "BC1 / DXT1" "" "bc2" 2 "BC2 / DXT3" "" "bc3, " 3 "BC3 / DXT5" "" "bc3n" 4 "BC3nm / DXT5nm" "" "bc4" 5 "BC4 / ATI1 (3Dc+)" "" "bc5" 6 "BC5 / ATI2 (3Dc)" "" "bc7" 8 "BC7" "" "rxgb" 9 "RXGB (DXT5)" "" "aexp" 10 "Alpha Exponent (DXT5)" "" "ycocg" 11 "YCoCg (DXT5)" "" "ycocgs" 12 "YCoCg scaled (DXT5)" "")
-        (proc-arg 5 "GParamBoolean" "gboolean" "perceptual-metric" "Use percept_ual error metric" "Use a perceptual error metric during compression" 3 0)
-        (proc-arg 4 "GimpParamChoice" "gchararray" "format" "_Format" "Pixel format" 3 "default" 15 "default" 0 "Default" "" "rgb8" 1 "RGB8" "" "rgba8" 2 "RGBA8" "" "bgr8" 3 "BGR8" "" "abgr8, " 4 "ABGR8" "" "r5g6b5" 5 "R5G6B5" "" "rgba4" 6 "RGBA4" "" "rgb5a1" 7 "RGB5A1" "" "rgb10a2" 8 "RGB10A2" "" "r3g3b2" 9 "R3G3B2" "" "a8" 10 "A8" "" "l8" 11 "L8" "" "l8a8" 12 "L8A8" "" "aexp" 13 "AEXP" "" "ycocg" 14 "YCOCG" "")
-        (proc-arg 4 "GimpParamChoice" "gchararray" "save-type" "Sav_e type" "How to save the image" 3 "layer" 5 "layer" 0 "Selected layer" "" "canvas" 4 "All visible layers" "" "cube" 1 "As cube map" "" "volume" 2 "As volume map" "" "array" 3 "As texture array" "")
-        (proc-arg 5 "GParamBoolean" "gboolean" "flip-image" "Flip image _vertically on export" "Flip the image vertically on export" 3 0)
-        (proc-arg 5 "GParamBoolean" "gboolean" "transparent-color" "Set _transparent color" "Make an indexed color transparent" 3 0)
-        (proc-arg 1 "GParamInt" "gint" "transparent-index" "Transparent inde_x" "Index of transparent color or -1 to disable (for indexed images only)." 3 0 255 0)
-        (proc-arg 4 "GimpParamChoice" "gchararray" "mipmaps" "_Mipmaps" "How to handle mipmaps" 3 "none" 3 "none" 0 "No mipmaps" "" "generate" 1 "Generate mipmaps" "" "existing" 2 "Use existing mipmaps" "")
-        (proc-arg 4 "GimpParamChoice" "gchararray" "mipmap-filter" "F_ilter" "Filtering to use when generating mipmaps" 3 "default" 10 "default" 0 "Default" "" "nearest" 1 "Nearest" "" "box" 2 "Box" "" "triangle" 3 "Triangle" "" "quadratic" 4 "Quadratic" "" "bspline" 5 "B-Spline" "" "mitchell" 6 "Mitchell" "" "catrom" 7 "Catmull-Rom" "" "lanczos" 8 "Lanczos" "" "kaiser" 9 "Kaiser" "")
-        (proc-arg 4 "GimpParamChoice" "gchararray" "mipmap-wrap" "_Wrap mode" "Wrap mode to use when generating mipmaps" 3 "default" 4 "default" 0 "Default" "" "mirror" 1 "Mirror" "" "repeat" 2 "Repeat" "" "clamp" 3 "Clamp" "")
-        (proc-arg 5 "GParamBoolean" "gboolean" "gamma-correct" "Appl_y gamma correction" "Use gamma correct mipmap filtering" 3 0)
-        (proc-arg 5 "GParamBoolean" "gboolean" "srgb" "Use sRG_B colorspace" "Use sRGB colorspace for gamma correction" 3 0)
-        (proc-arg 6 "GParamDouble" "gdouble" "gamma" "_Gamma" "Gamma value to use for gamma correction (e.g. 2.2)" 3 0 10 0)
-        (proc-arg 5 "GParamBoolean" "gboolean" "preserve-alpha-coverage" "Preserve al_pha test coverage" "Preserve alpha test coverage for alpha channel maps" 3 0)
-        (proc-arg 6 "GParamDouble" "gdouble" "alpha-test-threshold" "Alp_ha test threshold" "Alpha test threshold value for which alpha test coverage should be preserved" 3 0 1 0.5)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-csource/file-csource" 1
-    (proc-def "file-csource-export" 1
-         "Dump image data in RGB(A) format for C source"
-         "Dump image data in RGB(A) format for C source"
-         "Tim Janik"
-         "Tim Janik"
-         "1999"
-         "C source code"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "c")
-            (mime-types "image/x-csrc")
-            (handles-remote))
-         "*"
-         2147483647
-         4 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-compressor/file-compressor" 1
-    (proc-def "file-gz-load" 1
-         "Loads files compressed with gzip"
-         "This procedure loads files in the gzip compressed format."
-         "Daniel Risacher"
-         "Daniel Risacher, Spencer Kimball and Peter Mattis"
-         "1995-1997"
-         "gzip archive"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "xcf.gz,xcfgz")
-            (meta-extensions "gz")
-            (magics "0,string,\037‹")
-            (mime-types "application/x-gzip"))
-         ""
-         2147483647
-         2 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
-    (proc-def "file-gz-export" 1
-         "Exports files compressed with gzip"
-         "This procedure exports files in the gzip compressed format."
-         "Daniel Risacher"
-         "Daniel Risacher, Spencer Kimball and Peter Mattis"
-         "1995-1997"
-         "gzip archive"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "xcf.gz,xcfgz")
-            (meta-extensions "gz")
-            (mime-types "application/x-gzip"))
-         "RGB*, GRAY*, INDEXED*"
-         2147483647
-         4 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3))
-    (proc-def "file-bz2-load" 1
-         "Loads files compressed with bzip2"
-         "This procedure loads files in the bzip2 compressed format."
-         "Daniel Risacher"
-         "Daniel Risacher, Spencer Kimball and Peter Mattis"
-         "1995-1997"
-         "bzip archive"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "xcf.bz2,xcfbz2")
-            (meta-extensions "bz2")
-            (magics "0,string,BZh")
-            (mime-types "application/x-bzip"))
-         ""
-         2147483647
-         2 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
-    (proc-def "file-bz2-export" 1
-         "Exports files compressed with bzip2"
-         "This procedure exports files in the bzip2 compressed format."
-         "Daniel Risacher"
-         "Daniel Risacher, Spencer Kimball and Peter Mattis"
-         "1995-1997"
-         "bzip archive"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "xcf.bz2,xcfbz2")
-            (meta-extensions "bz2")
-            (mime-types "application/x-bzip"))
-         "RGB*, GRAY*, INDEXED*"
-         2147483647
-         4 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3))
-    (proc-def "file-xz-load" 1
-         "Loads files compressed with xz"
-         "This procedure loads files in the xz compressed format."
-         "Daniel Risacher"
-         "Daniel Risacher, Spencer Kimball and Peter Mattis"
-         "1995-1997"
-         "xz archive"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "xcf.xz,xcfxz")
-            (meta-extensions "xz")
-            (magics "0,string,ý7zXZ")
-            (mime-types "application/x-xz"))
-         ""
-         2147483647
-         2 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
-    (proc-def "file-xz-export" 1
-         "Exports files compressed with xz"
-         "This procedure exports files in the xz compressed format."
-         "Daniel Risacher"
-         "Daniel Risacher, Spencer Kimball and Peter Mattis"
-         "1995-1997"
-         "xz archive"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "xcf.xz,xcfxz")
-            (meta-extensions "xz")
-            (mime-types "application/x-xz"))
-         "RGB*, GRAY*, INDEXED*"
-         2147483647
-         4 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3))
-    (proc-def "file-zip-load" 1
-         "Loads files compressed with zip"
-         "This procedure loads files in the zip compressed format."
-         "Daniel Risacher"
-         "Daniel Risacher, Spencer Kimball and Peter Mattis"
-         "1995-1997"
-         "zip archive"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "hgt.zip")
-            (meta-extensions "zip")
-            (magics "0,string,PK\003\004")
-            (mime-types "application/zip"))
-         ""
-         2147483647
-         2 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-cel/file-cel" 1
-    (proc-def "file-cel-load" 1
-         "Loads files in KISS CEL file format"
-         "This plug-in loads individual KISS cell files."
-         "Nick Lamb"
-         "Nick Lamb <njl195@zepler.org.uk>"
-         "May 1998"
-         "KISS CEL"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "cel")
-            (magics "0,string,KiSS\\040"))
-         ""
-         2147483647
-         3 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 13 "GimpParamFile" "GFile" "palette-file" "_Palette file" "KCF file to load palette from" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
-    (proc-def "file-cel-export" 1
-         "Exports files in KISS CEL file format"
-         "This plug-in exports individual KISS cell files."
-         "Nick Lamb"
-         "Nick Lamb <njl195@zepler.org.uk>"
-         "May 1998"
-         "KISS CEL"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "cel")
-            (handles-remote))
-         "RGB*, INDEXED*"
-         2147483647
-         5 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)
-        (proc-arg 13 "GimpParamFile" "GFile" "palette-file" "_Palette file" "File to save palette to" 3 1 0 "")))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-bmp/file-bmp" 1
-    (proc-def "file-bmp-load" 1
-         "Loads files of Windows BMP file format"
-         "Loads files of Windows BMP file format"
-         "Alexander Schulz"
-         "Alexander Schulz"
-         "1997"
-         "Windows BMP image"
-         0
-        (icon icon-name -1 "")
-        (load-proc
-            (extensions "bmp")
-            (magics "0,string,BM")
-            (mime-types "image/bmp"))
-         ""
-         2147483647
-         2 1
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1))
-    (proc-def "file-bmp-export" 1
-         "Saves files in Windows BMP file format"
-         "Saves files in Windows BMP file format"
-         "Alexander Schulz"
-         "Alexander Schulz"
-         "1997"
-         "Windows BMP image"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "bmp")
-            (mime-types "image/bmp"))
-         "INDEXED, GRAY, RGB*"
-         2147483647
-         7 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)
-        (proc-arg 5 "GParamBoolean" "gboolean" "use-rle" "Ru_n-Length Encoded" "Use run-length-encoding compression (only valid for 4 and 8-bit indexed images)" 3 0)
-        (proc-arg 5 "GParamBoolean" "gboolean" "write-color-space" "_Write color space information" "Whether or not to write BITMAPV5HEADER color space data" 3 1)
-        (proc-arg 4 "GimpParamChoice" "gchararray" "rgb-format" "R_GB format" "Export format for RGB images" 3 "rgb-888" 6 "rgb-565" 0 "16 bit (R5 G6 B5)" "" "rgba-5551" 1 "16 bit (A1 R5 G5 B5)" "" "rgb-555" 2 "16 bit (X1 R5 G5 B5)" "" "rgb-888" 3 "24 bit (R8 G8 B8)" "" "rgba-8888" 4 "32 bit (A8 R8 G8 B8)" "" "rgbx-8888" 5 "32 bit (X8 R8 G8 B8)" "")))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-aa/file-aa" 1
-    (proc-def "file-aa-export" 1
-         "Saves grayscale image in various text formats"
-         "This plug-in uses aalib to save grayscale image as ascii art into a variety of text formats"
-         "Tim Newsome <nuisance@cmu.edu>"
-         "Tim Newsome <nuisance@cmu.edu>"
-         "1997"
-         "ASCII art"
-         0
-        (icon icon-name -1 "")
-        (save-proc
-            (extensions "txt,ansi,text")
-            (mime-types "text/plain"))
-         "*"
-         2147483647
-         5 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The image to export" 3 0)
-        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to export to" 3 1 0 "")
-        (proc-arg 11 "GimpParamExportOptions" "GimpExportOptions" "options" "Options" "Export options" 3)
-        (proc-arg 1 "GParamInt" "gint" "file-type" "_Format" "File type to use" 3 0 11 0)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/destripe/destripe" 1
-    (proc-def "plug-in-destripe" 1
-         "Remove vertical stripe artifacts from the image"
-         "This plug-in tries to remove vertical stripes from an image."
-         "Marc Lehmann <pcg@goof.com>"
-         "Marc Lehmann <pcg@goof.com>"
-         "0.2"
-         "Des_tripe..."
-         1
-        (menu-path "<Image>/Colors/Tone Mapping")
-        (icon icon-name -1 "")
-         "RGB*, GRAY*"
-         1
-         5 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The input image" 3 0)
-        (proc-arg 10 "GimpParamCoreObjectArray" "GimpCoreObjectArray" "drawables" "Drawables" "The input drawables" 259 "GimpDrawable")
-        (proc-arg 1 "GParamInt" "gint" "avg-width" "_Width" "Averaging filter width" 3 2 100 36)
-        (proc-arg 5 "GParamBoolean" "gboolean" "create-histogram" "Create _histogram" "Output a histogram" 3 0)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/despeckle/despeckle" 1
-    (proc-def "plug-in-despeckle" 1
-         "Remove speckle noise from the image"
-         "This plug-in selectively performs a median or adaptive box filter on an image."
-         "Michael Sweet <mike@easysw.com>"
-         "Copyright 1997-1998 by Michael Sweet"
-         "May 2010"
-         "Des_peckle..."
-         1
-        (menu-path "<Image>/Filters/Enhance")
-        (icon icon-name -1 "")
-         "RGB*, GRAY*"
-         1
-         7 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The input image" 3 0)
-        (proc-arg 10 "GimpParamCoreObjectArray" "GimpCoreObjectArray" "drawables" "Drawables" "The input drawables" 259 "GimpDrawable")
-        (proc-arg 1 "GParamInt" "gint" "radius" "R_adius" "Filter box radius" 3 1 30 3)
-        (proc-arg 4 "GimpParamChoice" "gchararray" "type" "_Filter type" "Filter type" 3 "adaptive" 4 "median" 0 "Median" "" "adaptive" 1 "Adaptive" "" "recursive-median" 2 "Recursive-Median" "" "recursive-adaptive" 3 "Recursive-Adaptive" "")
-        (proc-arg 1 "GParamInt" "gint" "black" "_Black level" "Black level" 3 -1 255 7)
-        (proc-arg 1 "GParamInt" "gint" "white" "_White level" "White level" 3 0 256 248)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/depth-merge/depth-merge" 1
-    (proc-def "plug-in-depth-merge" 1
-         "Combine two images using depth maps (z-buffers)"
-         "Taking as input two full-color, full-alpha images and two corresponding grayscale depth maps, this plug-in combines the images based on which is closer (has a lower depth map value) at each point."
-         "Sean Cier"
-         "Sean Cier"
-         "August 1998"
-         "_Depth Merge..."
-         1
-        (menu-path "<Image>/Filters/Combine")
-        (icon icon-name -1 "")
-         "RGB*, GRAY*"
-         1
-         11 0
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The input image" 3 0)
-        (proc-arg 10 "GimpParamCoreObjectArray" "GimpCoreObjectArray" "drawables" "Drawables" "The input drawables" 259 "GimpDrawable")
-        (proc-arg 9 "GimpParamDrawable" "GimpDrawable" "source-1" "Source _1" "Source 1" 3 1)
-        (proc-arg 9 "GimpParamDrawable" "GimpDrawable" "depth-map-1" "_Depth map 1" "Depth map 1" 3 1)
-        (proc-arg 9 "GimpParamDrawable" "GimpDrawable" "source-2" "Source _2" "Source 2" 3 1)
-        (proc-arg 9 "GimpParamDrawable" "GimpDrawable" "depth-map-2" "Depth _map 2" "Depth map 2" 3 1)
-        (proc-arg 6 "GParamDouble" "gdouble" "overlap" "O_verlap" "Overlap" 3 0 2 0)
-        (proc-arg 6 "GParamDouble" "gdouble" "offset" "O_ffset" "Depth relative offset" 3 -1 1 0)
-        (proc-arg 6 "GParamDouble" "gdouble" "scale-1" "Sc_ale 1" "Depth relative scale 1" 3 -1 1 1)
-        (proc-arg 6 "GParamDouble" "gdouble" "scale-2" "Scal_e 2" "Depth relative scale 2" 3 -1 1 1)))
-(plug-in-def "${gimp_plug_in_dir}/plug-ins/decompose/decompose" 1
-    (proc-def "plug-in-decompose" 1
-         "Decompose an image into separate colorspace components"
-         "This function creates new gray images with different channel information in each of them"
-         "Peter Kirchgessner"
-         "Peter Kirchgessner, Clarence Risher"
-         "1997"
-         "_Decompose..."
-         1
-        (menu-path "<Image>/Colors/Components")
-        (icon icon-name -1 "")
-         "RGB*"
-         1
-         6 4
-        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "The input image" 3 0)
-        (proc-arg 10 "GimpParamCoreObjectArray" "GimpCoreObjectArray" "drawables" "Drawables" "The input drawables" 259 "GimpDrawable")
-        (proc-arg 4 "GimpParamChoice" "gchararray" "decompose-type" "Color _model" "The model to decompose to" 3 "rgb" 12 "rgb" 0 "RGB" "" "rgba" 1 "RGBA" "" "alpha" 2 "Alpha" "" "hsv" 3 "HSV" "" "hsl" 4 "HSL" "" "cmyk" 5 "CMYK" "" "lab" 6 "LAB" "" "lch" 7 "LCH" "" "ycbcr470" 8 "YCbCr ITU R470" "" "ycbcr709" 9 "YCbCr ITU R709" "" "ycbcr470f" 10 "YCbCr ITU R470 256" "" "ycbcr709f" 11 "YCbCr ITU R709 256" "")
-        (proc-arg 5 "GParamBoolean" "gboolean" "layers-mode" "_Decompose to layers" "Create channels as layers in a single image" 3 1)
-        (proc-arg 5 "GParamBoolean" "gboolean" "use-registration" "_Foreground as registration color" "When enabled, pixels in the foreground color will appear black in all output images. This can be used for things like crop marks that have to show up on all channels." 3 0)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "new-image-1" "New image 1" "Output gray image 1" 3 0)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "new-image-2" "New image 2" "Output gray image 2 (N/A for single channel extract)" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "new-image-3" "New image 3" "Output gray image 3 (N/A for single channel extract)" 3 1)
-        (proc-arg 9 "GimpParamImage" "GimpImage" "new-image-4" "New image 4" "Output gray image 4 (N/A for single channel extract)" 3 1)))
 (plug-in-def "${gimp_plug_in_dir}/plug-ins/curve-bend/curve-bend" 1
     (proc-def "plug-in-curve-bend" 1
          "Bend the image using two control curves"
@@ -4726,6 +4706,26 @@
         (proc-arg 0 "GParamBoxed" "GBytes" "upper-val-y" "Upper val Y" "Array of 256 y freehand coords { 0 <= y <= 255 }" 3)
         (proc-arg 0 "GParamBoxed" "GBytes" "lower-val-y" "Lower val Y" "Array of 256 y freehand coords { 0 <= y <= 255 }" 3)
         (proc-arg 9 "GimpParamLayer" "GimpLayer" "bent-layer" "Bent layer" "The transformed layer" 3 0)))
+(plug-in-def "${gimp_plug_in_dir}/plug-ins/file-exr/file-exr" 1
+    (proc-def "file-exr-load" 1
+         "Loads files in the OpenEXR file format"
+         "This plug-in loads OpenEXR files. "
+         "Dominik Ernst <dernst@gmx.de>, Mukund Sivaraman <muks@banu.com>"
+         "Dominik Ernst <dernst@gmx.de>, Mukund Sivaraman <muks@banu.com>"
+         ""
+         "OpenEXR image"
+         0
+        (icon icon-name -1 "")
+        (load-proc
+            (extensions "exr")
+            (magics "0,long,0x762f3101")
+            (mime-types "image/x-exr"))
+         ""
+         2147483647
+         2 1
+        (proc-arg 3 "GParamEnum" "GimpRunMode" "run-mode" "Run mode" "The run mode" 3 1)
+        (proc-arg 13 "GimpParamFile" "GFile" "file" "File" "The file to load" 3 0 0 "")
+        (proc-arg 9 "GimpParamImage" "GimpImage" "image" "Image" "Output image" 3 1)))
 (plug-in-def "${gimp_plug_in_dir}/plug-ins/crop-zealous/crop-zealous" 1
     (proc-def "plug-in-zealouscrop" 1
          "Autocrop unused space from edges and middle"

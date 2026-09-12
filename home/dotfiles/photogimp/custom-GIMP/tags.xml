@@ -244,10 +244,10 @@
   <resource identifier="external:${mypaint_brushes_dir}/experimental/1pixel.myb//1pixel" checksum="edc5df19469776f35d08d24f9248c406">
   </resource>
 
-  <resource identifier="external:${mypaint_brushes_dir}/ramon/2B_pencil.myb//2B pencil" checksum="7136280b33d2f2cb27c2cfcc96c57ce4">
+  <resource identifier="external:${mypaint_brushes_dir}/deevad/2B_pencil.myb//2B pencil" checksum="abaa73df608d192d62bd3a33636cf1ba">
   </resource>
 
-  <resource identifier="external:${mypaint_brushes_dir}/deevad/2B_pencil.myb//2B pencil #1" checksum="abaa73df608d192d62bd3a33636cf1ba">
+  <resource identifier="external:${mypaint_brushes_dir}/ramon/2B_pencil.myb//2B pencil #1" checksum="7136280b33d2f2cb27c2cfcc96c57ce4">
   </resource>
 
   <resource identifier="external:${mypaint_brushes_dir}/deevad/4H_pencil.myb//4H pencil" checksum="2718434e495370fb4d96d217a3c524c2">
@@ -1237,124 +1237,124 @@
   <resource identifier="internal:gimp-palette-color-history//Color History" checksum="(null)">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Bears.gpl//Bears" checksum="bd165f121c52054e57c6148528a1645d">
+  <resource identifier="external:${gimp_data_dir}/palettes/Bears.gpl//Bears" checksum="6eeeeb695b524d874cee04368e6468f5">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Bgold.gpl//Bgold" checksum="58619fabd555acac7d406648e2140dfb">
+  <resource identifier="external:${gimp_data_dir}/palettes/Bgold.gpl//Bgold" checksum="a155f79a8973ef3aa17351a6904bb80d">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Blues.gpl//Blues" checksum="793a7fc9a912d663b6b32629888a5799">
+  <resource identifier="external:${gimp_data_dir}/palettes/Blues.gpl//Blues" checksum="a5803c1ca7540f834bdbd1ff3f092986">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Borders.gpl//Borders" checksum="c2eb56ecfa95bb2c01ac825f2a81755c">
+  <resource identifier="external:${gimp_data_dir}/palettes/Borders.gpl//Borders" checksum="0e69032577140202e4e52eaf2bc9a046">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Browns_And_Yellows.gpl//Browns And Yellows" checksum="7d203132294b958826e385ab0ee8fda3">
+  <resource identifier="external:${gimp_data_dir}/palettes/Browns_And_Yellows.gpl//Browns And Yellows" checksum="dcf7b2376529f2b6403a884f476b5d00">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Caramel.gpl//Caramel" checksum="b97107d254e39966260c45aadf7b4f81">
+  <resource identifier="external:${gimp_data_dir}/palettes/Caramel.gpl//Caramel" checksum="f94427bb12f1c344c998293e65e31abe">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Cascade.gpl//Cascade" checksum="c4bd92a9fffbc54926b982eb158d4d09">
+  <resource identifier="external:${gimp_data_dir}/palettes/Cascade.gpl//Cascade" checksum="d77f7f89ef5c0800835a6ec69947ec9c">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/China.gpl//China" checksum="2cd0c32d256035a95729c5c13c325832">
+  <resource identifier="external:${gimp_data_dir}/palettes/China.gpl//China" checksum="71ebe95c8e4848fa0dc4f8d6433779f9">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Coldfire.gpl//Coldfire" checksum="7007e43fe1b9951691b81cd128a97498">
+  <resource identifier="external:${gimp_data_dir}/palettes/Coldfire.gpl//Coldfire" checksum="8757336f712bb1c3b14c66b60bf1409f">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Cool_Colors.gpl//Cool Colors" checksum="0cb5be6f856954f6101435b202f5026a">
+  <resource identifier="external:${gimp_data_dir}/palettes/Cool_Colors.gpl//Cool Colors" checksum="802e5a44d3042ce71151430d3068890c">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Cranes.gpl//Cranes" checksum="9922c9907458aa087d22e8f14725b4c5">
+  <resource identifier="external:${gimp_data_dir}/palettes/Cranes.gpl//Cranes" checksum="81df758516457fbae7f3148d9979d300">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Dark_pastels.gpl//Dark pastels" checksum="59518ca79918a179739881681cb9f2dc">
+  <resource identifier="external:${gimp_data_dir}/palettes/Dark_pastels.gpl//Dark pastels" checksum="4083fd375b51353decd90d4fd2fc7716">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Default.gpl//Default" checksum="b7dc875da47487b02770872737614965">
+  <resource identifier="external:${gimp_data_dir}/palettes/Default.gpl//Default" checksum="893a1437bcfbd7a64be77c73a4ecb73c">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Ega.gpl//Ega" checksum="c7867d080520ed3df352649fc95a9356">
+  <resource identifier="external:${gimp_data_dir}/palettes/Ega.gpl//Ega" checksum="a2c69f64c9cad65fc8fd1d31b6182603">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Firecode.gpl//Firecode" checksum="1ea4d3fc7f239fbb8f94855f6b0b63e4">
+  <resource identifier="external:${gimp_data_dir}/palettes/Firecode.gpl//Firecode" checksum="03376a02f226436502735293fbdcdbda">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Gold.gpl//Gold" checksum="c7bef4e4102b56c5c5531eea090df698">
+  <resource identifier="external:${gimp_data_dir}/palettes/Gold.gpl//Gold" checksum="52e80f1cb4f363c8ad9f0df8a5ba7acb">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Grayblue.gpl//Grayblue" checksum="caed0283ea80699efc4c9b145076735c">
+  <resource identifier="external:${gimp_data_dir}/palettes/Grayblue.gpl//Grayblue" checksum="c3b6282900d774e9932e4c1f16bbbe23">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Grays.gpl//Grays" checksum="a1dbc41d3dac4ce29cddf47abf1d3367">
+  <resource identifier="external:${gimp_data_dir}/palettes/Grays.gpl//Grays" checksum="de963cf51308967a2e42622eca15c0ef">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/GrayViolet.gpl//GrayViolet" checksum="e7a0ad8a567c967033da02447a89a239">
+  <resource identifier="external:${gimp_data_dir}/palettes/GrayViolet.gpl//GrayViolet" checksum="1c3fb03798e6779bbb0011251f84dc45">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Greens.gpl//Greens" checksum="17dc38c825b9f3f45ae978955104e64d">
+  <resource identifier="external:${gimp_data_dir}/palettes/Greens.gpl//Greens" checksum="4fded8762e0df5aad7c7bf2c3d1b435c">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Hilite.gpl//Hilite" checksum="7b967e4aabf3afe6e1a4bd1161fec9a4">
+  <resource identifier="external:${gimp_data_dir}/palettes/Hilite.gpl//Hilite" checksum="cb25d66f562cb71b093cdc38f14c21a3">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Khaki.gpl//Khaki" checksum="e58cde59ce7885f5e72cc393604a0f6b">
+  <resource identifier="external:${gimp_data_dir}/palettes/Khaki.gpl//Khaki" checksum="894518b0e98f5db653e88b58a8538a92">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Lights.gpl//Lights" checksum="caed68ea55f7a1bdd23d29fcd0b22fc0">
+  <resource identifier="external:${gimp_data_dir}/palettes/Lights.gpl//Lights" checksum="39744dab668c3871572fb38ad7dee816">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Muted.gpl//Muted" checksum="94e3e5c05ce902fc2e65e9af52b89753">
+  <resource identifier="external:${gimp_data_dir}/palettes/Muted.gpl//Muted" checksum="15c5d2a4269a30132b9683e3cfcd249f">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Named_Colors.gpl//Named Colors" checksum="425da9cb41561918d3012d26cb1a66b5">
+  <resource identifier="external:${gimp_data_dir}/palettes/Named_Colors.gpl//Named Colors" checksum="0b11f0da5187cf80a3c92dc9bd635236">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/News3.gpl//News3" checksum="c9800363e5fcfd66d3c03e49507d68ed">
+  <resource identifier="external:${gimp_data_dir}/palettes/News3.gpl//News3" checksum="bdcc2107a5bdf2e121cbbfc8c7ec38f3">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Op2.gpl//Op2" checksum="bd8dfe49ad5511051149fe49a32442f8">
+  <resource identifier="external:${gimp_data_dir}/palettes/Op2.gpl//Op2" checksum="9d9208e3b4c09402fa4d776f9ab90468">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Paintjet.gpl//Paintjet" checksum="fd5462be188fef899e00723a3e29bf6a">
+  <resource identifier="external:${gimp_data_dir}/palettes/Paintjet.gpl//Paintjet" checksum="d59d34bf5f547221da8e8ec10734a223">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Pastels.gpl//Pastels" checksum="eca7df74a4352835c207b7c8baff31c6">
+  <resource identifier="external:${gimp_data_dir}/palettes/Pastels.gpl//Pastels" checksum="d88fbd76271744357ac6bd4e01bd3b98">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Plasma.gpl//Plasma" checksum="499f155419bc49132fa0f4b1c0f872a9">
+  <resource identifier="external:${gimp_data_dir}/palettes/Plasma.gpl//Plasma" checksum="3a64665a9cfd2708f1321e701589c33d">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Reds.gpl//Reds" checksum="c046592a9a66bd2ef174936abe7c36f7">
+  <resource identifier="external:${gimp_data_dir}/palettes/Reds.gpl//Reds" checksum="3ded4a76d6076a584b51c81566340770">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Reds_And_Purples.gpl//Reds And Purples" checksum="9393997b81a4cbd0561a931656b54a68">
+  <resource identifier="external:${gimp_data_dir}/palettes/Reds_And_Purples.gpl//Reds And Purples" checksum="989c4c25f1e695ecebd16167dd428228">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Royal.gpl//Royal" checksum="5f07ef244ce73cfc8a8f8271a7f0c84e">
+  <resource identifier="external:${gimp_data_dir}/palettes/Royal.gpl//Royal" checksum="1ae879f5b6ade2ca8e43c2b560f0f0b8">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Tango.gpl//Tango Icon Theme" checksum="4b83e017d807ae997f04a4b7fe8a00ce">
+  <resource identifier="external:${gimp_data_dir}/palettes/Tango.gpl//Tango Icon Theme" checksum="92e2bea728f8a720d2439e3ae3b2e7ea">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Topographic.gpl//Topographic" checksum="df9c2b05429565a47db9ac5eb9ed367b">
+  <resource identifier="external:${gimp_data_dir}/palettes/Topographic.gpl//Topographic" checksum="4ddc6cffedd4a99c2949c1f4abf18e3d">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Visibone.gpl//Visibone" checksum="d86bb0a0c0137c69ce41557960cf2976">
+  <resource identifier="external:${gimp_data_dir}/palettes/Visibone.gpl//Visibone" checksum="57c44f536deee71c5098a823f1cab4ed">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Visibone_2.gpl//Visibone 2" checksum="05366aa67db3242e71bf4cad7f409041">
+  <resource identifier="external:${gimp_data_dir}/palettes/Visibone_2.gpl//Visibone 2" checksum="a2e661ae60772923dd548871cd1026ae">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Volcano.gpl//Volcano" checksum="5775d0ca2c41eef04bb751b14ef2cc13">
+  <resource identifier="external:${gimp_data_dir}/palettes/Volcano.gpl//Volcano" checksum="d442e75f0ba68465d965745defd3fa0a">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Warm_Colors.gpl//Warm Colors" checksum="7a2b1c564b7eadb92a7626d9983864a5">
+  <resource identifier="external:${gimp_data_dir}/palettes/Warm_Colors.gpl//Warm Colors" checksum="ea58275b90134859368cbddf7272a061">
   </resource>
 
-  <resource identifier="external:${gimp_data_dir}/palettes/Web.gpl//Web" checksum="541a4a69c99e1974033e9e1ae2f5788b">
+  <resource identifier="external:${gimp_data_dir}/palettes/Web.gpl//Web" checksum="568e21c0d940569174518cdffecd5ef6">
   </resource>
 
   <resource identifier="internal:gimp-font-standard-alias: Monospace//Monospace" checksum="(null)">
@@ -1393,805 +1393,814 @@
   <resource identifier="internal:gimp-font-standard-alias: Serif Italic//Serif Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuMathTeXGyre.ttf//DejaVu Math TeX Gyre Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuMathTeXGyre.ttf//DejaVu Math TeX Gyre Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans-Bold.ttf//DejaVu Sans Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans-Bold.ttf//DejaVu Sans Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans-BoldOblique.ttf//DejaVu Sans Bold Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans-BoldOblique.ttf//DejaVu Sans Bold Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans.ttf//DejaVu Sans Book" checksum="(null)">
+  <resource identifier="external:/nix/store/zqhby0xidpi0xsafsbl4l7dc72imqqq6-dejavu-fonts-minimal-2.37/share/fonts/truetype/DejaVuSans.ttf//DejaVu Sans Book" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/gi7k29v23s6dv0g28nm4sdllnzahv3yp-dejavu-fonts-minimal-2.37/share/fonts/truetype/DejaVuSans.ttf//DejaVu Sans Book" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans.ttf//DejaVu Sans Book" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansCondensed.ttf//DejaVu Sans Condensed" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansCondensed.ttf//DejaVu Sans Condensed" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansCondensed-Bold.ttf//DejaVu Sans Condensed Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansCondensed-Bold.ttf//DejaVu Sans Condensed Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansCondensed-BoldOblique.ttf//DejaVu Sans Condensed Bold Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansCondensed-BoldOblique.ttf//DejaVu Sans Condensed Bold Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansCondensed-Oblique.ttf//DejaVu Sans Condensed Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansCondensed-Oblique.ttf//DejaVu Sans Condensed Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans-ExtraLight.ttf//DejaVu Sans ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans-ExtraLight.ttf//DejaVu Sans ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-Bold.ttf//DejaVu Sans Mono Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-Bold.ttf//DejaVu Sans Mono Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-BoldOblique.ttf//DejaVu Sans Mono Bold Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-BoldOblique.ttf//DejaVu Sans Mono Bold Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono.ttf//DejaVu Sans Mono Book" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono.ttf//DejaVu Sans Mono Book" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-Oblique.ttf//DejaVu Sans Mono Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSansMono-Oblique.ttf//DejaVu Sans Mono Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans-Oblique.ttf//DejaVu Sans Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSans-Oblique.ttf//DejaVu Sans Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerif-Bold.ttf//DejaVu Serif Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerif-Bold.ttf//DejaVu Serif Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerif-BoldItalic.ttf//DejaVu Serif Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerif-BoldItalic.ttf//DejaVu Serif Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerif.ttf//DejaVu Serif Book" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerif.ttf//DejaVu Serif Book" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerifCondensed.ttf//DejaVu Serif Condensed" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerifCondensed.ttf//DejaVu Serif Condensed" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerifCondensed-Bold.ttf//DejaVu Serif Condensed Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerifCondensed-Bold.ttf//DejaVu Serif Condensed Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerifCondensed-BoldItalic.ttf//DejaVu Serif Condensed Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerifCondensed-BoldItalic.ttf//DejaVu Serif Condensed Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerifCondensed-Italic.ttf//DejaVu Serif Condensed Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerifCondensed-Italic.ttf//DejaVu Serif Condensed Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/yvb6vspwp18qc7miy9f3mzpbrn3c4lhy-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerif-Italic.ttf//DejaVu Serif Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/0lhf2h2fnjqvpzmk92s5axr2ybvs981s-dejavu-fonts-2.37/share/fonts/truetype/DejaVuSerif-Italic.ttf//DejaVu Serif Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/pxxja75509snhq5pxmpwyaw748x9wg01-font-awesome-7.2.0/share/fonts/opentype/Font Awesome 7 Brands-Regular-400.otf//Font Awesome 7 Brands Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/zd2hw3xc6398sj2ddl03b74ga0p7n6z5-font-awesome-7.2.0/share/fonts/opentype/Font Awesome 7 Brands-Regular-400.otf//Font Awesome 7 Brands Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/pxxja75509snhq5pxmpwyaw748x9wg01-font-awesome-7.2.0/share/fonts/opentype/Font Awesome 7 Free-Regular-400.otf//Font Awesome 7 Free Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/zd2hw3xc6398sj2ddl03b74ga0p7n6z5-font-awesome-7.2.0/share/fonts/opentype/Font Awesome 7 Free-Regular-400.otf//Font Awesome 7 Free Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/pxxja75509snhq5pxmpwyaw748x9wg01-font-awesome-7.2.0/share/fonts/opentype/Font Awesome 7 Free-Solid-900.otf//Font Awesome 7 Free Solid" checksum="(null)">
+  <resource identifier="external:/nix/store/zd2hw3xc6398sj2ddl03b74ga0p7n6z5-font-awesome-7.2.0/share/fonts/opentype/Font Awesome 7 Free-Solid-900.otf//Font Awesome 7 Free Solid" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeMonoBold.ttf//FreeMono Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeMonoBold.ttf//FreeMono Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeMonoBoldOblique.ttf//FreeMono Bold Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeMonoBoldOblique.ttf//FreeMono Bold Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeMonoOblique.ttf//FreeMono Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeMonoOblique.ttf//FreeMono Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeMono.ttf//FreeMono Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeMono.ttf//FreeMono Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeSansBold.ttf//FreeSans Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeSansBold.ttf//FreeSans Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeSansBoldOblique.ttf//FreeSans Bold Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeSansBoldOblique.ttf//FreeSans Bold Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeSansOblique.ttf//FreeSans Oblique" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeSansOblique.ttf//FreeSans Oblique" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeSans.ttf//FreeSans Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeSans.ttf//FreeSans Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeSerifBold.ttf//FreeSerif Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeSerifBold.ttf//FreeSerif Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeSerifBoldItalic.ttf//FreeSerif Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeSerifBoldItalic.ttf//FreeSerif Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeSerifItalic.ttf//FreeSerif Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeSerifItalic.ttf//FreeSerif Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xdvspccgkvyyl2dh2kl9f3ka98dzcw53-freefont-ttf-20120503/share/fonts/truetype/FreeSerif.ttf//FreeSerif Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/m1krv2mvh97plh2xz94g2qrm3xc2hgzl-freefont-ttf-20120503/share/fonts/truetype/FreeSerif.ttf//FreeSerif Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Bold.ttf//JetBrainsMono Nerd Font Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Bold.ttf//JetBrainsMono Nerd Font Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-BoldItalic.ttf//JetBrainsMono Nerd Font Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-BoldItalic.ttf//JetBrainsMono Nerd Font Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ExtraBold.ttf//JetBrainsMono Nerd Font ExtraBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ExtraBold.ttf//JetBrainsMono Nerd Font ExtraBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ExtraBoldItalic.ttf//JetBrainsMono Nerd Font ExtraBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ExtraBoldItalic.ttf//JetBrainsMono Nerd Font ExtraBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ExtraLight.ttf//JetBrainsMono Nerd Font ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ExtraLight.ttf//JetBrainsMono Nerd Font ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ExtraLightItalic.ttf//JetBrainsMono Nerd Font ExtraLight Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ExtraLightItalic.ttf//JetBrainsMono Nerd Font ExtraLight Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Italic.ttf//JetBrainsMono Nerd Font Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Italic.ttf//JetBrainsMono Nerd Font Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Light.ttf//JetBrainsMono Nerd Font Light" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Light.ttf//JetBrainsMono Nerd Font Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-LightItalic.ttf//JetBrainsMono Nerd Font Light Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-LightItalic.ttf//JetBrainsMono Nerd Font Light Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Medium.ttf//JetBrainsMono Nerd Font Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Medium.ttf//JetBrainsMono Nerd Font Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-MediumItalic.ttf//JetBrainsMono Nerd Font Medium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-MediumItalic.ttf//JetBrainsMono Nerd Font Medium Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Bold.ttf//JetBrainsMono Nerd Font Mono Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Bold.ttf//JetBrainsMono Nerd Font Mono Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-BoldItalic.ttf//JetBrainsMono Nerd Font Mono Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-BoldItalic.ttf//JetBrainsMono Nerd Font Mono Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ExtraBold.ttf//JetBrainsMono Nerd Font Mono ExtraBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ExtraBold.ttf//JetBrainsMono Nerd Font Mono ExtraBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ExtraBoldItalic.ttf//JetBrainsMono Nerd Font Mono ExtraBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ExtraBoldItalic.ttf//JetBrainsMono Nerd Font Mono ExtraBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ExtraLight.ttf//JetBrainsMono Nerd Font Mono ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ExtraLight.ttf//JetBrainsMono Nerd Font Mono ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ExtraLightItalic.ttf//JetBrainsMono Nerd Font Mono ExtraLight Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ExtraLightItalic.ttf//JetBrainsMono Nerd Font Mono ExtraLight Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Italic.ttf//JetBrainsMono Nerd Font Mono Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Italic.ttf//JetBrainsMono Nerd Font Mono Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Light.ttf//JetBrainsMono Nerd Font Mono Light" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Light.ttf//JetBrainsMono Nerd Font Mono Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-LightItalic.ttf//JetBrainsMono Nerd Font Mono Light Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-LightItalic.ttf//JetBrainsMono Nerd Font Mono Light Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Medium.ttf//JetBrainsMono Nerd Font Mono Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Medium.ttf//JetBrainsMono Nerd Font Mono Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-MediumItalic.ttf//JetBrainsMono Nerd Font Mono Medium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-MediumItalic.ttf//JetBrainsMono Nerd Font Mono Medium Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Regular.ttf//JetBrainsMono Nerd Font Mono Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Regular.ttf//JetBrainsMono Nerd Font Mono Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-SemiBold.ttf//JetBrainsMono Nerd Font Mono SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-SemiBold.ttf//JetBrainsMono Nerd Font Mono SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-SemiBoldItalic.ttf//JetBrainsMono Nerd Font Mono SemiBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-SemiBoldItalic.ttf//JetBrainsMono Nerd Font Mono SemiBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Thin.ttf//JetBrainsMono Nerd Font Mono Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-Thin.ttf//JetBrainsMono Nerd Font Mono Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ThinItalic.ttf//JetBrainsMono Nerd Font Mono Thin Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontMono-ThinItalic.ttf//JetBrainsMono Nerd Font Mono Thin Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Bold.ttf//JetBrainsMono Nerd Font Propo Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Bold.ttf//JetBrainsMono Nerd Font Propo Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-BoldItalic.ttf//JetBrainsMono Nerd Font Propo Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-BoldItalic.ttf//JetBrainsMono Nerd Font Propo Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ExtraBold.ttf//JetBrainsMono Nerd Font Propo ExtraBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ExtraBold.ttf//JetBrainsMono Nerd Font Propo ExtraBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ExtraBoldItalic.ttf//JetBrainsMono Nerd Font Propo ExtraBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ExtraBoldItalic.ttf//JetBrainsMono Nerd Font Propo ExtraBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ExtraLight.ttf//JetBrainsMono Nerd Font Propo ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ExtraLight.ttf//JetBrainsMono Nerd Font Propo ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ExtraLightItalic.ttf//JetBrainsMono Nerd Font Propo ExtraLight Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ExtraLightItalic.ttf//JetBrainsMono Nerd Font Propo ExtraLight Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Italic.ttf//JetBrainsMono Nerd Font Propo Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Italic.ttf//JetBrainsMono Nerd Font Propo Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Light.ttf//JetBrainsMono Nerd Font Propo Light" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Light.ttf//JetBrainsMono Nerd Font Propo Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-LightItalic.ttf//JetBrainsMono Nerd Font Propo Light Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-LightItalic.ttf//JetBrainsMono Nerd Font Propo Light Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Medium.ttf//JetBrainsMono Nerd Font Propo Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Medium.ttf//JetBrainsMono Nerd Font Propo Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-MediumItalic.ttf//JetBrainsMono Nerd Font Propo Medium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-MediumItalic.ttf//JetBrainsMono Nerd Font Propo Medium Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Regular.ttf//JetBrainsMono Nerd Font Propo Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Regular.ttf//JetBrainsMono Nerd Font Propo Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-SemiBold.ttf//JetBrainsMono Nerd Font Propo SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-SemiBold.ttf//JetBrainsMono Nerd Font Propo SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-SemiBoldItalic.ttf//JetBrainsMono Nerd Font Propo SemiBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-SemiBoldItalic.ttf//JetBrainsMono Nerd Font Propo SemiBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Thin.ttf//JetBrainsMono Nerd Font Propo Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-Thin.ttf//JetBrainsMono Nerd Font Propo Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ThinItalic.ttf//JetBrainsMono Nerd Font Propo Thin Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFontPropo-ThinItalic.ttf//JetBrainsMono Nerd Font Propo Thin Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf//JetBrainsMono Nerd Font Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Regular.ttf//JetBrainsMono Nerd Font Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-SemiBold.ttf//JetBrainsMono Nerd Font SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-SemiBold.ttf//JetBrainsMono Nerd Font SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-SemiBoldItalic.ttf//JetBrainsMono Nerd Font SemiBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-SemiBoldItalic.ttf//JetBrainsMono Nerd Font SemiBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Thin.ttf//JetBrainsMono Nerd Font Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-Thin.ttf//JetBrainsMono Nerd Font Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ThinItalic.ttf//JetBrainsMono Nerd Font Thin Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNerdFont-ThinItalic.ttf//JetBrainsMono Nerd Font Thin Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Bold.ttf//JetBrainsMonoNL Nerd Font Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Bold.ttf//JetBrainsMonoNL Nerd Font Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-BoldItalic.ttf//JetBrainsMonoNL Nerd Font Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-BoldItalic.ttf//JetBrainsMonoNL Nerd Font Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ExtraBold.ttf//JetBrainsMonoNL Nerd Font ExtraBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ExtraBold.ttf//JetBrainsMonoNL Nerd Font ExtraBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ExtraBoldItalic.ttf//JetBrainsMonoNL Nerd Font ExtraBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ExtraBoldItalic.ttf//JetBrainsMonoNL Nerd Font ExtraBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ExtraLight.ttf//JetBrainsMonoNL Nerd Font ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ExtraLight.ttf//JetBrainsMonoNL Nerd Font ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ExtraLightItalic.ttf//JetBrainsMonoNL Nerd Font ExtraLight Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ExtraLightItalic.ttf//JetBrainsMonoNL Nerd Font ExtraLight Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Italic.ttf//JetBrainsMonoNL Nerd Font Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Italic.ttf//JetBrainsMonoNL Nerd Font Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Light.ttf//JetBrainsMonoNL Nerd Font Light" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Light.ttf//JetBrainsMonoNL Nerd Font Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-LightItalic.ttf//JetBrainsMonoNL Nerd Font Light Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-LightItalic.ttf//JetBrainsMonoNL Nerd Font Light Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Medium.ttf//JetBrainsMonoNL Nerd Font Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Medium.ttf//JetBrainsMonoNL Nerd Font Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-MediumItalic.ttf//JetBrainsMonoNL Nerd Font Medium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-MediumItalic.ttf//JetBrainsMonoNL Nerd Font Medium Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Bold.ttf//JetBrainsMonoNL Nerd Font Mono Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Bold.ttf//JetBrainsMonoNL Nerd Font Mono Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-BoldItalic.ttf//JetBrainsMonoNL Nerd Font Mono Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-BoldItalic.ttf//JetBrainsMonoNL Nerd Font Mono Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ExtraBold.ttf//JetBrainsMonoNL Nerd Font Mono ExtraBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ExtraBold.ttf//JetBrainsMonoNL Nerd Font Mono ExtraBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ExtraBoldItalic.ttf//JetBrainsMonoNL Nerd Font Mono ExtraBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ExtraBoldItalic.ttf//JetBrainsMonoNL Nerd Font Mono ExtraBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ExtraLight.ttf//JetBrainsMonoNL Nerd Font Mono ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ExtraLight.ttf//JetBrainsMonoNL Nerd Font Mono ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ExtraLightItalic.ttf//JetBrainsMonoNL Nerd Font Mono ExtraLight Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ExtraLightItalic.ttf//JetBrainsMonoNL Nerd Font Mono ExtraLight Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Italic.ttf//JetBrainsMonoNL Nerd Font Mono Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Italic.ttf//JetBrainsMonoNL Nerd Font Mono Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Light.ttf//JetBrainsMonoNL Nerd Font Mono Light" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Light.ttf//JetBrainsMonoNL Nerd Font Mono Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-LightItalic.ttf//JetBrainsMonoNL Nerd Font Mono Light Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-LightItalic.ttf//JetBrainsMonoNL Nerd Font Mono Light Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Medium.ttf//JetBrainsMonoNL Nerd Font Mono Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Medium.ttf//JetBrainsMonoNL Nerd Font Mono Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-MediumItalic.ttf//JetBrainsMonoNL Nerd Font Mono Medium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-MediumItalic.ttf//JetBrainsMonoNL Nerd Font Mono Medium Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Regular.ttf//JetBrainsMonoNL Nerd Font Mono Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Regular.ttf//JetBrainsMonoNL Nerd Font Mono Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-SemiBold.ttf//JetBrainsMonoNL Nerd Font Mono SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-SemiBold.ttf//JetBrainsMonoNL Nerd Font Mono SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-SemiBoldItalic.ttf//JetBrainsMonoNL Nerd Font Mono SemiBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-SemiBoldItalic.ttf//JetBrainsMonoNL Nerd Font Mono SemiBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Thin.ttf//JetBrainsMonoNL Nerd Font Mono Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-Thin.ttf//JetBrainsMonoNL Nerd Font Mono Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ThinItalic.ttf//JetBrainsMonoNL Nerd Font Mono Thin Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontMono-ThinItalic.ttf//JetBrainsMonoNL Nerd Font Mono Thin Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Bold.ttf//JetBrainsMonoNL Nerd Font Propo Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Bold.ttf//JetBrainsMonoNL Nerd Font Propo Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-BoldItalic.ttf//JetBrainsMonoNL Nerd Font Propo Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-BoldItalic.ttf//JetBrainsMonoNL Nerd Font Propo Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ExtraBold.ttf//JetBrainsMonoNL Nerd Font Propo ExtraBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ExtraBold.ttf//JetBrainsMonoNL Nerd Font Propo ExtraBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ExtraBoldItalic.ttf//JetBrainsMonoNL Nerd Font Propo ExtraBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ExtraBoldItalic.ttf//JetBrainsMonoNL Nerd Font Propo ExtraBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ExtraLight.ttf//JetBrainsMonoNL Nerd Font Propo ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ExtraLight.ttf//JetBrainsMonoNL Nerd Font Propo ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ExtraLightItalic.ttf//JetBrainsMonoNL Nerd Font Propo ExtraLight Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ExtraLightItalic.ttf//JetBrainsMonoNL Nerd Font Propo ExtraLight Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Italic.ttf//JetBrainsMonoNL Nerd Font Propo Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Italic.ttf//JetBrainsMonoNL Nerd Font Propo Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Light.ttf//JetBrainsMonoNL Nerd Font Propo Light" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Light.ttf//JetBrainsMonoNL Nerd Font Propo Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-LightItalic.ttf//JetBrainsMonoNL Nerd Font Propo Light Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-LightItalic.ttf//JetBrainsMonoNL Nerd Font Propo Light Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Medium.ttf//JetBrainsMonoNL Nerd Font Propo Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Medium.ttf//JetBrainsMonoNL Nerd Font Propo Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-MediumItalic.ttf//JetBrainsMonoNL Nerd Font Propo Medium Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-MediumItalic.ttf//JetBrainsMonoNL Nerd Font Propo Medium Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Regular.ttf//JetBrainsMonoNL Nerd Font Propo Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Regular.ttf//JetBrainsMonoNL Nerd Font Propo Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-SemiBold.ttf//JetBrainsMonoNL Nerd Font Propo SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-SemiBold.ttf//JetBrainsMonoNL Nerd Font Propo SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-SemiBoldItalic.ttf//JetBrainsMonoNL Nerd Font Propo SemiBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-SemiBoldItalic.ttf//JetBrainsMonoNL Nerd Font Propo SemiBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Thin.ttf//JetBrainsMonoNL Nerd Font Propo Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-Thin.ttf//JetBrainsMonoNL Nerd Font Propo Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ThinItalic.ttf//JetBrainsMonoNL Nerd Font Propo Thin Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFontPropo-ThinItalic.ttf//JetBrainsMonoNL Nerd Font Propo Thin Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Regular.ttf//JetBrainsMonoNL Nerd Font Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Regular.ttf//JetBrainsMonoNL Nerd Font Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-SemiBold.ttf//JetBrainsMonoNL Nerd Font SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-SemiBold.ttf//JetBrainsMonoNL Nerd Font SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-SemiBoldItalic.ttf//JetBrainsMonoNL Nerd Font SemiBold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-SemiBoldItalic.ttf//JetBrainsMonoNL Nerd Font SemiBold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Thin.ttf//JetBrainsMonoNL Nerd Font Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-Thin.ttf//JetBrainsMonoNL Nerd Font Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/xfgcrc59dijia0wqxv5lxfpg1234mipg-nerd-fonts-jetbrains-mono-3.4.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ThinItalic.ttf//JetBrainsMonoNL Nerd Font Thin Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/qgi0zfsds1x52ax69iak1kziznav550l-nerd-fonts-jetbrains-mono-3.5.0+2.304/share/fonts/truetype/NerdFonts/JetBrainsMono/JetBrainsMonoNLNerdFont-ThinItalic.ttf//JetBrainsMonoNL Nerd Font Thin Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationMono-Bold.ttf//Liberation Mono Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationMono-Bold.ttf//Liberation Mono Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationMono-BoldItalic.ttf//Liberation Mono Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationMono-BoldItalic.ttf//Liberation Mono Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationMono-Italic.ttf//Liberation Mono Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationMono-Italic.ttf//Liberation Mono Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationMono-Regular.ttf//Liberation Mono Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationMono-Regular.ttf//Liberation Mono Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSans-Bold.ttf//Liberation Sans Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSans-Bold.ttf//Liberation Sans Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSans-BoldItalic.ttf//Liberation Sans Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSans-BoldItalic.ttf//Liberation Sans Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSans-Italic.ttf//Liberation Sans Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSans-Italic.ttf//Liberation Sans Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSans-Regular.ttf//Liberation Sans Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSans-Regular.ttf//Liberation Sans Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSerif-Bold.ttf//Liberation Serif Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSerif-Bold.ttf//Liberation Serif Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSerif-BoldItalic.ttf//Liberation Serif Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSerif-BoldItalic.ttf//Liberation Serif Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSerif-Italic.ttf//Liberation Serif Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSerif-Italic.ttf//Liberation Serif Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/vwj0mza7vx4nxmy5k2y4hwzaky1vvd1v-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSerif-Regular.ttf//Liberation Serif Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/8r48nfm4db3dsbnlnjr9ishfi4j8rbbn-liberation-fonts-2.1.5/share/fonts/truetype/LiberationSerif-Regular.ttf//Liberation Serif Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/853lj88ld60bpmr3dq37jyir9vl5dlww-noto-fonts-color-emoji-2.051/share/fonts/noto/NotoColorEmoji.ttf//Noto Color Emoji Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/aqcjxx6j9yq175dar0x60qb1kdzvrm9z-noto-fonts-color-emoji-2.051/share/fonts/noto/NotoColorEmoji.ttf//Noto Color Emoji Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Black" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK DemiLight" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK DemiLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Light" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK HK Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Black" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP DemiLight" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP DemiLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Light" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK JP Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Black" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR DemiLight" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR DemiLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Light" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK KR Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Black" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC DemiLight" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC DemiLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Light" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK SC Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Black" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC DemiLight" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC DemiLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Light" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Thin" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansCJK-VF.otf.ttc//Noto Sans CJK TC Thin" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK HK Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK HK Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK HK Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK HK Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK HK Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK HK Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK JP Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK JP Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK JP Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK JP Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK JP Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK JP Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK KR Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK KR Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK KR Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK KR Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK KR Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK KR Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK SC Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK SC Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK SC Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK SC Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK SC Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK SC Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK TC Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK TC Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK TC Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK TC Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/338507zqxjcgdfn0vah72w7k96nafnk8-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK TC Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/dllg6pqphyxipzwihzb6phmjlq4r0w4b-noto-fonts-cjk-sans-2.004/share/fonts/opentype/noto-cjk/NotoSansMonoCJK-VF.otf.ttc//Noto Sans Mono CJK TC Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Black" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Light" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK HK SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Black" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Light" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK JP SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Black" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Light" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK KR SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Black" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Light" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK SC SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Black" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Black" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC ExtraLight" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC ExtraLight" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Light" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Light" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Medium" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Medium" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/d4m4nxw8n7w1iiy4a8prgb4ld1dqwcwg-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC SemiBold" checksum="(null)">
+  <resource identifier="external:/nix/store/gxs0n7s3ajv9ivm79ghv11p745qq1hc3-noto-fonts-cjk-serif-2.003/share/fonts/opentype/noto-cjk/NotoSerifCJK-VF.otf.ttc//Noto Serif CJK TC SemiBold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreadventor-bold.otf//TeX Gyre Adventor Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreadventor-bold.otf//TeX Gyre Adventor Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreadventor-bolditalic.otf//TeX Gyre Adventor Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreadventor-bolditalic.otf//TeX Gyre Adventor Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreadventor-italic.otf//TeX Gyre Adventor Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreadventor-italic.otf//TeX Gyre Adventor Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreadventor-regular.otf//TeX Gyre Adventor Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreadventor-regular.otf//TeX Gyre Adventor Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrebonum-bold.otf//TeX Gyre Bonum Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrebonum-bold.otf//TeX Gyre Bonum Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrebonum-bolditalic.otf//TeX Gyre Bonum Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrebonum-bolditalic.otf//TeX Gyre Bonum Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrebonum-italic.otf//TeX Gyre Bonum Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrebonum-italic.otf//TeX Gyre Bonum Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrebonum-regular.otf//TeX Gyre Bonum Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrebonum-regular.otf//TeX Gyre Bonum Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrechorus-mediumitalic.otf//TeX Gyre Chorus Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrechorus-mediumitalic.otf//TeX Gyre Chorus Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrecursor-bold.otf//TeX Gyre Cursor Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrecursor-bold.otf//TeX Gyre Cursor Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrecursor-bolditalic.otf//TeX Gyre Cursor Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrecursor-bolditalic.otf//TeX Gyre Cursor Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrecursor-italic.otf//TeX Gyre Cursor Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrecursor-italic.otf//TeX Gyre Cursor Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrecursor-regular.otf//TeX Gyre Cursor Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrecursor-regular.otf//TeX Gyre Cursor Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreheros-bold.otf//TeX Gyre Heros Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreheros-bold.otf//TeX Gyre Heros Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreheros-bolditalic.otf//TeX Gyre Heros Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreheros-bolditalic.otf//TeX Gyre Heros Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreheroscn-bold.otf//TeX Gyre Heros Cn Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreheroscn-bold.otf//TeX Gyre Heros Cn Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreheroscn-bolditalic.otf//TeX Gyre Heros Cn Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreheroscn-bolditalic.otf//TeX Gyre Heros Cn Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreheroscn-italic.otf//TeX Gyre Heros Cn Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreheroscn-italic.otf//TeX Gyre Heros Cn Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreheroscn-regular.otf//TeX Gyre Heros Cn Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreheroscn-regular.otf//TeX Gyre Heros Cn Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreheros-italic.otf//TeX Gyre Heros Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreheros-italic.otf//TeX Gyre Heros Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreheros-regular.otf//TeX Gyre Heros Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreheros-regular.otf//TeX Gyre Heros Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrepagella-bold.otf//TeX Gyre Pagella Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrepagella-bold.otf//TeX Gyre Pagella Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrepagella-bolditalic.otf//TeX Gyre Pagella Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrepagella-bolditalic.otf//TeX Gyre Pagella Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrepagella-italic.otf//TeX Gyre Pagella Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrepagella-italic.otf//TeX Gyre Pagella Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyrepagella-regular.otf//TeX Gyre Pagella Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyrepagella-regular.otf//TeX Gyre Pagella Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreschola-bold.otf//TeX Gyre Schola Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreschola-bold.otf//TeX Gyre Schola Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreschola-bolditalic.otf//TeX Gyre Schola Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreschola-bolditalic.otf//TeX Gyre Schola Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreschola-italic.otf//TeX Gyre Schola Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreschola-italic.otf//TeX Gyre Schola Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyreschola-regular.otf//TeX Gyre Schola Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyreschola-regular.otf//TeX Gyre Schola Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyretermes-bold.otf//TeX Gyre Termes Bold" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyretermes-bold.otf//TeX Gyre Termes Bold" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyretermes-bolditalic.otf//TeX Gyre Termes Bold Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyretermes-bolditalic.otf//TeX Gyre Termes Bold Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyretermes-italic.otf//TeX Gyre Termes Italic" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyretermes-italic.otf//TeX Gyre Termes Italic" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/himq63vc7gc6ns7pgw23f9pcwmb02x6x-gyre-fonts-2.501/share/fonts/opentype/texgyretermes-regular.otf//TeX Gyre Termes Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/k0s6chvkwcczk6wmmf38b0w5rdm32ij9-gyre-fonts-2.501/share/fonts/opentype/texgyretermes-regular.otf//TeX Gyre Termes Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/gazj807cyz2hyjj00hq90rzzb28ylm4z-unifont-17.0.05/share/fonts/opentype/unifont.otf//Unifont Regular" checksum="(null)">
+  <resource identifier="external:/nix/store/649hrwwvr1pbyzccy4dqkw8r52g700x3-unifont-17.0.05/share/fonts/opentype/unifont/unifont_csur.otf//Unifont CSUR Regular" checksum="(null)">
   </resource>
 
-  <resource identifier="external:/nix/store/gazj807cyz2hyjj00hq90rzzb28ylm4z-unifont-17.0.05/share/fonts/unifont.otb//Unifont Sans-Serif" checksum="(null)">
+  <resource identifier="external:/nix/store/649hrwwvr1pbyzccy4dqkw8r52g700x3-unifont-17.0.05/share/fonts/opentype/unifont/unifont_jp.otf//Unifont-JP Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/649hrwwvr1pbyzccy4dqkw8r52g700x3-unifont-17.0.05/share/fonts/opentype/unifont/unifont.otf//Unifont Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/649hrwwvr1pbyzccy4dqkw8r52g700x3-unifont-17.0.05/share/fonts/opentype/unifont/unifont_t.otf//Unifont-T Regular" checksum="(null)">
+  </resource>
+
+  <resource identifier="external:/nix/store/649hrwwvr1pbyzccy4dqkw8r52g700x3-unifont-17.0.05/share/fonts/opentype/unifont/unifont_upper.otf//Unifont Upper Regular" checksum="(null)">
   </resource>
 
   <resource identifier="external:${gimp_data_dir}/tool-presets/Crop/16_10.gtp//16×10" checksum="(null)">
