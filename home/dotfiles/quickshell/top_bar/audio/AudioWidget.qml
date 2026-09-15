@@ -55,32 +55,55 @@ Item {
 
   readonly property color activeColor: Theme.barColor
 
-    // Icon container
-    Item {
-      id: iconContainer
-      anchors.centerIn: parent
-      Layout.preferredWidth: referenceIcon.implicitWidth > 0 ? referenceIcon.implicitWidth : 18
-      Layout.preferredHeight: Theme.barHeight 
-      Layout.alignment: Qt.AlignVCenter
+  property real lastKnownVolume: volumePercent
+  property bool isMutedLastKnown: isMuted
 
-      // Invisible text to force max width 
-      Text {
-        id: referenceIcon
-        text: ""
-        anchors.centerIn: parent
-        font.pixelSize: Theme.barFontSize
-        visible: false
+  onVolumePercentChanged: {
+    if (Math.abs(volumePercent - lastKnownVolume) > 0.1) {
+      showVolumePopup();
+    }
+    lastKnownVolume = volumePercent;
+  }
+
+  onIsMutedChanged: {
+    if (isMuted !== isMutedLastKnown) {
+      showVolumePopup();
+    }
+    isMutedLastKnown = isMuted;
+  }
+
+  function showVolumePopup() {
+    hideSmallPopupTimer.stop();
+    smallPopup.show();
+    hideSmallPopupTimer.start();
+  }
+
+  // Icon container
+  Item {
+    id: iconContainer
+    anchors.centerIn: parent
+    Layout.preferredWidth: referenceIcon.implicitWidth > 0 ? referenceIcon.implicitWidth : 18
+    Layout.preferredHeight: Theme.barHeight 
+    Layout.alignment: Qt.AlignVCenter
+
+    // Invisible text to force max width 
+    Text {
+      id: referenceIcon
+      text: ""
+      anchors.centerIn: parent
+      font.pixelSize: Theme.barFontSize
+      visible: false
       }
       
-      // Actual icon
-      Text {
-        id: iconText
-        text: root.audioIconText
-        anchors.centerIn: parent
-        font.pixelSize: Theme.barFontSize
-        color: Theme.barColor
-      }
+    // Actual icon
+    Text {
+      id: iconText
+      text: root.audioIconText
+      anchors.centerIn: parent
+      font.pixelSize: Theme.barFontSize
+      color: Theme.barColor
     }
+  }
 
   AudioPopupSmall {
     id: smallPopup
