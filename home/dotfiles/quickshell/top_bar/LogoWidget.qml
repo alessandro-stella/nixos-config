@@ -2,12 +2,12 @@ import Quickshell.Hyprland
 import Quickshell.Io
 import Quickshell
 import QtQuick
-import "../../"
+import "../"
 
 Item {
   id: root
   
-  required property PanelWindow parentWindow
+  required property string distroLogo
   
   property int fontSize: Theme.fontSize
   property string fontFamily: "monospace"
@@ -22,7 +22,7 @@ Item {
     font.pixelSize: root.fontSize
     font.family: root.fontFamily
     font.bold: true
-    text: ""
+    text: root.distroLogo
     transformOrigin: Item.Center
     rotation: mouseArea.containsMouse ? 360 : 0
     
@@ -34,12 +34,6 @@ Item {
     }
   }
 
-  LogoPopup {
-    id: logoPopup
-    parentWindow: root.parentWindow
-    targetItem: root
-  }
-
   MouseArea {
     id: mouseArea
     anchors.fill: parent
@@ -47,7 +41,7 @@ Item {
     cursorShape: Qt.PointingHandCursor
     
     onClicked: {
-      logoPopup.toggle()
+      Hyprland.dispatch('hl.dsp.global("quickshell:toggleLogoutMenu")')
     }
   }
 }
