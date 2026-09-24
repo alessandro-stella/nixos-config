@@ -134,6 +134,7 @@ in
     shellAliases = {
       ls = "ls --color=auto";
       grep = "grep --color=auto";
+      n = "nvim";
     };
 
     initContent = ''

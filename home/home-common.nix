@@ -16,6 +16,7 @@ in
     
     ./modules/programs/web-apps.nix
     ./modules/programs/tmux.nix
+    ./modules/programs/zoxide.nix
     ./modules/programs/zshell.nix
   ];
 

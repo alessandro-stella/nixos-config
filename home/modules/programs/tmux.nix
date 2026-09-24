@@ -10,7 +10,7 @@
     baseIndex = 1;
     escapeTime = 0;
     secureSocket = false;
-    mouse = false;
+    mouse = true;
     historyLimit = 50000;
     
     plugins = with pkgs; [
@@ -32,17 +32,16 @@
     ];
     
     extraConfig = ''
-      # Terminal settings
+      # Terminal settings for foot 
       set -g default-terminal "tmux-256color"
-      set -ga terminal-overrides ",*256col*:Tc"
+      set -ag terminal-features ",foot:RGB:Sync,xterm-256color:RGB:Sync"
       set -ga terminal-overrides '*:Ss=\E[%p1%d q:Se=\E[ q'
       set-environment -g COLORTERM "truecolor"
 
-      # Add support for mouse
-      set -g mouse on
+      # Clipboard on select
       set -g set-clipboard on
 
-      # Add support to extended keys
+      # Extended keys for Neovim
       set -s extended-keys on
       set -as terminal-features 'xterm*:extkeys'
 
