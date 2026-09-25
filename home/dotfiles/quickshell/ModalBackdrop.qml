@@ -17,9 +17,6 @@ Scope {
   signal opened()
   signal closed()
 
-  // Tracks whether THIS instance is the one that incremented
-  // StateManager.shortcutBlockCount, so we release it correctly even
-  // if the focused monitor changes between open() and close().
   property bool _shortcutBlockOwned: false
 
   function open(): void {
@@ -110,13 +107,6 @@ Scope {
       right: true
     }
 
-    // Close on ESC
-    Shortcut {
-      sequence: "Escape"
-      onActivated: root.closeAll()
-    }
-
-    // Dark background to cover monitor
     Rectangle {
       anchors.fill: parent
       color: Qt.rgba(0, 0, 0, 0.35)
@@ -135,7 +125,6 @@ Scope {
       }
     }
 
-    // Inner container, only for focused display
     Item {
       id: focusContainer
       anchors.fill: parent
