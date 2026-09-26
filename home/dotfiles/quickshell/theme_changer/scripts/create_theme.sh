@@ -228,24 +228,6 @@ if command -v magick &>/dev/null; then
 fi
 
 # ==============================================================================
-# Generate colors.json (palette backup)
-# ==============================================================================
-
-log_info "Generating colors.json..."
-
-cat > "$THEME_DIR/colors.json" << EOF
-{
-  "accent1": "$ACCENT1",
-  "accent2": "$ACCENT2",
-  "palette": [
-    $(printf '"%s", ' "${COLORS[@]}" | sed 's/, $//')
-  ]
-}
-EOF
-
-log_success "Generated colors.json"
-
-# ==============================================================================
 # Generate colors-foot.ini
 # ==============================================================================
 
@@ -254,9 +236,9 @@ log_info "Generating colors-foot.ini..."
 cat > "$THEME_DIR/colors-foot.ini" << EOF
 [colors-dark]
 foreground=EEFAF9
-background=242223
+background=121212
 cursor=$(strip_hash "$ACCENT1") EEFAF9 
-selection-foreground=242223
+selection-foreground=121212
 selection-background=EEFAF9
 
 # Standard colors
@@ -388,7 +370,6 @@ log_info "Files created:"
 echo "  ✓ wallpaper.png"
 echo "  ✓ thumbnail.png (optional)"
 echo "  ✓ colors-foot.ini"
-echo "  ✓ colors.json"
 echo "  ✓ swaync.css"
 echo "  ✓ theme.omp.json"
 echo "  ✓ Accents.qml"

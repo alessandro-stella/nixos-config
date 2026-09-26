@@ -586,9 +586,9 @@ GenericModal {
         Layout.preferredHeight: parent.height
         Layout.preferredWidth: 1 
         radius: Theme.radiusInner
-        color: previewMouseArea.containsMouse ? Theme.accent1 : Theme.colBg
+        color: previewMouseArea.containsMouse ? Theme.accent2 : Theme.colBg
         border.width: Theme.borderWidth
-        border.color: Theme.accent1
+        border.color: Theme.accent2
 
         Behavior on color {
           ColorAnimation { duration: Theme.fastAnimation }
@@ -608,7 +608,7 @@ GenericModal {
             }
             return "Preview"
           }
-          color: previewMouseArea.containsMouse ? Theme.colBg : Theme.accent1
+          color: previewMouseArea.containsMouse ? Theme.colBg : Theme.accent2
           font.pixelSize: Theme.fontSizeSmall
           font.family: Theme.fontFamily
           elide: Text.ElideRight
@@ -646,9 +646,9 @@ GenericModal {
         Layout.preferredHeight: parent.height
         Layout.preferredWidth: 1
         radius: Theme.radiusInner
-        color: applyMouseArea.containsMouse ? Theme.accent1 : Theme.colBg
+        color: applyMouseArea.containsMouse ? Theme.accent2 : Theme.colBg
         border.width: Theme.borderWidth
-        border.color: Theme.accent1
+        border.color: Theme.accent2
 
         Behavior on color {
           ColorAnimation { duration: Theme.fastAnimation }
@@ -657,7 +657,7 @@ GenericModal {
         Text {
           anchors.centerIn: parent
           text: "Apply theme"
-          color: applyMouseArea.containsMouse ? Theme.colBg : Theme.accent1
+          color: applyMouseArea.containsMouse ? Theme.colBg : Theme.accent2
           font.pixelSize: Theme.fontSizeSmall
           font.family: Theme.fontFamily
         }
@@ -687,9 +687,9 @@ GenericModal {
         Layout.preferredHeight: parent.height
         Layout.preferredWidth: 1
         radius: Theme.radiusInner
-        color: createMouseArea.containsMouse ? Theme.accent1 : Theme.colBg
+        color: createMouseArea.containsMouse ? Theme.accent2 : Theme.colBg
         border.width: Theme.borderWidth
-        border.color: Theme.accent1
+        border.color: Theme.accent2
 
         Behavior on color {
           ColorAnimation { duration: Theme.fastAnimation }
@@ -698,7 +698,7 @@ GenericModal {
         Text {
           anchors.centerIn: parent
           text: "Create new theme"
-          color: createMouseArea.containsMouse ? Theme.colBg : Theme.accent1
+          color: createMouseArea.containsMouse ? Theme.colBg : Theme.accent2
           font.pixelSize: Theme.fontSizeSmall
           font.family: Theme.fontFamily
         }

@@ -36,18 +36,15 @@ PanelWindow {
     top: Theme.barHeight + Math.round(Theme.outerSpacing / 2) - Math.round(Theme.borderWidth / 2)
   }
 
-  width: layout.implicitWidth + (padding * 2)
-  height: layout.implicitHeight + (padding * 2)
+  implicitWidth: layout.implicitWidth + (padding * 2)
+  implicitHeight: layout.implicitHeight + (padding * 2)
   
   color: "transparent"
   readonly property color background: Theme.colBg
 
-  // Inizialmente il popup è spento a livello di sistema
   visible: false
 
-  // --- LOGICA E SHORTCUT ---
 
-  // 1) Calcola le dimensioni esatte della scritta "100%" prima di renderizzarla
   TextMetrics {
     id: percentMetrics
     font.pixelSize: Theme.fontSize

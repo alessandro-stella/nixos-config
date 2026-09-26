@@ -51,7 +51,6 @@ update_file "$THEME_DIR/swaync.css" "$CURRENT_THEME_DIR/swaync.css"
 update_file "$THEME_DIR/theme.omp.json" "$CURRENT_THEME_DIR/current_theme.omp.json"
 update_file "$THEME_DIR/Accents.qml" "$CURRENT_THEME_DIR/Accents.qml"
 update_file "$THEME_DIR/dynamic-border.lua" "$CURRENT_THEME_DIR/dynamic-border.lua"
-update_file "$THEME_DIR/colors.json" "$CURRENT_THEME_DIR/colors.json"
 update_file "$THEME_DIR/AccentsSDDM.qml" "$CURRENT_THEME_DIR/AccentsSDDM.qml"
 
 echo "$THEME_NAME" > "$CURRENT_THEME_DIR/name"
