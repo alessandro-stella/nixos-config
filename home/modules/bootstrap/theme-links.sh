@@ -12,6 +12,8 @@ if [ ! -d "$CURRENT_THEME" ]; then
     
     if [ -n "$FIRST_THEME" ]; then
         cp -r "$FIRST_THEME" "$CURRENT_THEME"
+        chmod -R +w "$CURRENT_THEME"
+
         echo "Initializing current_theme using: $(basename "$FIRST_THEME")"
     else
         echo "No theme found in $REPO_THEMES. Can't initialize current_theme."
@@ -22,6 +24,7 @@ fi
 declare -A links=(
   ["$HOME/.config/oh-my-posh/themes/current_theme.omp.json"]="theme.omp.json"
   ["$HOME/.config/swaync/style.css"]="swaync.css"
+  ["$HOME/.config/quickshell/Accents.qml"]="Accents.qml"
   ["$HOME/.config/hypr/modules/dynamic-border.lua"]="dynamic-border.lua"
   ["$HOME/.config/foot/colors-foot.ini"]="colors-foot.ini"
 )
