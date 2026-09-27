@@ -2,4 +2,10 @@ home/dotfiles/foot/colors-foot.ini
 home/dotfiles/oh-my-posh/themes/current_theme.omp.json
 home/dotfiles/swaync/style.css
 
+home/dotfiles/hypr/desktop/dynamic-border.lua
+home/dotfiles/hypr/laptop/dynamic-border.lua
+
+home/dotfiles/quickshell/Accents.qml
 home/dotfiles/quickshell/.qmlls.ini
+
+home/dotfiles/themes/current_theme

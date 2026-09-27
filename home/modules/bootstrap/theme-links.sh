@@ -1,5 +1,24 @@
 #!/usr/bin/env bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
+REPO_THEMES="$SCRIPT_DIR/../../dotfiles/themes"
+THEME_DIR="$HOME/.config/themes"
+CURRENT_THEME="$THEME_DIR/current_theme"
+
+if [ ! -d "$CURRENT_THEME" ]; then
+    mkdir -p "$THEME_DIR"
+    
+    FIRST_THEME=$(find "$REPO_THEMES" -mindepth 1 -maxdepth 1 -type d | head -n 1)
+    
+    if [ -n "$FIRST_THEME" ]; then
+        cp -r "$FIRST_THEME" "$CURRENT_THEME"
+        echo "Initializing current_theme using: $(basename "$FIRST_THEME")"
+    else
+        echo "No theme found in $REPO_THEMES. Can't initialize current_theme."
+        exit 1
+    fi
+fi
+
 declare -A links=(
   ["$HOME/.config/oh-my-posh/themes/current_theme.omp.json"]="current_theme.omp.json"
   ["$HOME/.config/swaync/style.css"]="swaync.css"
@@ -9,5 +28,5 @@ declare -A links=(
 
 for target in "${!links[@]}"; do
   mkdir -p "$(dirname "$target")"
-  ln -sfn "$HOME/.config/themes/current_theme/${links[$target]}" "$target"
+  ln -sfn "$CURRENT_THEME/${links[$target]}" "$target"
 done
