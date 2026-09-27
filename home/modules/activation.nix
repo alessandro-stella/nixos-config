@@ -1,4 +1,4 @@
-{ config, pkgs, username, hostType, dotfilesPath, ... }:
+{ config, pkgs, self, username, hostType, dotfilesPath, ... }:
   
 let
   activationPath = pkgs.lib.makeBinPath [

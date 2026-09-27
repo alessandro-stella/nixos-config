@@ -30,7 +30,7 @@
     ];
     
     homeManagerConfig = hostType: modules: {
-      home-manager.extraSpecialArgs = { inherit inputs username hostType dotfilesPath; };
+      home-manager.extraSpecialArgs = { inherit inputs self username hostType dotfilesPath; };
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.users.${username} = {
