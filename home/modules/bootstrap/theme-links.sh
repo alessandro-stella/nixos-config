@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" &> /dev/null && pwd)"
-REPO_THEMES="$SCRIPT_DIR/../../dotfiles/themes"
+REPO_ROOT="${1:-$HOME/nixos-config}"
+REPO_THEMES="$REPO_ROOT/home/dotfiles/themes"
 THEME_DIR="$HOME/.config/themes"
 CURRENT_THEME="$THEME_DIR/current_theme"
 

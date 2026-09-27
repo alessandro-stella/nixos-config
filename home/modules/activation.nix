@@ -19,6 +19,6 @@ in
   home.activation.themeLinks =
   config.lib.dag.entryAfter [ "write" ] ''
     export PATH=${activationPath}:$PATH
-    ${./bootstrap/theme-links.sh}
+    ${./bootstrap/theme-links.sh} ${self}
   '';
 }
