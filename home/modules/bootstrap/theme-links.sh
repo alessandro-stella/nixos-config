@@ -20,7 +20,7 @@ if [ ! -d "$CURRENT_THEME" ]; then
 fi
 
 declare -A links=(
-  ["$HOME/.config/oh-my-posh/themes/current_theme.omp.json"]="current_theme.omp.json"
+  ["$HOME/.config/oh-my-posh/themes/current_theme.omp.json"]="theme.omp.json"
   ["$HOME/.config/swaync/style.css"]="swaync.css"
   ["$HOME/.config/hypr/modules/dynamic-border.lua"]="dynamic-border.lua"
   ["$HOME/.config/foot/colors-foot.ini"]="colors-foot.ini"
