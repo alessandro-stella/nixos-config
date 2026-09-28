@@ -153,7 +153,7 @@ in
       ${nixosCleanCommand}
 
       # Oh My Posh
-      eval "$(oh-my-posh --init --shell zsh --config ~/.config/oh-my-posh/themes/current_theme.omp.json)"
+      eval "$(oh-my-posh --init --shell zsh --config ~/.config/oh-my-posh/current_theme.omp.json)"
 
       # Fastfetch
       if command -v fastfetch >/dev/null; then

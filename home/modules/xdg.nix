@@ -11,7 +11,6 @@ in
   xdg.configFile = {
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/btop";
     "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/fastfetch";
-    "oh-my-posh".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/oh-my-posh";
     "swaync".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaync";
     "themes".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/themes";
     "wallust".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wallust";
