@@ -81,6 +81,7 @@
   environment.systemPackages = with pkgs; [
     playerctl
     system-config-printer
+    openrgb
   ];
 
   # Enable printing
@@ -126,4 +127,7 @@
       RemainAfterExit = true;
     };
   };
+
+  # Activate OpenRGB
+  services.hardware.openrgb.enable = true;
 }

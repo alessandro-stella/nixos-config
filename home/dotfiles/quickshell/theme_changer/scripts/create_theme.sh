@@ -360,6 +360,19 @@ sed -e "s/__ACCENT1__/$ACCENT1_HEX/g" \
 log_success "Generated dynamic-border.lua"
 
 # ==============================================================================
+# Generate fan_accents.txt
+# ==============================================================================
+
+log_info "Generating fan-accents.txt..."
+
+cat > "$THEME_DIR/fan-accents.txt" << EOF
+$ACCENT1
+$ACCENT2
+EOF
+
+log_success "Generated fan-accents.txt"
+
+# ==============================================================================
 # Summary
 # ==============================================================================
 
@@ -375,6 +388,7 @@ echo "  ✓ theme.omp.json"
 echo "  ✓ Accents.qml"
 echo "  ✓ AccentsSDDM.qml"
 echo "  ✓ dynamic-border.lua"
+echo "  ✓ fan-accents.txt"
 
 # ==============================================================================
 # Apply theme (if --apply flag)
@@ -382,5 +396,6 @@ echo "  ✓ dynamic-border.lua"
 
 if [[ $APPLY_THEME -eq 1 ]]; then
     log_info "Applying theme via apply_theme.sh..."
-    "$SCRIPT_DIR/apply_theme.sh" "$WALLPAPER_NAME"
+    nohup "$SCRIPT_DIR/apply_theme.sh" "$WALLPAPER_NAME" >/dev/null 2>&1 &
+    disown
 fi

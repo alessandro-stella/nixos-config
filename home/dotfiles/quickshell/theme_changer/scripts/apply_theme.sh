@@ -7,9 +7,17 @@ BLUE='\033[0;34m'
 RED='\033[0;31m'
 NC='\033[0m'
 
-log_info() { echo -e "${BLUE}[INFO]${NC} $1"; }
-log_success() { echo -e "${GREEN}[✓]${NC} $1"; }
-log_error() { echo -e "${RED}[ERROR]${NC} $1" >&2; }
+log_info() { 
+    echo -e "${BLUE}[INFO]${NC} $1" 
+}
+ 
+log_success() { 
+    echo -e "${GREEN}[✓]${NC} $1" 
+}
+ 
+log_error() { 
+    echo -e "${RED}[ERROR]${NC} $1" >&2 
+}
 
 THEME_NAME="$1"
 
@@ -89,14 +97,38 @@ if command -v hyprctl &>/dev/null; then
 fi
 
 log_info "Reloading quickshell..."
-    
 if command -v quickshell &>/dev/null; then
     ( sleep 0.5; pkill quickshell; sleep 0.5; quickshell ) >/dev/null 2>&1 &
     disown
 fi
 
 log_info "Reloading swaync..."
-    
-if command -v swaync-client &>/dev/null; then
-  swaync-client -rs
+if command -v swaync-client &> /dev/null; then
+    ( sleep 0.5; swaync-client -rs ) >/dev/null 2>&1
+fi
+
+if command -v openrgb &> /dev/null; then
+    log_info "Reading accent colors for OpenRGB..."
+
+    if [[ -f "$THEME_DIR/fan-accents.txt" ]]; then
+        mapfile -t RGB_COLORS < "$THEME_DIR/fan-accents.txt"
+        ACCENT1="${RGB_COLORS[0]:-}"
+        ACCENT2="${RGB_COLORS[1]:-}"
+
+        if [[ -n "$ACCENT1" && -n "$ACCENT2" ]]; then
+            log_info "Found accent colors: $ACCENT1, $ACCENT2"
+            CHANGE_RGB_SCRIPT="$(dirname "$0")/change_rgb.py"
+
+            if [[ -f "$CHANGE_RGB_SCRIPT" ]]; then
+                log_info "Applying RGB colors..."
+                python3 "$CHANGE_RGB_SCRIPT" "$ACCENT1" "$ACCENT2"
+            else
+                log_error "change_rgb.py not found at $CHANGE_RGB_SCRIPT"
+            fi
+        else
+            log_error "rgb-colors.txt is empty or missing colors"
+        fi
+    else
+        log_error "fan-accents.txt not found in theme directory"
+    fi
 fi

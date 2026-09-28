@@ -171,8 +171,8 @@ GenericModal {
 
     applyThemeProcess.command = [
       "bash",
-      Quickshell.env("HOME") + "/.config/quickshell/theme_changer/scripts/apply_theme.sh",
-      theme.name
+      "-c",
+      "nohup bash " + Quickshell.env("HOME") + "/.config/quickshell/theme_changer/scripts/apply_theme.sh " + theme.name + " >/dev/null 2>&1 & disown"
     ]
     
     applyThemeProcess.running = true
