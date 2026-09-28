@@ -32,7 +32,7 @@
           },
           "trailing_diamond": "",
           "template": " 󰉖 {{ path .Path .Location }}",
-          "foreground": "p:color15",
+          "foreground": "p:color9",
           "background": "p:color12",
           "type": "path",
           "style": "diamond"
