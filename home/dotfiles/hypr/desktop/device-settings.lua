@@ -29,4 +29,7 @@ hl.on("hyprland.start", function()
 	hl.exec_cmd(
 		'sleep 8 && hyprctl dispatch \'hl.dsp.exec_cmd("foot --title=btop-panel btop", { workspace = "9 silent", fullscreen = true })\''
 	)
+
+	-- Change theme to update fan colors
+	hl.exec_cmd("sleep 1 && python $HOME/.config/quickshell/theme_changer/scripts/change_rgb.py")
 end)
