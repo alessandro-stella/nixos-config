@@ -16,6 +16,7 @@ PanelWindow {
   id: root
 
   WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
+  WlrLayershell.namespace: "quickshell-topbar"
   
   required property int monitorId
   required property var modelData

@@ -103,12 +103,15 @@ hl.window_rule({
 	stay_focused = true,
 })
 
--- Disable rofi animation for resizing
-hl.layer_rule({ name = "rofi-no-anim", match = { namespace = "rofi" }, no_anim = true })
-
 -- Blur lockscreen
 hl.layer_rule({
 	match = { namespace = "quickshell-lock" },
+	blur = true,
+})
+
+-- Blur topbar
+hl.layer_rule({
+	match = { namespace = "quickshell-topbar" },
 	blur = true,
 })
 
