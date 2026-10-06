@@ -107,6 +107,10 @@ in
   services.gnome.localsearch.enable = true;
   services.gnome.tinysparql.enable = true;
 
+  systemd.user.settings.Manager = {
+    DefaultEnvironment = "XDG_SESSION_CLASS=user";
+  };
+
   # Graphical packages for polkit authorization
   environment.systemPackages = with pkgs; [
     polkit_gnome
