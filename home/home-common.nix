@@ -15,6 +15,7 @@ in
     ./modules/activation.nix
     
     ./modules/programs/web-apps.nix
+    ./modules/programs/nautilus.nix
     ./modules/programs/tmux.nix
     ./modules/programs/zoxide.nix
     ./modules/programs/zshell.nix
