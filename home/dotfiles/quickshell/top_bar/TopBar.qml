@@ -17,6 +17,7 @@ PanelWindow {
 
   WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
   WlrLayershell.namespace: "quickshell-topbar"
+  WlrLayershell.exclusiveZone: Theme.barHeight
   
   required property int monitorId
   required property var modelData

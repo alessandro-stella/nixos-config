@@ -22,7 +22,7 @@
           "template": "{{ .UserName }}",
           "trailing_diamond": "█",
           "foreground": "p:color15",
-          "background": "p:color0",
+          "background": "p:color1",
           "type": "session",
           "style": "diamond"
         },
@@ -150,22 +150,21 @@
   "patch_pwsh_bleed": true,
   "final_space": true,
   "palette": {
-    "color0": "__COLOR0__",
-    "color1": "__COLOR1__",
-    "color2": "__COLOR2__",
-    "color3": "__COLOR3__",
-    "color4": "__COLOR4__",
-    "color5": "__COLOR5__",
-    "color6": "__COLOR6__",
-    "color7": "__COLOR7__",
-    "color8": "__COLOR8__",
-    "color9": "__COLOR9__",
-    "color10": "__COLOR10__",
-    "color11": "__COLOR11__",
-    "color12": "__COLOR12__",
-    "color13": "__COLOR13__",
-    "color14": "__COLOR14__",
-    "color15": "__COLOR15__"
+    "color0": "#434449",
+    "color1": "#151D34",
+    "color2": "#636083",
+    "color3": "#B85F66",
+    "color4": "#4C8DC2",
+    "color5": "#B1A2C7",
+    "color6": "#FDB2A8",
+    "color7": "#F6D0CB",
+    "color8": "#434449",
+    "color9": "#151D34",
+    "color10": "#636083",
+    "color11": "#B85F66",
+    "color12": "#4C8DC2",
+    "color13": "#B1A2C7",
+    "color14": "#FDB2A8",
+    "color15": "#F6D0CB"
   }
 }
-

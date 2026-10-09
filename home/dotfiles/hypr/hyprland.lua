@@ -113,6 +113,7 @@ hl.layer_rule({
 hl.layer_rule({
 	match = { namespace = "quickshell-topbar" },
 	blur = true,
+	xray = true,
 })
 
 -- Quickshell submap to catch all binds
