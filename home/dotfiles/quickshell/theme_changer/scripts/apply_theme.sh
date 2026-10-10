@@ -126,7 +126,7 @@ if command -v openrgb &> /dev/null; then
                 log_error "change_rgb.py not found at $CHANGE_RGB_SCRIPT"
             fi
         else
-            log_error "rgb-colors.txt is empty or missing colors"
+            log_error "fan-accents.txt is empty or missing colors"
         fi
     else
         log_error "fan-accents.txt not found in theme directory"

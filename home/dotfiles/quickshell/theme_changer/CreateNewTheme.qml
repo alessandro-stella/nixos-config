@@ -26,11 +26,30 @@ ModalBackdrop {
   property var initialPalette: []
   property bool applyThemeOnCreate: false
 
+  property string themeName: ""
+
+  function baseName(path) {
+    const file = path.split("/").pop()
+    const dot = file.lastIndexOf(".")
+    return dot > 0 ? file.substring(0, dot) : file
+  }
+
+  Connections {
+    target: StateManager
+
+    function onNewThemeImagePathChanged() {
+      root.themeName = StateManager.newThemeImagePath !== ""
+        ? root.baseName(StateManager.newThemeImagePath)
+        : ""
+    }
+  }
+
   onClosed: {
     root.initialPalette = []
     root.activeColorPicker = 0
     root.showTerminalPreview = false
     root.tempFilePath = ""
+    root.themeName = ""
     root.fullPalette = []
     StateManager.clearNewThemeState()
   }
@@ -107,7 +126,7 @@ ModalBackdrop {
     }
   }
 
-  Process {
+ Process {
     id: paletteExtractor
 
     stdout: SplitParser {
@@ -115,16 +134,16 @@ ModalBackdrop {
         try {
           const parsed = JSON.parse(data)
 
-          if (parsed.palette && Array.isArray(parsed.palette)) {
-            StateManager.newThemePalette = parsed.palette
-            root.fullPalette = StateManager.newThemePalette
+          if (Array.isArray(parsed)) {
+            StateManager.newThemePalette = parsed
+            root.fullPalette = parsed
 
             if (root.initialPalette.length === 0) {
-              root.initialPalette = parsed.palette.slice()
+              root.initialPalette = parsed.slice()
             }
 
-            root.termBg = parsed.background || ""
-            root.termFg = parsed.foreground || ""
+            root.termBg = "#121212"
+            root.termFg = "#EEFAF9"
           }
         } catch (e) {
           console.log("Palette JSON error:", e)
@@ -137,7 +156,7 @@ ModalBackdrop {
         console.log("Palette extractor error:", data)
       }
     }
-  }
+  } 
 
   Process {
     id: colorPickerProcess
@@ -157,7 +176,7 @@ ModalBackdrop {
 
         } else if (
           root.activeColorPicker >= 3
-          && root.activeColorPicker <= 11
+          && root.activeColorPicker <= 18
         ) {
           const paletteIndex =
             root.activeColorPicker - 3
@@ -216,6 +235,11 @@ ModalBackdrop {
       "--accent1", accent1,
       "--accent2", accent2
     ]
+
+    const name = root.themeName.trim()
+    if (name !== "") {
+      args.push("--name", name)
+    }
 
     if (apply) {
       args.push("--apply")
@@ -385,10 +409,9 @@ ModalBackdrop {
                 border.color: StateManager.newThemeColor1
                 border.width: 1
 
-                color:
-                  root.termBg !== ""
-                  ? root.termBg + "66"
-                  : "#12111466"
+                color: root.termBg !== "" 
+                       ? Qt.alpha(root.termBg, 0.7)
+                       : Qt.alpha("#121114", 0.7)
 
                 clip: true
 
@@ -457,14 +480,83 @@ ModalBackdrop {
                 StateManager.newThemeImagePath === ""
             }
 
+            Canvas {
+              id: pixelSampler
+
+              width: 1
+              height: 1
+              opacity: 0
+
+              renderTarget: Canvas.Image
+
+              property string imageUrl:
+                StateManager.newThemeImagePath !== ""
+                ? "file://" + StateManager.newThemeImagePath
+                : ""
+
+              property bool imageReady: false
+              property int sampleX: 0
+              property int sampleY: 0
+              property color pixelColor: Theme.accent1
+
+              function sampleAt(x, y) {
+                sampleX = x
+                sampleY = y
+                requestPaint()
+              }
+
+              Component.onCompleted: {
+                if (imageUrl !== "") {
+                  loadImage(imageUrl)
+                  imageReady = isImageLoaded(imageUrl)
+                }
+              }
+
+              onImageUrlChanged: {
+                imageReady = false
+
+                if (imageUrl !== "") {
+                  loadImage(imageUrl)
+
+                  imageReady = isImageLoaded(imageUrl)
+                }
+              }
+
+              onImageLoaded: {
+                imageReady = isImageLoaded(imageUrl)
+                requestPaint()
+              }
+
+              onPaint: {
+                if (!imageReady)
+                  return
+
+                const ctx = getContext("2d")
+
+                ctx.clearRect(0, 0, 1, 1)
+
+                ctx.drawImage(
+                  imageUrl,
+                  sampleX, sampleY, 1, 1,
+                  0, 0, 1, 1
+                )
+
+                const d = ctx.getImageData(0, 0, 1, 1).data
+
+                pixelColor = Qt.rgba(d[0] / 255, d[1] / 255, d[2] / 255, 1)
+              }
+            }
+
             Rectangle {
               id: magnifier
 
-              width: 120
-              height: 120
+              width: 150
+              height: 150
 
-              border.color: Theme.accent1
-              border.width: 2
+              color: "black"
+
+              border.color: pixelSampler.pixelColor
+              border.width: 5
 
               z: 100
 
@@ -477,12 +569,29 @@ ModalBackdrop {
               x:
                 pickMouseArea.mouseX - width / 2
 
-              y:
-                pickMouseArea.mouseY - height - 15
+              y: {
+                const above = pickMouseArea.mouseY - height - 15
+                return above < 0 ? pickMouseArea.mouseY + 25 : above
+              }
 
-              onYChanged: {
-                if (y < 0)
-                  y = pickMouseArea.mouseY + 25
+              Rectangle {
+                anchors.fill: parent
+                anchors.margins: -1
+
+                color: "transparent"
+
+                border.color: "black"
+                border.width: 1
+              }
+
+              Rectangle {
+                anchors.fill: parent
+                anchors.margins: -2
+
+                color: "transparent"
+
+                border.color: "white"
+                border.width: 1
               }
 
               ShaderEffectSource {
@@ -494,40 +603,54 @@ ModalBackdrop {
                 sourceItem: previewImg
 
                 sourceRect: Qt.rect(
-                  pickMouseArea.mouseX - 10,
-                  pickMouseArea.mouseY - 10,
-                  20,
-                  20
+                  Math.floor(pickMouseArea.mouseX - previewImg.x) - 10,
+                  Math.floor(pickMouseArea.mouseY - previewImg.y) - 10,
+                  21,
+                  21
                 )
 
-                layer.enabled: true
+                smooth: false
+              }
 
-                layer.effect: MultiEffect {
-                  maskEnabled: true
+              Rectangle {
+                anchors.fill: zoomSource
 
-                  maskSource: ShaderEffectSource {
-                    sourceItem: Rectangle {
-                      width: zoomSource.width
-                      height: zoomSource.height
+                color: "transparent"
 
-                      radius: width / 2
-                      color: "white"
-                    }
+                border.color: "black"
+                border.width: 1
 
-                    hideSource: true
-                  }
+                Rectangle {
+                  anchors.fill: parent
+                  anchors.margins: 1
+
+                  color: "transparent"
+
+                  border.color: "white"
+                  border.width: 1
                 }
               }
 
               Rectangle {
-                anchors.centerIn: parent
+                anchors.centerIn: zoomSource
 
-                width: 4
-                height: 4
+                width: zoomSource.width / 21 + 4
+                height: width
 
-                radius: 2
+                color: "transparent"
 
-                color: Theme.colRed
+                border.color: "black"
+                border.width: 1
+
+                Rectangle {
+                  anchors.fill: parent
+                  anchors.margins: 1
+
+                  color: "transparent"
+
+                  border.color: "white"
+                  border.width: 1
+                }
               }
             }
 
@@ -548,50 +671,48 @@ ModalBackdrop {
                 ? Qt.CrossCursor
                 : Qt.ArrowCursor
 
-              onClicked: mouse => {
-                if (previewImg.sourceSize.width === 0)
-                  return
+              function imagePixel(mx, my) {
+                const w = previewImg.sourceSize.width
+                const h = previewImg.sourceSize.height
+
+                if (w === 0 || h === 0)
+                  return null
 
                 const scale =
                   Math.max(
-                    previewImg.width
-                    / previewImg.sourceSize.width,
-                    previewImg.height
-                    / previewImg.sourceSize.height
+                    previewImg.width / w,
+                    previewImg.height / h
                   )
 
-                const visibleW =
-                  previewImg.width / scale
+                const offsetX = (w - previewImg.width / scale) / 2
+                const offsetY = (h - previewImg.height / scale) / 2
 
-                const visibleH =
-                  previewImg.height / scale
+                const x = Math.floor(offsetX + (mx - previewImg.x) / scale)
+                const y = Math.floor(offsetY + (my - previewImg.y) / scale)
 
-                const offsetX =
-                  (
-                    previewImg.sourceSize.width
-                    - visibleW
-                  ) / 2
+                return {
+                  x: Math.max(0, Math.min(w - 1, x)),
+                  y: Math.max(0, Math.min(h - 1, y))
+                }
+              }
 
-                const offsetY =
-                  (
-                    previewImg.sourceSize.height
-                    - visibleH
-                  ) / 2
+              onPositionChanged: mouse => {
+                const p = imagePixel(mouse.x, mouse.y)
 
-                const realX =
-                  Math.floor(
-                    offsetX + mouse.x / scale
-                  )
+                if (p)
+                  pixelSampler.sampleAt(p.x, p.y)
+              }
 
-                const realY =
-                  Math.floor(
-                    offsetY + mouse.y / scale
-                  )
+              onClicked: mouse => {
+                const p = imagePixel(mouse.x, mouse.y)
+
+                if (!p)
+                  return
 
                 colorPickerProcess.command = [
                   "sh",
                   "-c",
-                  `magick "${StateManager.newThemeImagePath}" -crop 1x1+${realX}+${realY} txt: | grep -oE '#[0-9A-Fa-f]{6}' | head -n 1`
+                  `magick "${StateManager.newThemeImagePath}" -crop 1x1+${p.x}+${p.y} txt: | grep -oE '#[0-9A-Fa-f]{6}' | head -n 1`
                 ]
 
                 colorPickerProcess.running = true
@@ -927,7 +1048,7 @@ ModalBackdrop {
                 anchors.centerIn: parent
 
                 text: "⌖"
-                color: root.activeColorPicker === 1
+                color: root.activeColorPicker === 2
                   ? Theme.widgetDarkBackground
                   : Theme.colFg
 
@@ -954,8 +1075,156 @@ ModalBackdrop {
             }
           }
 
+          RowLayout {
+            Layout.fillWidth: true
+
+            Text {
+              text: "Terminal palette"
+
+              color: Theme.colFg
+
+              font.pixelSize: Theme.fontSizeSmall
+              font.family: Theme.fontFamily
+            }
+
+            Item {
+              Layout.fillWidth: true
+            }
+
+            Text {
+              text:
+                paletteGrid.hoveredIndex >= 0
+                && root.fullPalette.length > paletteGrid.hoveredIndex
+                ? "color" + paletteGrid.hoveredIndex + "  " + root.fullPalette[paletteGrid.hoveredIndex]
+                : ""
+
+              color: Theme.colMuted
+
+              font.pixelSize: Theme.fontSizeSmall
+              font.family: Theme.fontFamily
+            }
+          }
+
+          GridLayout {
+            id: paletteGrid
+
+            columns: 8
+
+            columnSpacing: 6
+            rowSpacing: 6
+
+            property int hoveredIndex: -1
+
+            readonly property real cellSize:
+              Math.floor((rightColumn.width - columnSpacing * (columns - 1)) / columns)
+
+            Repeater {
+              model: 16
+
+              delegate: Rectangle {
+                id: swatch
+
+                required property int index
+
+                Layout.preferredWidth: paletteGrid.cellSize
+                Layout.preferredHeight: paletteGrid.cellSize
+
+                radius: Theme.radiusInner
+
+                color:
+                  root.fullPalette.length > index
+                  ? root.fullPalette[index]
+                  : Theme.colBg
+
+                border.color:
+                  root.activeColorPicker === index + 3
+                  ? Theme.colGreen
+                  : Theme.accent1
+
+                border.width:
+                  root.activeColorPicker === index + 3
+                  ? 2
+                  : 1
+
+                Behavior on color {
+                  ColorAnimation {
+                    duration: Theme.fastAnimation
+                  }
+                }
+
+                Behavior on border.color {
+                  ColorAnimation {
+                    duration: Theme.fastAnimation
+                  }
+                }
+
+                MouseArea {
+                  id: paletteColorMouseArea
+
+                  anchors.fill: parent
+
+                  hoverEnabled: true
+
+                  cursorShape: StateManager.newThemeImagePath !== "" ? Qt.PointingHandCursor : Qt.ArrowCursor
+
+                  onContainsMouseChanged: {
+                    if (containsMouse)
+                      paletteGrid.hoveredIndex = swatch.index
+                    else if (paletteGrid.hoveredIndex === swatch.index)
+                      paletteGrid.hoveredIndex = -1
+                  }
+
+                  onClicked: {
+                    if (StateManager.newThemeImagePath === "")
+                      return
+
+                    root.showTerminalPreview = false
+
+                    root.activeColorPicker =
+                      root.activeColorPicker === swatch.index + 3
+                      ? 0
+                      : swatch.index + 3
+                  }
+                }
+
+                Rectangle {
+                  anchors.fill: parent
+
+                  radius: parent.radius
+
+                  color: Theme.colGreen
+
+                  opacity:
+                    (
+                      StateManager.newThemeImagePath !== ""
+                      && paletteColorMouseArea.containsMouse
+                      && !paletteColorMouseArea.pressed
+                    )
+                    ? 0.85
+                    : 0
+
+                  Behavior on opacity {
+                    NumberAnimation {
+                      duration: Theme.fastAnimation
+                    }
+                  }
+
+                  Text {
+                    anchors.centerIn: parent
+
+                    text: "⌖"
+
+                    color: Theme.widgetDarkBackground
+
+                    font.pixelSize: 15
+                  }
+                }
+              }
+            }
+          }
+
           Text {
-            text: "Terminal palette"
+            text: "Theme name"
 
             color: Theme.colFg
 
@@ -963,167 +1232,38 @@ ModalBackdrop {
             font.family: Theme.fontFamily
           }
 
-          GridLayout {
-            id: paletteGrid
+          TextField {
+            id: themeNameField
 
             Layout.fillWidth: true
 
-            columns: 2
+            placeholderText: "Theme name"
 
-            columnSpacing: 8
-            rowSpacing: 8
+            text: root.themeName
 
-            Repeater {
-              model: 8
+            enabled: StateManager.newThemeImagePath !== ""
+            opacity: enabled ? 1.0 : 0.5
 
-              delegate: RowLayout {
-                required property int index
+            color: Theme.colFg
 
-                Layout.fillWidth: true
-                spacing: 5
+            font.family: Theme.fontFamily
+            font.pixelSize: Theme.fontSizeSmall
 
-                Rectangle {
-                  id: paletteColor
+            leftPadding: 6
+            rightPadding: 6
 
-                  width: 24
-                  height: 28
+            background: Rectangle {
+              color: "#24283b"
 
-                  radius: Theme.radiusInner
+              radius: Theme.radiusInner
 
-                  color:
-                    root.fullPalette.length > index
-                    ? root.fullPalette[index]
-                    : Theme.colBg
-
-                  border.color:
-                    root.activeColorPicker === index + 3
-                    ? Theme.colGreen
-                    : Theme.accent1
-
-                  border.width:
-                    root.activeColorPicker === index + 3
-                    ? 2
-                    : 1
-
-                  Behavior on color {
-                    ColorAnimation {
-                      duration: Theme.fastAnimation
-                    }
-                  }
-
-                  Behavior on border.color {
-                    ColorAnimation {
-                      duration: Theme.fastAnimation
-                    }
-                  }
-
-                  MouseArea {
-                    id: paletteColorMouseArea
-
-                    anchors.fill: parent
-
-                    hoverEnabled: StateManager.newThemeImagePath !== ""
-                    
-                    cursorShape: StateManager.newThemeImagePath !== "" ? Qt.PointingHandCursor : Qt.ArrowCursor
-
-                    onClicked: {
-                      if (StateManager.newThemeImagePath === "")
-                        return
-
-                      root.showTerminalPreview = false
-
-                      root.activeColorPicker =
-                        root.activeColorPicker === index + 3
-                        ? 0
-                        : index + 3
-                    }
-                  }
-
-                  Rectangle {
-                    anchors.fill: parent
-
-                    radius: parent.radius
-
-                    color: Theme.colGreen
-
-                    opacity:
-                      (paletteColorMouseArea.containsMouse && !paletteColorMouseArea.pressed)
-                      ? 0.85
-                      : 0
-
-                    Behavior on opacity {
-                      NumberAnimation {
-                        duration: Theme.fastAnimation
-                      }
-                    }
-
-                    Text {
-                      anchors.centerIn: parent
-
-                      text: "⌖"
-
-                      color: Theme.widgetDarkBackground
-
-                      font.pixelSize: 15
-
-                      opacity:
-                        (paletteColorMouseArea.containsMouse && !paletteColorMouseArea.pressed)
-                        ? 1
-                        : 0
-
-                      Behavior on opacity {
-                        NumberAnimation {
-                          duration: Theme.fastAnimation
-                        }
-                      }
-                    }
-                  }
-                }
-
-                TextField {
-                  Layout.fillWidth: true
-
-                  text:
-                    root.fullPalette.length > index
-                    ? root.fullPalette[index]
-                    : ""
-
-                  color: Theme.colFg
-
-                  font.family: Theme.fontFamily
-                  font.pixelSize: Theme.fontSizeSmall
-
-                  leftPadding: 6
-                  rightPadding: 6
-
-                  background: Rectangle {
-                    color: "#24283b"
-
-                    radius: Theme.radiusInner
-
-                    border.color:
-                      parent.activeFocus
-                      ? Theme.accent1
-                      : Theme.colMuted
-                  }
-
-                  onTextChanged: {
-                    if (
-                      root.fullPalette.length > index
-                      && root.fullPalette[index] !== text
-                    ) {
-                      const palette =
-                        StateManager.newThemePalette.slice()
-
-                      palette[index] = text
-
-                      StateManager.newThemePalette = palette
-                      root.fullPalette = palette
-                    }
-                  }
-                }
-              }
+              border.color:
+                parent.activeFocus
+                ? Theme.accent1
+                : Theme.colMuted
             }
+
+            onTextEdited: root.themeName = text
           }
 
           Item {

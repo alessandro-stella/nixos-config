@@ -1,7 +1,0 @@
-[general]
-backend = "kmeans"
-colorspace = "lch"
-palette = "dark16"
-
-[templates]
-palette = { template = "palette.json.j2", target = "~/.cache/wallust/colors.json" }

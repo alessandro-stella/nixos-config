@@ -2,8 +2,24 @@
 
 {
   environment.systemPackages = with pkgs; [
-    neovim foot git wget curl gnumake gcc clang unzip glib libnotify 
-    bc psmisc fzf ntfs3g networkmanagerapplet gsettings-desktop-schemas
+    neovim 
+    foot 
+    git 
+    wget 
+    curl 
+    gnumake 
+    gcc 
+    clang 
+    unzip 
+    glib 
+    libnotify 
+    bc 
+    psmisc 
+    fzf 
+    ntfs3g 
+    networkmanagerapplet 
+    gsettings-desktop-schemas
+    uv
   ];
 
   programs.nix-ld.enable = true;

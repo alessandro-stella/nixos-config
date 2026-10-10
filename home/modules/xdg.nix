@@ -13,7 +13,6 @@ in
     "fastfetch".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/fastfetch";
     "swaync".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/swaync";
     "themes".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/themes";
-    "wallust".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/wallust";
     "scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/scripts";
     "foot".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/foot";
     "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/quickshell";

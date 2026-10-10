@@ -22,7 +22,7 @@
           "template": "{{ .UserName }}",
           "trailing_diamond": "█",
           "foreground": "p:color15",
-          "background": "p:color0",
+          "background": "p:color8",
           "type": "session",
           "style": "diamond"
         },
@@ -137,7 +137,7 @@
             "always_enabled": true,
             "cache_duration": "none"
           },
-          "template": "╰─ ❯❯",
+          "template": "╰─ ❯",
           "foreground": "p:color15",
           "type": "text",
           "style": "diamond"
@@ -150,21 +150,21 @@
   "patch_pwsh_bleed": true,
   "final_space": true,
   "palette": {
-    "color0": "#535456",
-    "color1": "#2A2E39",
-    "color2": "#4D2D2E",
-    "color3": "#8D473C",
-    "color4": "#665C64",
-    "color5": "#DD3D23",
-    "color6": "#9F766D",
-    "color7": "#C6B2AE",
-    "color8": "#8B7D79",
-    "color9": "#2A2E39",
-    "color10": "#4D2D2E",
-    "color11": "#8D473C",
-    "color12": "#665C64",
-    "color13": "#DD3D23",
-    "color14": "#9F766D",
-    "color15": "#C6B2AE"
+    "color0": "#08050d",
+    "color1": "#3F2D81",
+    "color2": "#4C3591",
+    "color3": "#5B3CA1",
+    "color4": "#5E48A5",
+    "color5": "#7850C7",
+    "color6": "#965ADD",
+    "color7": "#c1c0c2",
+    "color8": "#5c5567",
+    "color9": "#3F2D81",
+    "color10": "#4C3591",
+    "color11": "#5B3CA1",
+    "color12": "#5E48A5",
+    "color13": "#7850C7",
+    "color14": "#965ADD",
+    "color15": "#c1c0c2"
   }
 }

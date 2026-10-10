@@ -137,7 +137,7 @@
             "always_enabled": true,
             "cache_duration": "none"
           },
-          "template": "╰─ ❯❯",
+          "template": "╰─ ❯",
           "foreground": "p:color15",
           "type": "text",
           "style": "diamond"
@@ -150,21 +150,22 @@
   "patch_pwsh_bleed": true,
   "final_space": true,
   "palette": {
-    "color0": "#3b3b3d",
-    "color1": "#626255",
-    "color2": "#67618F",
-    "color3": "#B06E6B",
-    "color4": "#ACAFCC",
-    "color5": "#FFBC93",
-    "color6": "#D7E6C0",
-    "color7": "#E3EAD7",
-    "color8": "#9FA496",
-    "color9": "#626255",
-    "color10": "#67618F",
-    "color11": "#B06E6B",
-    "color12": "#ACAFCC",
-    "color13": "#FFBC93",
-    "color14": "#D7E6C0",
-    "color15": "#E3EAD7"
+    "color0": "#0d0d1f",
+    "color1": "#685C61",
+    "color2": "#996A67",
+    "color3": "#C99575",
+    "color4": "#636D92",
+    "color5": "#927E80",
+    "color6": "#6B8FB8",
+    "color7": "#c2c2c7",
+    "color8": "#5c5c71",
+    "color9": "#685C61",
+    "color10": "#996A67",
+    "color11": "#C99575",
+    "color12": "#636D92",
+    "color13": "#927E80",
+    "color14": "#6B8FB8",
+    "color15": "#c2c2c7"
   }
 }
+

@@ -33,7 +33,7 @@
     cliphist
     wtype
     wl-clipboard
-    wallust
+    pywal
     quickshell
     lm_sensors
     zenity
