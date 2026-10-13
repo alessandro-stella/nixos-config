@@ -20,7 +20,7 @@ ModalBackdrop {
   property real heightScale: 0.35
 
   property var actions: [
-    { icon: "lock", action: "swaylock -K", text: "Lock" },
+    { icon: "lock", action: "hyprctl dispatch 'hl.dsp.global(\"quickshell:toggleLockscreen\")'", text: "Lock" },
     { icon: "logout", action: "hyprctl dispatch 'hl.dsp.exit()'", text: "Logout" },
     { icon: "suspend", action: "systemctl suspend", text: "Suspend" },
     { icon: "shutdown", action: "systemctl poweroff", text: "Shutdown" },
