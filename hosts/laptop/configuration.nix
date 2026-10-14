@@ -19,6 +19,15 @@
     efi.canTouchEfiVariables = true;
   };
 
+  # Diagnostic
+  boot.kernelParams = [ "i915.enable_psr=0" ];
+
+  boot.kernel.sysctl = {
+    "kernel.softlockup_panic" = 1;
+    "kernel.hardlockup_panic" = 1;
+  };
+
+  # Laptop only packages
   environment.systemPackages = with pkgs; [
     brightnessctl
     powertop
@@ -145,5 +154,7 @@
       }
     });
   '';
+
+
 }
 
