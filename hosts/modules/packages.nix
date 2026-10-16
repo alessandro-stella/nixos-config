@@ -19,7 +19,6 @@
     ntfs3g 
     networkmanagerapplet 
     gsettings-desktop-schemas
-    uv
   ];
 
   programs.nix-ld.enable = true;

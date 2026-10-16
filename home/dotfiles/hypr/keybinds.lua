@@ -42,7 +42,7 @@ hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
 -- Open custom websites as apps
-hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("brave-origin --password-store=basic --app=https://chat.openai.com/"))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("brave-origin --password-store=basic --app=https://claude.ai/"))
 hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("brave-origin --password-store=basic --app=https://gemini.google.com/"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("brave-origin --password-store=basic --app=https://teams.microsoft.com/v2/"))
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("brave-origin --password-store=basic --app=https://web.whatsapp.com/"))

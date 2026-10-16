@@ -116,12 +116,61 @@ let
       fi
     }
   '';
+
   nixosCleanCommand = ''
     nixos-clean() {
       sudo nix-env --profile /nix/var/nix/profiles/system --delete-generations +5 && sudo nix-collect-garbage -d
     }
   '';
 
+  nixosTestCommand = ''
+    nix-test() {
+      if [ $# -eq 0 ]; then
+        gum log --structured --level error "No package specified," example "nix-test cowsay lolcat"
+        return 1
+      fi
+
+      if ! command -v nix >/dev/null 2>&1; then
+        gum log --level error "The nix command is not available on this system"
+        return 2
+      fi
+
+      local packages=()
+      local invalid=()
+      local pkg
+
+      for pkg in "$@"; do
+        if [[ "$pkg" == -* ]]; then
+          gum log --structured --level error "Unsupported option," option "$pkg"
+          return 1
+        fi
+
+        if nix eval --raw "nixpkgs#$pkg.name" >/dev/null 2>&1; then
+          packages+=("nixpkgs#$pkg")
+        else
+          invalid+=("$pkg")
+        fi
+      done
+
+      if [ ''${#invalid[@]} -gt 0 ]; then
+        gum log --structured --level error "Packages not found in nixpkgs," packages "''${invalid[*]}"
+        return 3
+      fi
+
+      gum log --structured --level info "Starting temporary shell," packages "$*"
+
+      nix shell "''${packages[@]}"
+      local exit_code=$?
+
+      if [ $exit_code -ne 0 ]; then
+        gum log --structured --level error "Temporary shell exited with an error," code "$exit_code"
+        return $exit_code
+      fi
+
+      gum log --level info "Temporary shell closed, the packages are no longer available"
+      return 0
+    }
+  '';
 in
 {
   home.packages = [
@@ -151,6 +200,7 @@ in
       ${compileCommand}
       ${nixosSwitchCommand}
       ${nixosCleanCommand}
+      ${nixosTestCommand}
 
       # Oh My Posh
       eval "$(oh-my-posh --init --shell zsh --config ~/.config/oh-my-posh/theme.omp.json)"
