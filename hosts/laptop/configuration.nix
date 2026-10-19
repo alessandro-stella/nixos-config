@@ -130,14 +130,11 @@
     }
   ];
 
-  # Udev rules for fingerprint and lid switch
+  # Udev rules for fingerprint
   services.udev.extraRules = ''
     # Fingerprint reader - make accessible to 'input' group
     SUBSYSTEMS=="usb", KERNEL=="*", ATTRS{type}=="*", TAG="uaccess"
     SUBSYSTEM=="input", KERNEL=="event*", TAG="uaccess"
-    
-    # Ignore broken Lid Switch
-    ACTION=="add|change", SUBSYSTEM=="input", ATTRS{name}=="Lid Switch", ENV{LIBINPUT_IGNORE_DEVICE}="1"
   '';
 
   users.groups.input.members = [ username ];
