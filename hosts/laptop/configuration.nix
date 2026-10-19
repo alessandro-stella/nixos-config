@@ -19,13 +19,8 @@
     efi.canTouchEfiVariables = true;
   };
 
-  # Diagnostic
-  boot.kernelParams = [ "i915.enable_psr=0" ];
-
-  boot.kernel.sysctl = {
-    "kernel.softlockup_panic" = 1;
-    "kernel.hardlockup_panic" = 1;
-  };
+  # Disabling potentially damaged sensor 
+  services.logind.settings.Login.HandleLidSwitch = "ignore";
 
   # Laptop only packages
   environment.systemPackages = with pkgs; [
@@ -135,11 +130,14 @@
     }
   ];
 
-  # Udev rules for fingerprint 
+  # Udev rules for fingerprint and lid switch
   services.udev.extraRules = ''
     # Fingerprint reader - make accessible to 'input' group
     SUBSYSTEMS=="usb", KERNEL=="*", ATTRS{type}=="*", TAG="uaccess"
     SUBSYSTEM=="input", KERNEL=="event*", TAG="uaccess"
+    
+    # Ignore broken Lid Switch
+    ACTION=="add|change", SUBSYSTEM=="input", ATTRS{name}=="Lid Switch", ENV{LIBINPUT_IGNORE_DEVICE}="1"
   '';
 
   users.groups.input.members = [ username ];
@@ -154,7 +152,4 @@
       }
     });
   '';
-
-
 }
-
