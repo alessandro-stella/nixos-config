@@ -9,6 +9,7 @@
     apostrophe
     bruno 
     brave-origin
+    qsynth
 
     # Tool CLI
     btop

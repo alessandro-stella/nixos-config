@@ -11,6 +11,7 @@ import "./cpu"
 import "./temperature"
 import "./audio"
 import "./network"
+import "./workspaces"
 
 PanelWindow {
   id: root
