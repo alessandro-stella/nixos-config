@@ -14,7 +14,11 @@ Scope {
   property string ssidName: ""
   property string ipAddress: "N/A"
   property real wifiStrength: 0
-  property bool isConnecting: false // <-- Aggiunto
+  property bool isConnecting: false
+
+  property var info: ({})
+  property real downloadRate: 0
+  property real uploadRate: 0
 
   property bool isOpen: false
   property bool _isLoaded: false
@@ -22,8 +26,10 @@ Scope {
   function toggle() {
     if (!isOpen) {
       _isLoaded = true
+      isOpen = true
       StateManager.requestOpen(popupScope)
     } else {
+      isOpen = false
       StateManager.requestClose(popupScope)
     }
   }
@@ -66,17 +72,22 @@ Scope {
         NetworkPopupContent {
           id: networkContent
           anchors.fill: parent
+          
           connectionType: popupScope.connectionType
           ssidName: popupScope.ssidName
           ipAddress: popupScope.ipAddress
           wifiStrength: popupScope.wifiStrength
-          isConnecting: popupScope.isConnecting // <-- Passato al contenuto
+          isConnecting: popupScope.isConnecting
+          
+          info: popupScope.info
+          downloadRate: popupScope.downloadRate
+          uploadRate: popupScope.uploadRate
         }
       }
 
       onIsOpenChanged: {
-        if (popupScope.isOpen !== isOpen) {
-          popupScope.isOpen = isOpen
+        if (isOpen === false) {
+          popupScope.isOpen = false
         }
       }
     }

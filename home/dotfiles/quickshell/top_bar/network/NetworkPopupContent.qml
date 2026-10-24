@@ -3,303 +3,431 @@ import QtQuick.Layouts
 import QtQuick.Window
 import Quickshell
 import Quickshell.Io
+import Quickshell.Networking
 import "../../"
+import "NetworkModel.js" as NetworkModel
 
 Item {
-  id: contentRoot
+  id: root
+  implicitWidth: 380
+  implicitHeight: column.implicitHeight
 
-  implicitHeight: mainLayout.implicitHeight
-  implicitWidth: 350
-
-  readonly property string spinnerIcon: ""
-
-  property bool wifiEnabled: true
-  property bool isScanning: false
-  property bool isInitializing: true 
-  property string currentConnectedSsid: ""
-  property string currentConnectedSignal: ""
-
-  property string selectedSsidForPassword: ""
-  property bool showPasswordInput: false
-
-  property string errorMessage: ""
-  property string errorSsid: ""
-
-  property var scanBuffer: ({})
-  property string bufferedConnectedSsid: ""
-  property string bufferedConnectedSignal: ""
-  property var savedSsidsMap: ({})
-  property var savedUuidsMap: ({})
-
-  // Properties from NetworkWidget
-  property string connectionType: "disconnected" 
+  property string connectionType: "disconnected"
   property string ssidName: ""
   property string ipAddress: "N/A"
   property real wifiStrength: 0
   property bool isConnecting: false
-  readonly property bool isCurrentlyConnecting: contentRoot.isConnecting || connectProcess.running
+  property var info: ({})
+  property real downloadRate: 0
+  property real uploadRate: 0
 
-  function resetState() {
-    contentRoot.showPasswordInput = false
-    contentRoot.errorMessage = ""
-    contentRoot.errorSsid = ""
-    contentRoot.selectedSsidForPassword = ""
+  property bool opened: true
+  property string passwordSsid: ""
+  property string passwordText: ""
+  property string identityText: ""
+
+  readonly property int fsTitle: Theme.fontSize                          
+  readonly property int fsBody: Theme.fontSizeSmall                      
+  readonly property int fsCaption: Theme.barFontSizeSmall                
+  readonly property int fsIconHero: Math.round(Theme.fontSize * 1.5)     
+  readonly property int fsIconRow: Theme.fontSize                        
+
+  readonly property int rowPadding: 8
+
+  property string prevIface: ""
+  property real prevRxBytes: 0
+  property real prevTxBytes: 0
+  property real prevSampleTime: 0
+  property var pingSamples: []   
+
+  readonly property bool hasTransferStats: !!info && info.rx_bytes !== undefined
+  readonly property var pingOkSamples: pingSamples.filter(function(v) { return v !== null })
+  readonly property string pingText: {
+    if (pingOkSamples.length === 0) return "--"
+    let sum = 0
+    for (let i = 0; i < pingOkSamples.length; i++) sum += pingOkSamples[i]
+    return Math.round(sum / pingOkSamples.length) + " ms"
+  }
+  readonly property string packetLossText: pingSamples.length === 0
+    ? "--"
+    : Math.round((pingSamples.length - pingOkSamples.length) * 100 / pingSamples.length) + "%"
+
+  function recordPing(next) {
+    if (!next.iface) { pingSamples = []; return }
+    if (next.internet_ping_ms === undefined) return
+    let ms = parseFloat(next.internet_ping_ms)
+    let samples = pingSamples.slice()
+    samples.push(isFinite(ms) ? ms : null)
+    while (samples.length > 10) samples.shift()
+    pingSamples = samples
   }
 
-  // Initial read
-  Component.onCompleted: {
-    resetState()
-    refreshNetworks(false) 
-  }
+  function updateDetails(raw) {
+    let next = NetworkModel.parseKeyValue(raw)
+    info = next
 
-  onVisibleChanged: {
-    if (visible) {
-      contentRoot.isInitializing = true
-      refreshNetworks(false)
-    } else {
-      resetState()
-    }
-  }
+    let state = NetworkModel.throughputState({
+      prevIface: prevIface,
+      prevRxBytes: prevRxBytes,
+      prevTxBytes: prevTxBytes,
+      prevSampleTime: prevSampleTime
+    }, next, Date.now() / 1000)
 
-  ListModel {
-    id: wifiModel
-  }
-
-  function escapeShellArg(arg) {
-    return "'" + arg.replace(/'/g, "'\\''") + "'"
-  }
-
-  function getWifiIcon(signalStr): string {
-    let strength = parseInt(signalStr) || 0
-    strength = Math.max(0, Math.min(100, strength))
-    if (strength === 0) return "󰤯"
-    if (strength <= 25) return "󰤟"
-    if (strength <= 50) return "󰤢"
-    if (strength <= 75) return "󰤥"
-    return "󰤨"
-  }
-
-  Process {
-    id: checkWifiStatus
-    command: ["sh", "-c", "nmcli radio wifi"]
-
-    stdout: SplitParser {
-      onRead: data => {
-        if (data) {
-          contentRoot.wifiEnabled = data.trim() === "enabled"
-        }
-      }
-    }
-  }
-
-  Process {
-    id: getSavedNetworks
-    command: ["nmcli", "-t", "-f", "NAME,UUID,TYPE", "connection", "show"]
-    property string accumulatedOutput: ""
-
-    onRunningChanged: {
-      if (running) {
-        accumulatedOutput = ""
-      } else {
-        let lines = accumulatedOutput.trim().split("\n")
-        let nameMap = {}
-        let uuidMap = {}
-
-        for (let l of lines) {
-          let parts = l.split(":")
-
-          if (parts.length >= 3 && parts[2].trim() === "802-11-wireless") {
-            let cleanName = parts[0].trim()
-            let cleanUuid = parts[1].trim()
-
-            if (cleanName !== "") {
-              nameMap[cleanName] = true
-              uuidMap[cleanName] = cleanUuid
-            }
-          }
-        }
-        contentRoot.savedSsidsMap = nameMap
-        contentRoot.savedUuidsMap = uuidMap
-      }
-    }
-
-    stdout: SplitParser {
-      onRead: data => {
-        if (data) {
-          getSavedNetworks.accumulatedOutput += data + "\n"
-        }
-      }
-    }
+    prevIface = state.prevIface
+    prevRxBytes = state.prevRxBytes
+    prevTxBytes = state.prevTxBytes
+    prevSampleTime = state.prevSampleTime
+    downloadRate = state.downloadRate
+    uploadRate = state.uploadRate
+    recordPing(next)
   }
 
   Process {
-    id: scanAndReadProcess
-    command: ["sh", "-c", "nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
-
-    onRunningChanged: {
-      if (running) {
-        contentRoot.isScanning = true
-        contentRoot.scanBuffer = {}
-        contentRoot.bufferedConnectedSsid = ""
-        contentRoot.bufferedConnectedSignal = ""
-      } else {
-        contentRoot.isScanning = false
-        contentRoot.isInitializing = false 
-
-        contentRoot.currentConnectedSsid = contentRoot.bufferedConnectedSsid
-        contentRoot.currentConnectedSignal = contentRoot.bufferedConnectedSignal
-
-        let foundSsids = contentRoot.scanBuffer
-        let networksArray = []
-
-        for (let ssid in foundSsids) {
-          let isSaved = contentRoot.savedSsidsMap[ssid] === true
-
-          networksArray.push({
-            ssid: ssid,
-            signal: foundSsids[ssid].signal,
-            security: foundSsids[ssid].security,
-            saved: isSaved
-          })
-        }
-
-        networksArray.sort((a, b) => {
-          let sigA = parseInt(a.signal) || 0
-          let sigB = parseInt(b.signal) || 0
-          return sigB - sigA
-        })
-
-        for (let i = wifiModel.count - 1; i >= 0; i--) {
-          let existingSsid = wifiModel.get(i).ssid
-          let exists = networksArray.find(n => n.ssid === existingSsid)
-          if (!exists) {
-            wifiModel.remove(i)
-          }
-        }
-
-        for (let i = 0; i < networksArray.length; i++) {
-          let net = networksArray[i]
-          let existingIndex = -1
-
-          for (let j = 0; j < wifiModel.count; j++) {
-            if (wifiModel.get(j).ssid === net.ssid) {
-              existingIndex = j
-              break
-            }
-          }
-
-          if (existingIndex !== -1) {
-            let currentItem = wifiModel.get(existingIndex)
-
-            if (currentItem.signal !== net.signal)
-              wifiModel.setProperty(existingIndex, "signal", net.signal)
-            if (currentItem.security !== net.security)
-              wifiModel.setProperty(existingIndex, "security", net.security)
-            if (currentItem.saved !== net.saved)
-              wifiModel.setProperty(existingIndex, "saved", net.saved)
-
-            if (existingIndex !== i) {
-              wifiModel.move(existingIndex, i, 1)
-            }
-          } else {
-            wifiModel.insert(i, {
-              "ssid": net.ssid,
-              "signal": net.signal,
-              "security": net.security,
-              "saved": net.saved
-            })
-          }
-        }
-      }
-    }
-
-    stdout: SplitParser {
-      onRead: data => {
-        if (!data || data.trim() === "") return
-
-        let lines = data.trim().split("\n")
-        let currentBuffer = contentRoot.scanBuffer
-
-        for (let line of lines) {
-          if (line.trim() === "") continue
-
-          let firstColon = line.indexOf(":")
-          let lastColon = line.lastIndexOf(":")
-          let secondLastColon = line.lastIndexOf(":", lastColon - 1)
-
-          if (
-            firstColon !== -1 &&
-            lastColon !== -1 &&
-            secondLastColon !== -1 &&
-            firstColon < secondLastColon
-          ) {
-            let inUse = line.substring(0, firstColon) === "*"
-            let ssid = line.substring(firstColon + 1, secondLastColon)
-            let signal = line.substring(secondLastColon + 1, lastColon) + "%"
-            let security = line.substring(lastColon + 1)
-
-            ssid = ssid.replace(/^["']|["']$/g, "").trim()
-
-            if (ssid !== "") {
-              if (inUse) {
-                contentRoot.bufferedConnectedSsid = ssid
-                contentRoot.bufferedConnectedSignal = signal
-              } else {
-                let sigNum = parseInt(signal) || 0
-
-                if (
-                  !currentBuffer[ssid] ||
-                  sigNum > (parseInt(currentBuffer[ssid].signal) || 0)
-                ) {
-                  currentBuffer[ssid] = {
-                    "signal": signal,
-                    "security": security
-                  }
-                }
-              }
-            }
-          }
-        }
-        contentRoot.scanBuffer = currentBuffer
-      }
+    id: detailsProc
+    command: ["bash", Qt.resolvedUrl("network_status.sh").toString().replace("file://", ""), "--verbose"]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: root.updateDetails(text)
     }
   }
 
-  Process {
-    id: toggleWifiProcess
-    command: ["sh", "-c", ""]
-    
-    onExited: {
-      if (contentRoot.wifiEnabled) {
-        turnOnDelay.restart()
-      }
-    }
-  }
-
-  // Wait for NIC to turn on
   Timer {
-    id: turnOnDelay
-    interval: 3500
-    onTriggered: {
-      refreshNetworks(true)
+    id: detailsPoll
+    interval: 1500
+    repeat: true
+    running: root.opened
+    triggeredOnStart: true
+    onTriggered: if (!detailsProc.running) detailsProc.running = true
+  }
+
+  readonly property bool networkManagerAvailable: Networking.backend === NetworkBackendType.NetworkManager
+  readonly property var networkDevices: Networking.devices ? Networking.devices.values : []
+  
+  readonly property var wifiDevice: {
+    let devs = networkDevices
+    for (let i = 0; i < devs.length; i++) {
+      if (devs[i] && devs[i].type === DeviceType.Wifi) return devs[i]
+    }
+    return null
+  }
+
+  onWifiDeviceChanged: {
+    if (wifiDevice) wifiDevice.scannerEnabled = opened
+  }
+  
+  onOpenedChanged: {
+    if (wifiDevice) wifiDevice.scannerEnabled = opened
+    if (opened) syncWifiNetworks()
+  }
+
+  Component.onCompleted: {
+    if (wifiDevice) wifiDevice.scannerEnabled = true
+    syncWifiNetworks()
+  }
+
+  readonly property var wifiNetworkObjects: wifiDevice && wifiDevice.networks ? wifiDevice.networks.values : []
+  property var wifiNetworks: []
+
+  function wifiIconFor(strength) {
+    let icons = ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"]
+    let index = Math.max(0, Math.min(4, Math.ceil(strength / 20) - 1))
+    return icons[index]
+  }
+
+  function wifiRow(network) {
+    if (!network) return null
+    return {
+      connected: !!network.connected,
+      known: everConnected(network),
+      ssid: network.name || "",
+      signal: Math.round((network.signalStrength || 0) * 100),
+      security: network.security,
+      rawNetwork: network
+    }
+  }
+
+  function sortWifiRows(rows) {
+    let nets = Array.isArray(rows) ? rows.slice() : []
+    nets.sort(function(a, b) {
+      if (a.connected !== b.connected) return a.connected ? -1 : 1
+      if (a.known !== b.known) return a.known ? -1 : 1
+      return b.signal - a.signal
+    })
+    return nets
+  }
+
+  function formatBytes(bytes) {
+    let n = Number(bytes)
+    if (!isFinite(n) || n < 0) n = 0
+    if (n < 1024) return Math.round(n) + " B"
+    if (n < 1024 * 1024) return (n / 1024).toFixed(1) + " KB"
+    if (n < 1024 * 1024 * 1024) return (n / (1024 * 1024)).toFixed(1) + " MB"
+    return (n / (1024 * 1024 * 1024)).toFixed(2) + " GB"
+  }
+
+  function formatRate(bytesPerSec) {
+    return formatBytes(bytesPerSec) + "/s"
+  }
+
+  function cancelPasswordPrompt() {
+    passwordSsid = ""
+    passwordText = ""
+    identityText = ""
+  }
+
+  function openPasswordPrompt(ssid) {
+    if (passwordSsid !== ssid) {
+      passwordText = ""
+      identityText = ""
+    }
+    passwordSsid = ssid
+  }
+
+  function requiresCredentials(security) {
+    return security !== WifiSecurityType.Open && security !== WifiSecurityType.Owe
+  }
+
+  property var successfulUuids: ({})
+  property bool timestampsLoaded: false
+
+  function everConnected(network) {
+    if (!network || !network.known) return false
+    if (!timestampsLoaded || network.connected) return true
+    let profiles = network.nmSettings
+    if (!profiles) return true
+    for (let i = 0; i < profiles.length; i++) {
+      if (profiles[i] && successfulUuids[profiles[i].uuid]) return true
+    }
+    return false
+  }
+
+  function parseTimestamps(raw) {
+    let map = ({})
+    let any = false
+    let lines = String(raw || "").split("\n")
+    for (let i = 0; i < lines.length; i++) {
+      let line = lines[i].trim()
+      let idx = line.lastIndexOf(":")
+      if (idx <= 0) continue
+      any = true
+      if (/^[1-9][0-9]*$/.test(line.substring(idx + 1))) map[line.substring(0, idx)] = true
+    }
+    if (!any) return
+    successfulUuids = map
+    timestampsLoaded = true
+    syncWifiNetworks()
+  }
+
+  function refreshTimestamps() {
+    if (!timestampProc.running) timestampProc.running = true
+  }
+
+  Process {
+    id: timestampProc
+    command: ["nmcli", "-t", "-f", "UUID,TIMESTAMP", "connection", "show"]
+    stdout: StdioCollector {
+      waitForEnd: true
+      onStreamFinished: root.parseTimestamps(text)
+    }
+  }
+
+  Timer {
+    interval: 5000
+    repeat: true
+    running: root.opened
+    triggeredOnStart: true
+    onTriggered: root.refreshTimestamps()
+  }
+
+  property string wifiSignature: ""
+
+  function rowsSignature(rows) {
+    let withSignal = passwordSsid === ""
+    return rows.map(function(r) {
+      return r.ssid + "|" + (r.connected ? 1 : 0) + (r.known ? 1 : 0) + "|" + r.security + "|"
+        + (withSignal ? Math.ceil(r.signal / 20) : "")
+    }).join("\n")
+  }
+
+  function syncWifiNetworks() {
+    let nets = []
+    let networks = wifiNetworkObjects || []
+    for (let i = 0; i < networks.length; i++) {
+      let network = networks[i]
+      if (!network) continue
+      checkActionCompletion(network)
+      let row = wifiRow(network)
+      if (row) nets.push(row)
+    }
+    let sorted = sortWifiRows(nets)
+    let signature = rowsSignature(sorted)
+    if (signature === wifiSignature) return
+    wifiSignature = signature
+    wifiNetworks = sorted
+  }
+
+  onWifiNetworkObjectsChanged: syncWifiNetworks()
+
+  Timer {
+    interval: 2000
+    running: root.opened
+    repeat: true
+    onTriggered: syncWifiNetworks()
+  }
+
+  property string actionKind: ""     // "connect" | "disconnect" | ""
+  property string actionSsid: ""
+  property string failureSsid: ""
+  property string failureReason: ""
+  readonly property bool busy: actionKind !== ""
+
+  readonly property var connectionFailReasons: ({
+    NoSecrets: ConnectionFailReason.NoSecrets,
+    WifiAuthTimeout: ConnectionFailReason.WifiAuthTimeout,
+    WifiNetworkLost: ConnectionFailReason.WifiNetworkLost,
+    WifiClientDisconnected: ConnectionFailReason.WifiClientDisconnected,
+    WifiClientFailed: ConnectionFailReason.WifiClientFailed
+  })
+
+  readonly property string enterpriseConnectScript:
+    "u=$(uuidgen); IFS= read -r pw;" +
+    " nmcli connection add type wifi con-name \"$1\" ssid \"$1\" connection.uuid \"$u\"" +
+    " wifi-sec.key-mgmt wpa-eap 802-1x.eap peap 802-1x.phase2-auth mschapv2" +
+    " 802-1x.identity \"$2\" 802-1x.auth-timeout 8 >/dev/null" +
+    " && printf 'set 802-1x.password %s\\nsave\\nquit\\n' \"$pw\" | nmcli connection edit uuid \"$u\" >/dev/null" +
+    " && nmcli connection up uuid \"$u\"" +
+    " || { nmcli connection delete uuid \"$u\" >/dev/null 2>&1; false; }"
+
+  function networkForSsid(ssid) {
+    let networks = wifiNetworkObjects || []
+    for (let i = 0; i < networks.length; i++) {
+      if (networks[i] && networks[i].name === ssid) return networks[i]
+    }
+    return null
+  }
+
+  function runNetworkAction(kind, network, callback) {
+    if (actionKind !== "" || !network) return
+    actionSsid = network.name || ""
+    actionKind = kind
+    failureSsid = ""
+    failureReason = ""
+    callback(network)
+    actionTimeout.restart()
+  }
+
+  function clearNetworkAction() {
+    actionTimeout.stop()
+    if (actionKind === "connect") {
+      cancelPasswordPrompt()
+      refreshTimestamps()
+    }
+    failureSsid = ""
+    failureReason = ""
+    actionSsid = ""
+    actionKind = ""
+    Qt.callLater(syncWifiNetworks)
+  }
+
+  function failNetworkAction(network, reason) {
+    if (!network || actionKind === "" || actionSsid !== (network.name || "")) return
+    actionTimeout.stop()
+    failureSsid = actionSsid
+    failureReason = networkFailureReason(reason, requiresCredentials(network.security))
+    actionSsid = ""
+    actionKind = ""
+    Qt.callLater(syncWifiNetworks)
+  }
+
+  function networkFailureReason(reason, needsCredentials) {
+    let r = connectionFailReasons
+    if (needsCredentials && reason === r.NoSecrets) return "Passphrase required"
+    if (needsCredentials && reason === r.WifiAuthTimeout) return "Wrong password"
+    if (reason === r.WifiNetworkLost) return "Network lost"
+    if (reason === r.WifiClientDisconnected) return "Disconnected"
+    if (reason === r.WifiClientFailed) return "Connection failed"
+    return "Failed to connect"
+  }
+
+  function shouldRepromptPassphrase(reason, needsCredentials) {
+    if (!needsCredentials) return false
+    return reason === connectionFailReasons.NoSecrets || reason === connectionFailReasons.WifiAuthTimeout
+  }
+
+  function checkActionCompletion(network) {
+    if (!network || actionKind === "" || actionSsid !== (network.name || "")) return
+    if (actionKind === "connect" && network.connected) clearNetworkAction()
+    else if (actionKind === "disconnect" && !network.connected && !network.stateChanging) clearNetworkAction()
+  }
+
+  function handleConnectionFailed(network, reason) {
+    let ours = actionKind === "connect" && actionSsid === (network.name || "")
+    failNetworkAction(network, reason)
+    if (ours && shouldRepromptPassphrase(reason, requiresCredentials(network.security)))
+      openPasswordPrompt(network.name || "")
+  }
+
+  function connectDirectly(ssid) {
+    runNetworkAction("connect", networkForSsid(ssid), function(network) { network.connect() })
+  }
+
+  function connectWithPassphrase(ssid, passphrase) {
+    runNetworkAction("connect", networkForSsid(ssid), function(network) { network.connectWithPsk(passphrase) })
+  }
+
+  function connectEnterprise(ssid, identity, passphrase) {
+    runNetworkAction("connect", networkForSsid(ssid), function(network) {
+      enterpriseConnect.secret = passphrase
+      enterpriseConnect.command = ["bash", "-c", enterpriseConnectScript, "nmcli-eap", ssid, identity]
+      enterpriseConnect.running = true
+    })
+  }
+
+  function disconnectRow(ssid) {
+    runNetworkAction("disconnect", networkForSsid(ssid), function(network) { network.disconnect() })
+  }
+
+  Instantiator {
+    model: root.wifiNetworkObjects
+    delegate: Connections {
+      required property var modelData
+      target: modelData
+      function onConnectionFailed(reason) { root.handleConnectionFailed(modelData, reason) }
+      function onConnectedChanged() { root.checkActionCompletion(modelData) }
+      function onKnownChanged() { root.checkActionCompletion(modelData) }
+      function onStateChangingChanged() { root.checkActionCompletion(modelData) }
     }
   }
 
   Process {
-    id: connectProcess
-    command: ["sh", "-c", ""]
+    id: enterpriseConnect
+    property string secret: ""
+    stdinEnabled: true
+    onStarted: {
+      write(secret + "\n")
+      secret = ""
+    }
+    onExited: function(exitCode, exitStatus) {
+      if (exitCode === 0 || root.actionKind !== "connect") return
+      actionTimeout.stop()
+      root.failureSsid = root.actionSsid
+      root.failureReason = "Connection failed"
+      root.actionSsid = ""
+      root.actionKind = ""
+    }
+  }
 
-    onExited: (exitCode) => {
-      getSavedNetworks.running = true
-      refreshNetworks(false)
-
-      if (exitCode !== 0) {
-        contentRoot.errorMessage = "Connection failed. Wrong password?"
-        contentRoot.errorSsid = contentRoot.selectedSsidForPassword
-        contentRoot.showPasswordInput = true
-      } else {
-        resetState()
-      }
+  Timer {
+    id: actionTimeout
+    interval: 30000
+    repeat: false
+    onTriggered: {
+      if (!root.actionKind) return
+      root.failureSsid = root.actionSsid
+      root.failureReason = root.actionKind === "connect" ? "Timed out connecting" : "Timed out disconnecting"
+      root.actionSsid = ""
+      root.actionKind = ""
+      root.syncWifiNetworks()
     }
   }
 
@@ -308,755 +436,426 @@ Item {
     command: ["nm-connection-editor"]
   }
 
-  // Refresh network data
-  function refreshNetworks(forceRescan = false) {
-    checkWifiStatus.running = true
-    getSavedNetworks.running = true
+  Column {
+    id: column
+    width: parent.width
+    spacing: 12
 
-    if (!scanAndReadProcess.running) {
-      if (forceRescan) {
-        scanAndReadProcess.command = ["sh", "-c", "nmcli device wifi rescan 2>/dev/null; sleep 0.5; nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
-      } else {
-        scanAndReadProcess.command = ["sh", "-c", "nmcli -t -f IN-USE,SSID,SIGNAL,SECURITY dev wifi"]
-      }
-      scanAndReadProcess.running = true
-    }
-  }
-
-  ColumnLayout {
-    id: mainLayout
-    anchors.fill: parent
-    spacing: 14
-
-    // Header
-    RowLayout {
-      Layout.fillWidth: true
-
-      Text {
-        text: "Network Settings"
-        font.bold: true
-        font.pixelSize: Theme.fontSize
-        color: Theme.barColor
-        Layout.fillWidth: true
-      }
-
-      Rectangle {
-        width: 28
-        height: 28
-        radius: 6
-        color: settingsMouse.containsMouse
-               ? Theme.widgetLightBackground
-               : "transparent"
-
-        Text {
-          anchors.centerIn: parent
-          text: ""
-          font.pixelSize: Theme.fontSizeSmall
-          color: Theme.barColor
-        }
-
-        MouseArea {
-          id: settingsMouse
-          anchors.fill: parent
-          hoverEnabled: true
-          cursorShape: Qt.PointingHandCursor
-
-          onClicked: {
-            openEditorProcess.command = ["nm-connection-editor"]
-            openEditorProcess.running = true
-            StateManager.closeActivePopup()
-          }
-        }
-      }
-    }
-
-    // Toggle Wi-Fi
-    Rectangle {
-      Layout.fillWidth: true
+    // --- HERO SECTION ---
+    Item {
+      width: parent.width
       height: 48
-      radius: 8
-      color: Theme.widgetLightBackground
 
       RowLayout {
         anchors.fill: parent
-        anchors.leftMargin: 12
-        anchors.rightMargin: 12
+        spacing: 12
 
         Text {
-          text: "Wi-Fi"
-          font.bold: true
-          font.pixelSize: Theme.fontSizeSmall
+          text: root.connectionType === "ethernet" ? "󰈀" : wifiIconFor(root.wifiStrength)
+          font.family: Theme.fontFamily
+          font.pixelSize: root.fsIconHero
           color: Theme.barColor
-          Layout.fillWidth: true
         }
 
-        Rectangle {
-          width: 40
-          height: 22
-          radius: 11
-          color: contentRoot.wifiEnabled
-                 ? Theme.colGreen
-                 : Theme.barDarkColor
+        ColumnLayout {
+          Layout.fillWidth: true
+          spacing: 2
 
-          Rectangle {
-            width: 18
-            height: 18
-            radius: 9
-            y: 2
-            x: contentRoot.wifiEnabled ? 20 : 2
-            color: "white"
-
-            Behavior on x {
-              NumberAnimation {
-                duration: 150
-              }
-            }
+          Text {
+            text: root.connectionType === "ethernet" ? "LAN" : (root.ssidName !== "" ? root.ssidName : (root.info.ip ? (root.info.ssid || "Connected") : "Disconnected"))
+            font.family: Theme.fontFamily
+            font.pixelSize: root.fsTitle
+            font.bold: true
+            color: Theme.barColor
+            elide: Text.ElideRight
+            Layout.fillWidth: true
           }
 
+          Text {
+            text: !Networking.wifiEnabled ? "WIFI OFF" : (isConnecting ? "CONNECTING..." : ((root.connectionType !== "disconnected" || root.info.ip) ? "CONNECTED" : "NO CONNECTION"))
+            font.family: Theme.fontFamily
+            font.pixelSize: root.fsCaption
+            font.bold: true
+            color: Theme.colMuted
+          } 
+        }
+
+        // Wifi Power Toggle Switch
+        Rectangle {
+          width: 36; height: 20; radius: 10
+          color: Networking.wifiEnabled ? Theme.colGreen : Theme.widgetLightBackground
+          Rectangle {
+            width: 16; height: 16; radius: 8; y: 2
+            x: Networking.wifiEnabled ? 18 : 2
+            color: "white"
+            Behavior on x { NumberAnimation { duration: 150 } }
+          }
           MouseArea {
             anchors.fill: parent
             cursorShape: Qt.PointingHandCursor
-
-            onClicked: {
-              let willBeEnabled = !contentRoot.wifiEnabled
-              contentRoot.wifiEnabled = willBeEnabled
-              let newState = willBeEnabled ? "on" : "off"
-
-              let cmd = "nmcli radio wifi " + newState
-              toggleWifiProcess.command = ["sh", "-c", cmd]
-              toggleWifiProcess.running = true
-
-              resetState()
-
-              if (!willBeEnabled) {
-                wifiModel.clear()
-                contentRoot.scanBuffer = {}
-                contentRoot.bufferedConnectedSsid = ""
-                contentRoot.bufferedConnectedSignal = ""
-                contentRoot.savedSsidsMap = {}
-                contentRoot.savedUuidsMap = {}
-                contentRoot.isScanning = false
-                contentRoot.isInitializing = false
-              } else {
-                wifiModel.clear()
-                contentRoot.isInitializing = true
-              }
-            }
+            onClicked: Networking.wifiEnabled = !Networking.wifiEnabled
           }
         }
       }
     }
 
-    //  Initial loader 
-    Item {
-      Layout.fillWidth: true
-      Layout.preferredHeight: {
-        let h = contentRoot.isInitializing && contentRoot.wifiEnabled ? 120 : 0
-        return h
-      }
-      visible: contentRoot.isInitializing && contentRoot.wifiEnabled
+    // --- STATS GRID ---
+    GridLayout {
+      width: parent.width
+      columns: 4
+      columnSpacing: 12
+      rowSpacing: 6
+
+      Text { text: "Ping"; color: Theme.colMuted; font.family: Theme.fontFamily; font.pixelSize: root.fsBody }
+      Text { text: root.pingText; color: Theme.barColor; font.family: Theme.fontFamily; font.pixelSize: root.fsBody; font.bold: true; horizontalAlignment: Text.AlignRight; Layout.fillWidth: true }
+      Text { text: "Packet Loss"; color: Theme.colMuted; font.family: Theme.fontFamily; font.pixelSize: root.fsBody }
+      Text { text: root.packetLossText; color: Theme.barColor; font.family: Theme.fontFamily; font.pixelSize: root.fsBody; font.bold: true; horizontalAlignment: Text.AlignRight; Layout.fillWidth: true }
+
+      Text { text: "Receiving"; color: Theme.colMuted; font.family: Theme.fontFamily; font.pixelSize: root.fsBody }
+      Text { text: root.hasTransferStats ? formatRate(root.downloadRate) : "--"; color: Theme.barColor; font.family: Theme.fontFamily; font.pixelSize: root.fsBody; font.bold: true; horizontalAlignment: Text.AlignRight; Layout.fillWidth: true }
+      Text { text: "Sending"; color: Theme.colMuted; font.family: Theme.fontFamily; font.pixelSize: root.fsBody }
+      Text { text: root.hasTransferStats ? formatRate(root.uploadRate) : "--"; color: Theme.barColor; font.family: Theme.fontFamily; font.pixelSize: root.fsBody; font.bold: true; horizontalAlignment: Text.AlignRight; Layout.fillWidth: true }
+
+      Text { text: "Downloaded"; color: Theme.colMuted; font.family: Theme.fontFamily; font.pixelSize: root.fsBody }
+      Text { text: root.hasTransferStats ? formatBytes(root.info.rx_bytes) : "--"; color: Theme.barColor; font.family: Theme.fontFamily; font.pixelSize: root.fsBody; font.bold: true; horizontalAlignment: Text.AlignRight; Layout.fillWidth: true }
+      Text { text: "Uploaded"; color: Theme.colMuted; font.family: Theme.fontFamily; font.pixelSize: root.fsBody }
+      Text { text: root.hasTransferStats ? formatBytes(root.info.tx_bytes) : "--"; color: Theme.barColor; font.family: Theme.fontFamily; font.pixelSize: root.fsBody; font.bold: true; horizontalAlignment: Text.AlignRight; Layout.fillWidth: true }
+
+      Text { text: "IP"; color: Theme.colMuted; font.family: Theme.fontFamily; font.pixelSize: root.fsBody }
+      Text { text: root.ipAddress; color: Theme.barColor; font.family: Theme.fontFamily; font.pixelSize: root.fsBody; font.bold: true; horizontalAlignment: Text.AlignRight; Layout.fillWidth: true }
+      Text { text: "Gateway"; color: Theme.colMuted; font.family: Theme.fontFamily; font.pixelSize: root.fsBody }
+      Text { text: root.info && root.info.gateway ? root.info.gateway : "N/A"; color: Theme.barColor; font.family: Theme.fontFamily; font.pixelSize: root.fsBody; font.bold: true; horizontalAlignment: Text.AlignRight; Layout.fillWidth: true }
+    }
+
+    // --- DIVIDER ---
+    Rectangle { width: parent.width; height: 1; color: Theme.widgetLightBackground; visible: Networking.wifiEnabled}
+
+    // --- WIFI NETWORKS LIST ---
+    ListView {
+      id: wifiListView
+      width: parent.width
+      height: Math.min(contentHeight, 280)
+      model: root.wifiNetworks
       clip: true
+      spacing: 4
+      visible: Networking.wifiEnabled
 
-      ColumnLayout {
-        anchors.centerIn: parent
-        spacing: 10
-
+      section.property: "known"
+      section.criteria: ViewSection.FullString
+      section.delegate: Item {
+        width: wifiListView.width
+        height: 24
         Text {
-          id: globalSpinner
-          text: contentRoot.spinnerIcon
-          font.pixelSize: 24
-          color: Theme.barDarkColor
-          Layout.alignment: Qt.AlignHCenter
-          transformOrigin: Item.Center
-
-          RotationAnimation on rotation {
-            running: contentRoot.isInitializing && contentRoot.wifiEnabled
-            from: 0
-            to: 360
-            duration: 1000
-            loops: Animation.Infinite
-          }
-        }
-
-        Text {
-          text: "Loading network settings..."
-          font.pixelSize: Theme.fontSizeSmall
-          color: Theme.barDarkColor
-          Layout.alignment: Qt.AlignHCenter
-        }
-      }
-    }
-
-    // Main content 
-    ColumnLayout {
-      id: mainContentCol
-      Layout.fillWidth: true
-      spacing: 14
-      
-      visible: {
-        if (contentRoot.isInitializing && contentRoot.wifiEnabled) return false
-        return contentRoot.wifiEnabled || contentRoot.connectionType === "ethernet"
-      }
-
-      // Password section
-      ColumnLayout {
-        id: passwordSection
-        Layout.fillWidth: true
-        spacing: 6
-        visible: contentRoot.showPasswordInput
-
-        Text {
-          text: "Password Required"
-          font.pixelSize: Theme.fontSizeSmall
+          anchors.bottom: parent.bottom
+          anchors.bottomMargin: root.rowPadding / 2
+          text: section === "true" ? "KNOWN NETWORKS" : "OTHER NETWORKS"
+          font.family: Theme.fontFamily
+          font.pixelSize: root.fsCaption
           font.bold: true
-          color: Theme.colYellow
+          color: Theme.colMuted
+        }
+      }
+
+      delegate: Rectangle {
+        id: row
+        required property var modelData
+
+        readonly property string ssid: modelData.ssid
+        readonly property bool isConnected: modelData.connected
+        readonly property bool isKnown: modelData.known
+        readonly property bool needsCredentials: root.requiresCredentials(modelData.security)
+        readonly property bool isEnterprise: modelData.security === WifiSecurityType.Wpa2Eap
+          || modelData.security === WifiSecurityType.WpaEap
+
+        readonly property bool isBusy: root.actionKind !== "" && root.actionSsid === ssid
+        readonly property bool isFailed: root.failureReason !== "" && root.failureSsid === ssid
+        readonly property bool isPasswordOpen: root.passwordSsid !== "" && root.passwordSsid === ssid
+
+        readonly property string statusText: {
+          if (isPasswordOpen) return ""
+          if (isBusy && root.actionKind === "connect") return "Connecting\u2026"
+          if (isBusy && root.actionKind === "disconnect") return "Disconnecting\u2026"
+          if (isFailed) return root.failureReason
+          if (isConnected) return "Connected"
+          return ""
+        }
+        readonly property color statusColor: isFailed ? Theme.colRed : (isBusy ? Theme.barColor : Theme.colMuted)
+
+        function submitCredentials() {
+          if (root.busy || root.passwordText.length === 0) return
+          if (!isEnterprise) return root.connectWithPassphrase(ssid, root.passwordText)
+          if (root.identityText.length > 0) root.connectEnterprise(ssid, root.identityText, root.passwordText)
         }
 
-        Rectangle {
-          Layout.fillWidth: true
-          height: contentRoot.errorMessage ? 90 : 75
-          radius: 8
-          color: Theme.widgetLightBackground
+        width: wifiListView.width
+        implicitHeight: root.rowPadding + rowContent.implicitHeight + root.rowPadding
+          + (isPasswordOpen ? root.rowPadding + passwordPanel.implicitHeight : 0)
+        height: implicitHeight
+        radius: Theme.radiusInner
+        color: delegateHover.hovered || isConnected || isPasswordOpen ? Theme.widgetLightBackground : "transparent"
 
-          Behavior on height {
-            NumberAnimation {
-              duration: 150
-            }
+        HoverHandler { id: delegateHover }
+
+        RowLayout {
+          id: rowContent
+          anchors.top: parent.top
+          anchors.left: parent.left
+          anchors.right: parent.right
+          anchors.margins: root.rowPadding
+          spacing: 10
+
+          Text {
+            text: wifiIconFor(modelData.signal)
+            font.family: Theme.fontFamily
+            font.pixelSize: root.fsIconRow
+            color: row.isFailed ? Theme.colRed : Theme.barColor
           }
 
           ColumnLayout {
-            anchors.fill: parent
-            anchors.margins: 10
-            spacing: 6
-
-            RowLayout {
-              Layout.fillWidth: true
-
-              Text {
-                text: contentRoot.selectedSsidForPassword
-                font.pixelSize: Theme.barFontSizeSmall
-                font.bold: true
-                color: Theme.barColor
-                elide: Text.ElideRight
-                Layout.fillWidth: true
-              }
-
-              // Close password section
-              Rectangle {
-                width: 18
-                height: 18
-                radius: 4
-                color: closePassMouse.containsMouse
-                       ? Theme.barDarkColor
-                       : "transparent"
-
-                Text {
-                  anchors.centerIn: parent
-                  text: "✕"
-                  font.pixelSize: 10
-                  color: Theme.barColor
-                }
-
-                MouseArea {
-                  id: closePassMouse
-                  anchors.fill: parent
-                  hoverEnabled: true
-                  cursorShape: Qt.PointingHandCursor
-
-                  onClicked: {
-                    resetState()
-                  }
-                }
-              }
-            }
-
-            Text {
-              text: contentRoot.errorMessage
-              font.pixelSize: 9
-              color: Theme.colRed
-              visible: contentRoot.errorMessage !== ""
-                       && contentRoot.errorSsid === contentRoot.selectedSsidForPassword
-            }
-
-            RowLayout {
-              Layout.fillWidth: true
-              spacing: 8
-
-              Rectangle {
-                Layout.fillWidth: true
-                height: 30
-                radius: 6
-                color: Theme.widgetDarkBackground
-                border.color: contentRoot.errorMessage
-                              ? Theme.colRed
-                              : Theme.barDarkColor
-                border.width: 1
-
-                TextInput {
-                  id: passwordInput
-                  anchors.fill: parent
-                  anchors.leftMargin: 8
-                  anchors.rightMargin: 35
-                  verticalAlignment: TextInput.AlignVCenter
-                  font.pixelSize: Theme.fontSizeSmall
-                  color: Theme.barColor
-                  echoMode: passwordInput.showPassword
-                            ? TextInput.Normal
-                            : TextInput.Password
-
-                  clip: true
-                  property bool showPassword: false
-
-                  Timer {
-                    interval: 50
-                    running: contentRoot.showPasswordInput
-                    repeat: true
-
-                    onTriggered: {
-                      if (
-                        contentRoot.showPasswordInput &&
-                        !passwordInput.activeFocus
-                      ) {
-                        passwordInput.forceActiveFocus()
-                      }
-                    }
-                  }
-
-                  onAccepted: {
-                    contentRoot.errorMessage = ""
-
-                    let targetSsid = contentRoot.selectedSsidForPassword
-                    if (targetSsid !== "") {
-                      let updatedMap = contentRoot.savedSsidsMap
-                      updatedMap[targetSsid] = true
-                      contentRoot.savedSsidsMap = updatedMap
-                    }
-
-                    let cmd =
-                      "nmcli dev wifi connect " +
-                      contentRoot.escapeShellArg(targetSsid) +
-                      " password " +
-                      contentRoot.escapeShellArg(text)
-
-                    contentRoot.showPasswordInput = false
-                    connectProcess.command = ["sh", "-c", cmd]
-                    connectProcess.running = true
-
-                    text = ""
-                  }
-                }
-
-                Text {
-                  anchors.right: parent.right
-                  anchors.rightMargin: 8
-                  anchors.verticalCenter: parent.verticalCenter
-                  text: passwordInput.showPassword ? "󰛐" : "󰈈"
-                  font.pixelSize: 14
-                  color: Theme.barColor
-                  z: 2
-                  visible: true 
-
-                  MouseArea {
-                    id: eyeMouse
-                    anchors.fill: parent
-                    anchors.margins: -4
-                    hoverEnabled: true
-                    cursorShape: Qt.PointingHandCursor
-                    z: 3
-
-                    onClicked: {
-                      passwordInput.showPassword = !passwordInput.showPassword
-                    }
-                  }
-                }
-
-                MouseArea {
-                  anchors.fill: parent
-                  acceptedButtons: Qt.NoButton
-
-                  onClicked: {
-                    passwordInput.forceActiveFocus()
-                  }
-                }
-              }
-
-              Rectangle {
-                width: connectButtonText.width + 16
-                height: 30
-                radius: 6
-                color: connectMouse.containsMouse
-                       ? Theme.colGreen
-                       : Theme.barDarkColor
-
-                Text {
-                  id: connectButtonText
-                  anchors.centerIn: parent
-                  text: "Connect"
-                  font.pixelSize: Theme.barFontSizeSmall
-                  font.bold: true
-                  color: Theme.widgetDarkBackground
-                }
-
-                MouseArea {
-                  id: connectMouse
-                  anchors.fill: parent
-                  hoverEnabled: true
-                  cursorShape: Qt.PointingHandCursor
-
-                  onClicked: {
-                    contentRoot.errorMessage = ""
-
-                    let targetSsid = contentRoot.selectedSsidForPassword
-                    if (targetSsid !== "") {
-                      let updatedMap = contentRoot.savedSsidsMap
-                      updatedMap[targetSsid] = true
-                      contentRoot.savedSsidsMap = updatedMap
-                    }
-
-                    let cmd =
-                      "nmcli dev wifi connect " +
-                      contentRoot.escapeShellArg(targetSsid) +
-                      " password " +
-                      contentRoot.escapeShellArg(passwordInput.text)
-
-                    contentRoot.showPasswordInput = false
-                    connectProcess.command = ["sh", "-c", cmd]
-                    connectProcess.running = true
-
-                    passwordInput.text = ""
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-
-      // Current network, loading or connected 
-      ColumnLayout {
-        id: currentNetworkSection
-        Layout.fillWidth: true
-        spacing: 6
-
-        visible: (
-                   contentRoot.connectionType === "ethernet" ||
-                   (contentRoot.connectionType === "wifi" && contentRoot.ssidName !== "") ||
-                   isCurrentlyConnecting
-                 ) && !contentRoot.showPasswordInput
-
-        Text {
-          text: isCurrentlyConnecting ? "Connecting..." : "Current network"
-          font.pixelSize: Theme.fontSizeSmall
-          font.bold: true
-          color: Theme.barDarkColor
-        }
-
-        Rectangle {
-          Layout.fillWidth: true
-          height: 50
-          radius: 8
-          color: Theme.widgetLightBackground
-
-          RowLayout {
-            anchors.fill: parent
-            anchors.leftMargin: 12
-            anchors.rightMargin: 12
-            spacing: 12
-
-            Text {
-              text: contentRoot.connectionType === "ethernet" ? "󰌗" : getWifiIcon(contentRoot.wifiStrength)
-              font.pixelSize: 18
-              color: isCurrentlyConnecting ? Theme.colYellow : Theme.colGreen
-            }
-
-            ColumnLayout {
-              Layout.fillWidth: true
-              spacing: 2
-
-              Text {
-                text: contentRoot.connectionType === "ethernet" ? "LAN" : (contentRoot.ssidName !== "" ? contentRoot.ssidName : contentRoot.selectedSsidForPassword)
-                font.bold: true
-                font.pixelSize: Theme.fontSizeSmall
-                color: Theme.barColor
-                elide: Text.ElideRight
-                Layout.fillWidth: true
-              }
-
-              Text {
-                text: isCurrentlyConnecting ? "Establishing connection..." : contentRoot.ipAddress
-                font.pixelSize: Theme.barFontSizeSmall
-                color: isCurrentlyConnecting ? Theme.colYellow : Theme.barColor
-              }
-            }
-
-            Text {
-              id: spinnerIcon
-              visible: isCurrentlyConnecting
-              text: contentRoot.spinnerIcon 
-              font.pixelSize: 24
-              color: Theme.colYellow
-              Layout.alignment: Qt.AlignVCenter
-              horizontalAlignment: Text.AlignHCenter
-              verticalAlignment: Text.AlignVCenter
-              transformOrigin: Item.Center
-
-              RotationAnimation on rotation {
-                running: spinnerIcon.visible
-                from: 0
-                to: 360
-                duration: 1000
-                loops: Animation.Infinite
-              }
-            }
-          }
-        }
-      }
-
-      // Available networks
-      ColumnLayout {
-        id: availableNetworksSection
-        Layout.fillWidth: true
-        spacing: 6
-        visible: contentRoot.wifiEnabled && contentRoot.connectionType !== "ethernet" 
-
-        // Horizontal divider
-        Rectangle {
-          Layout.fillWidth: true
-          Layout.topMargin: 4
-          Layout.bottomMargin: 4
-          height: 1
-          color: Theme.barDarkColor
-          opacity: 0.25
-        }
-
-        RowLayout {
-          Layout.fillWidth: true
-          Layout.minimumHeight: 24
-
-          Text {
-            text: "Available networks"
-            font.pixelSize: Theme.fontSizeSmall
-            font.bold: true
-            color: Theme.barDarkColor
             Layout.fillWidth: true
-            Layout.alignment: Qt.AlignVCenter
-          }
-
-          RowLayout {
-            spacing: 6
-            visible: contentRoot.isScanning
-            Layout.alignment: Qt.AlignVCenter
+            spacing: 0
 
             Text {
-              text: "Scanning..."
-              font.pixelSize: 10
-              color: Theme.barDarkColor
+              text: modelData.ssid || "Hidden Network"
+              font.family: Theme.fontFamily
+              font.pixelSize: root.fsBody
+              font.bold: modelData.connected
+              color: Theme.barColor
+              elide: Text.ElideRight
+              Layout.fillWidth: true
             }
 
             Text {
-              id: scanSpinner
-              text: contentRoot.spinnerIcon
-              font.pixelSize: 14
-              color: Theme.barColor
-              Layout.preferredWidth: 14
-              Layout.preferredHeight: 14
-              horizontalAlignment: Text.AlignHCenter
-              verticalAlignment: Text.AlignVCenter
-              transformOrigin: Item.Center
-
-              RotationAnimation on rotation {
-                running: contentRoot.isScanning
-                from: 0
-                to: 360
-                duration: 1000
-                loops: Animation.Infinite
-              }
+              visible: row.statusText !== ""
+              text: row.statusText
+              font.family: Theme.fontFamily
+              font.pixelSize: root.fsCaption
+              color: row.statusColor
+              elide: Text.ElideRight
+              Layout.fillWidth: true
             }
           }
 
           Rectangle {
-            width: 24
-            height: 24
-            radius: 4
-            visible: !contentRoot.isScanning
-            color: refreshMouse.containsMouse
-                   ? Theme.widgetLightBackground
-                   : "transparent"
-            Layout.alignment: Qt.AlignVCenter
+            id: editConnection
+            width: 24; height: 24; radius: 4
+            color: editMouse.containsMouse ? Theme.colMuted : "transparent"
+            visible: modelData.known
+
+            readonly property string profileUuid: {
+              let net = modelData.rawNetwork
+              let profiles = net ? net.nmSettings : null
+              return (profiles && profiles.length > 0 && profiles[0]) ? profiles[0].uuid : ""
+            }
 
             Text {
               anchors.centerIn: parent
-              text: "󰑐"
-              font.pixelSize: Theme.fontSize
+              text: ""
+              font.family: Theme.fontFamily
+              font.pixelSize: root.fsBody
               color: Theme.barColor
             }
 
             MouseArea {
-              id: refreshMouse
+              id: editMouse
               anchors.fill: parent
               hoverEnabled: true
               cursorShape: Qt.PointingHandCursor
-
               onClicked: {
-                refreshNetworks(true) 
+                mouse.accepted = true
+                openEditorProcess.command = ["nm-connection-editor", "--edit", editConnection.profileUuid]
+                openEditorProcess.running = true
               }
             }
           }
+
+          Text {
+            text: ""
+            font.family: Theme.fontFamily
+            font.pixelSize: root.fsCaption
+            color: Theme.colMuted
+            visible: row.needsCredentials && !modelData.known
+          }
         }
 
-        Text {
-          text: "No networks found"
-          font.pixelSize: Theme.fontSizeSmall
-          color: Theme.barDarkColor
-
-          visible: wifiModel.count === 0 &&
-                   !contentRoot.isScanning
-
-          Layout.topMargin: 8
-          Layout.bottomMargin: 8
-          Layout.alignment: Qt.AlignHCenter
-        }
-
-        ListView {
-          id: wifiListView
-
-          Layout.fillWidth: true
-          Layout.preferredHeight: wifiModel.count > 0 ? Math.min(contentHeight, Screen.height * 0.45) : 0
-
-          model: wifiModel
-          clip: true
-          spacing: 6
-
-          delegate: Rectangle {
-            required property string ssid
-            required property string signal
-            required property string security
-            required property bool saved
-
-            width: wifiListView.width
-            height: 44
-            radius: 8
-
-            HoverHandler {
-              id: delegateHover
+        MouseArea {
+          id: rowMouse
+          anchors.top: parent.top
+          anchors.left: parent.left
+          anchors.right: parent.right
+          height: rowContent.implicitHeight + 2 * root.rowPadding
+          cursorShape: Qt.PointingHandCursor
+          enabled: !root.busy && !editMouse.containsMouse
+          onClicked: {
+            if (row.isConnected) {
+              root.disconnectRow(row.ssid)
+              return
             }
+            if (row.needsCredentials && !row.isKnown) {
+              root.openPasswordPrompt(row.ssid)
+              return
+            }
+            root.connectDirectly(row.ssid)
+          }
+        }
 
-            color: delegateHover.hovered
-                   ? Theme.widgetLightBackground
-                   : "transparent"
+        Timer {
+          id: failureTimer
+          interval: 2000
+          running: row.isFailed && row.isPasswordOpen
+          onTriggered: {
+            root.failureSsid = ""
+            root.failureReason = ""
+            pwInput.forceActiveFocus()
+          }
+        }
 
-            RowLayout {
+        Timer {
+          interval: 50
+          repeat: true
+          running: row.isPasswordOpen && !row.isBusy && !row.isFailed
+            && !pwInput.activeFocus && !idInput.activeFocus
+          onTriggered: {
+            if (row.isEnterprise && idInput.text.length === 0) idInput.forceActiveFocus()
+            else pwInput.forceActiveFocus()
+          }
+        }
+
+        ColumnLayout {
+          id: passwordPanel
+          visible: row.isPasswordOpen
+          anchors.top: rowContent.bottom
+          anchors.left: parent.left
+          anchors.right: parent.right
+          anchors.margins: root.rowPadding
+          spacing: root.rowPadding
+
+          // Identity (only for 802.1X networks)
+          Rectangle {
+            id: idBox
+            visible: row.isEnterprise && !row.isBusy && !row.isFailed
+            Layout.fillWidth: true
+            implicitHeight: idInput.implicitHeight + 2 * root.rowPadding
+            radius: Theme.radiusInner
+            color: Theme.widgetDarkBackground
+            border.width: 1
+            border.color: idInput.activeFocus ? Theme.accent1 : Theme.barDarkColor
+
+            TextInput {
+              id: idInput
               anchors.fill: parent
-              anchors.leftMargin: 12
-              anchors.rightMargin: 12
-              spacing: 10
+              anchors.margins: root.rowPadding
+              verticalAlignment: TextInput.AlignVCenter
+              clip: true
+              color: Theme.barColor
+              font.family: Theme.fontFamily
+              font.pixelSize: root.fsBody
+              enabled: !row.isBusy
+              text: row.isPasswordOpen ? root.identityText : ""
 
-              Item {
-                Layout.fillWidth: true
-                Layout.fillHeight: true
+              onAccepted: pwInput.forceActiveFocus()
+              onTextChanged: if (row.isPasswordOpen && text !== root.identityText) root.identityText = text
+              Keys.onEscapePressed: root.cancelPasswordPrompt()
 
-                RowLayout {
-                  anchors.fill: parent
-                  spacing: 10
+              Text {
+                visible: idInput.text.length === 0
+                anchors.verticalCenter: parent.verticalCenter
+                text: "Identity"
+                color: Theme.colMuted
+                font.family: Theme.fontFamily
+                font.pixelSize: root.fsBody
+              }
+            }
+          }
 
-                  Text {
-                    text: getWifiIcon(signal)
-                    font.pixelSize: 16
-                    color: Theme.barColor
-                  }
+          // Password + confirm button
+          RowLayout {
+            visible: !row.isBusy && !row.isFailed
+            Layout.fillWidth: true
+            spacing: root.rowPadding
 
-                  Text {
-                    text: ssid
-                    font.pixelSize: Theme.fontSizeSmall
-                    font.bold: true
-                    color: Theme.barColor
-                    Layout.fillWidth: true
-                    elide: Text.ElideRight
-                  }
-                }
+            Rectangle {
+              id: pwBox
+              Layout.fillWidth: true
+              implicitHeight: pwInput.implicitHeight + 2 * root.rowPadding
+              radius: Theme.radiusInner
+              color: Theme.widgetDarkBackground
+              border.width: 1
+              border.color: pwInput.activeFocus ? Theme.accent1 : Theme.barDarkColor
 
-                MouseArea {
-                  id: connectArea
-                  anchors.fill: parent
-                  hoverEnabled: true
-                  cursorShape: Qt.PointingHandCursor
+              TextInput {
+                id: pwInput
+                anchors.fill: parent
+                anchors.margins: root.rowPadding
+                verticalAlignment: TextInput.AlignVCenter
+                clip: true
+                echoMode: TextInput.Password
+                color: Theme.barColor
+                font.family: Theme.fontFamily
+                font.pixelSize: root.fsBody
+                enabled: !row.isBusy
+                text: row.isPasswordOpen ? root.passwordText : ""
 
-                  onClicked: {
-                    contentRoot.errorMessage = ""
-                    contentRoot.errorSsid = ""
-                    contentRoot.selectedSsidForPassword = ssid
-
-                    let safeSsid = contentRoot.escapeShellArg(ssid)
-
-                    if (security !== "" && security !== "--") {
-                      if (saved) {
-                        contentRoot.showPasswordInput = false
-                        let cmd = "nmcli dev wifi connect " + safeSsid
-                        connectProcess.command = ["sh", "-c", cmd]
-                        connectProcess.running = true
-                      } else {
-                        contentRoot.showPasswordInput = true
-                      }
-                    } else {
-                      contentRoot.showPasswordInput = false
-                      let cmd = "nmcli dev wifi connect " + safeSsid
-                        connectProcess.command = ["sh", "-c", cmd]
-                        connectProcess.running = true
-                    }
-                  }
-                }
-              } 
-
-              Rectangle {
-                width: 24
-                height: 24
-                radius: 4
-
-                color: editMouse.containsMouse
-                       ? Theme.barDarkColor
-                       : "transparent"
-
-                visible: delegateHover.hovered && saved
+                onAccepted: row.submitCredentials()
+                onTextChanged: if (row.isPasswordOpen && text !== root.passwordText) root.passwordText = text
+                Keys.onEscapePressed: root.cancelPasswordPrompt()
 
                 Text {
-                  anchors.centerIn: parent
-                  text: ""
-                  font.pixelSize: Theme.barFontSize
-                  color: editMouse.containsMouse
-                       ? Theme.widgetLightBackground
-                       : Theme.barColor
-                }
-
-                MouseArea {
-                  id: editMouse
-                  anchors.fill: parent
-                  hoverEnabled: true
-                  cursorShape: Qt.PointingHandCursor
-
-                  onClicked: mouse => {
-                    mouse.accepted = true
-                    let uuid = contentRoot.savedUuidsMap[ssid] || ""
-                    let cmd = ""
-
-                    if (uuid !== "") {
-                      cmd = "nm-connection-editor --edit " + contentRoot.escapeShellArg(uuid)
-                    } else {
-                      cmd = "nm-connection-editor"
-                    }
-
-                    openEditorProcess.command = ["sh", "-c", cmd]
-                    openEditorProcess.running = true
-                    StateManager.closeActivePopup()
-                  }
+                  visible: pwInput.text.length === 0
+                  anchors.verticalCenter: parent.verticalCenter
+                  text: "Passphrase"
+                  color: Theme.colMuted
+                  font.family: Theme.fontFamily
+                  font.pixelSize: root.fsBody
                 }
               }
-            
+            }
+
+            Rectangle {
+              id: connectBtn
+              readonly property bool ready: pwInput.text.length > 0
+                && (!row.isEnterprise || idInput.text.length > 0)
+              Layout.preferredWidth: pwBox.implicitHeight
+              Layout.preferredHeight: pwBox.implicitHeight
+              radius: Theme.radiusInner
+              color: ready && connectMouse.containsMouse ? Theme.colGreen : Theme.barDarkColor
+              opacity: ready ? 1 : 0.4
+
               Text {
-                text: ""
-                font.pixelSize: Theme.barFontSize
-                color: Theme.barDarkColor
-                visible: security !== "" && security !== "--"
-              }            
+                anchors.centerIn: parent
+                text: "󰄬"
+                font.family: Theme.fontFamily
+                font.pixelSize: root.fsBody
+                color: connectBtn.ready && connectMouse.containsMouse ? Theme.widgetDarkBackground : Theme.barColor
+              }
+
+              MouseArea {
+                id: connectMouse
+                anchors.fill: parent
+                hoverEnabled: true
+                enabled: connectBtn.ready
+                cursorShape: Qt.PointingHandCursor
+                onClicked: row.submitCredentials()
+              }
+            }
+          }
+
+          // Status
+          Rectangle {
+            visible: row.isBusy || row.isFailed
+            Layout.fillWidth: true
+            implicitHeight: pwBox.implicitHeight
+            radius: Theme.radiusInner
+            color: Theme.widgetDarkBackground
+            border.width: 1
+            border.color: row.isFailed ? Theme.colRed : Theme.barDarkColor
+
+            Text {
+              anchors.centerIn: parent
+              text: row.isFailed ? "Wrong password" : "Connecting\u2026"
+              font.family: Theme.fontFamily
+              font.pixelSize: root.fsBody
+              color: row.isFailed ? Theme.colRed : Theme.barColor
             }
           }
         }
