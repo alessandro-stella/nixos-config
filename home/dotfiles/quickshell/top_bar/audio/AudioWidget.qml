@@ -55,18 +55,44 @@ Item {
 
   readonly property color activeColor: Theme.barColor
 
+  readonly property bool sinkReady: root.defaultSink !== null
+                                    && root.defaultSink.ready
+                                    && root.defaultSink.audio !== null
+
   property real lastKnownVolume: volumePercent
   property bool isMutedLastKnown: isMuted
+  property bool popupArmed: false
+
+  onSinkReadyChanged: rearm()
+  onDefaultSinkChanged: rearm()
+
+  function rearm() {
+    popupArmed = false;
+    armTimer.restart();
+  }
+
+  Timer {
+    id: armTimer
+    interval: 600
+    repeat: false
+    onTriggered: {
+      root.lastKnownVolume = root.volumePercent;
+      root.isMutedLastKnown = root.isMuted;
+      root.popupArmed = root.sinkReady;
+    }
+  }
+
+  Component.onCompleted: rearm()
 
   onVolumePercentChanged: {
-    if (Math.abs(volumePercent - lastKnownVolume) > 0.1) {
+    if (popupArmed && Math.abs(volumePercent - lastKnownVolume) > 0.1) {
       showVolumePopup();
     }
     lastKnownVolume = volumePercent;
   }
 
   onIsMutedChanged: {
-    if (isMuted !== isMutedLastKnown) {
+    if (popupArmed && isMuted !== isMutedLastKnown) {
       showVolumePopup();
     }
     isMutedLastKnown = isMuted;

@@ -26,7 +26,10 @@ in
   };
 
   # Hyprland
-  programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    withUWSM = true;
+  };
 
   # SDDM
   services.displayManager = {
@@ -35,7 +38,7 @@ in
       wayland.enable = true;
       theme = "pixie-better";
     };
-    defaultSession = "hyprland";
+    defaultSession = "hyprland-uwsm";
   };
 
   # SDMM wallpaper
