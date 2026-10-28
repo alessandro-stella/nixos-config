@@ -98,10 +98,12 @@ RowLayout {
       Layout.preferredWidth: height
       radius: 6
       antialiasing: true
+
       color: {
         if (isHovered) return Theme.barWorkspaceHover
         return "transparent"
       }
+
       Behavior on color {
         ColorAnimation { duration: 150; easing.type: Easing.InOutQuad }
       }

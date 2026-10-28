@@ -34,6 +34,9 @@ PanelWindow {
   color: "transparent"
 
   readonly property color background: Theme.barBackground
+  readonly property int horizontalPadding: Theme.outerSpacing + 1
+  readonly property int smallInnerSpacing: 10
+  readonly property int bigInnerSpacing: 16
   
   // Main bar container
   Rectangle {
@@ -53,10 +56,13 @@ PanelWindow {
           anchors.bottom: parent.bottom
           anchors.left: parent.left
 
+          anchors.leftMargin: root.horizontalPadding
+          spacing: root.smallInnerSpacing
+
           // Left widgets
+
           LogoWidget {
             Layout.fillHeight: true
-            Layout.preferredWidth: Theme.barHeight 
             distroLogo: ""
           }
 
@@ -79,11 +85,11 @@ PanelWindow {
           anchors.top: parent.top
           anchors.bottom: parent.bottom
           anchors.right: parent.right
-          anchors.rightMargin: 10
-
-          spacing: 16
+          anchors.rightMargin: root.horizontalPadding 
+          spacing: root.bigInnerSpacing
 
           // Right widgets
+          
           NotificationWidget {
             parentWindow: root
           }
