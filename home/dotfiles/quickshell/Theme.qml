@@ -15,16 +15,15 @@ QtObject {
   readonly property color colBg: Accents.colBg
   readonly property color colFg: Accents.colFg
   readonly property color colMuted: Accents.colMuted
+  readonly property color backdropColor: Qt.rgba(0, 0, 0, 0.65) 
 
-  readonly property color colCyan: "#0db9d7"
-  readonly property color colPurple: "#ad8ee6"
   readonly property color colRed: "#f7768e"
+  readonly property color colRedStrong: "#e92d4d"
   readonly property color colYellow: "#e0af68"
   readonly property color colBlue: "#7aa2f7"
   readonly property color colGreen: "#a6e3a1"
   readonly property color widgetDarkBackground: Accents.widgetDarkBackground
   readonly property color widgetLightBackground: Accents.widgetLightBackground
-  readonly property color colRedStrong: "#e92d4d"
 
   readonly property string fontFamily: "JetBrainsMono Nerd Font Propo"
   readonly property int fontSize: 16

@@ -109,7 +109,7 @@ Scope {
 
     Rectangle {
       anchors.fill: parent
-      color: Qt.rgba(0, 0, 0, 0.35)
+      color: Theme.backdropColor 
       opacity: root.isVisible ? 1.0 : 0.0
 
       Behavior on opacity {

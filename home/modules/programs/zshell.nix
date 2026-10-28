@@ -159,7 +159,7 @@ let
 
       gum log --structured --level info "Starting temporary shell," packages "$*"
 
-      nix shell "''${packages[@]}"
+      NIXPKGS_ALLOW_UNFREE=1 NIXPKGS_ALLOW_INSECURE=1 nix shell --impure "''${packages[@]}"
       local exit_code=$?
 
       if [ $exit_code -ne 0 ]; then

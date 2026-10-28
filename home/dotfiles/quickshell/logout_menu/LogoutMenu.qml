@@ -3,6 +3,7 @@ import Quickshell.Io
 import Quickshell.Widgets
 import QtQuick
 import QtQuick.Controls
+import QtQuick.Effects
 import QtQuick.Layouts
 import QtQuick.Controls.impl
 import "../"
@@ -31,6 +32,21 @@ ModalBackdrop {
     anchors.fill: parent
     focus: true
 
+    Keys.onEscapePressed: {
+      StateManager.closeAllWidgets()
+    }
+
+    MultiEffect {
+      source: mainContainer
+      anchors.fill: mainContainer
+      shadowEnabled: true
+      shadowColor: Theme.accent1
+      shadowBlur: 1.0
+      shadowVerticalOffset: 0
+      shadowHorizontalOffset: 0
+      opacity: 0.25
+    }
+    
     Rectangle {
       id: mainContainer
 
@@ -133,12 +149,15 @@ ModalBackdrop {
                 width: parent.width
 
                 IconImage {
+                  id: icon
+                  property real sizeRatio: 0.5
+
                   Layout.alignment: Qt.AlignHCenter
+                  Layout.preferredWidth: parent.width * icon.sizeRatio
+                  Layout.preferredHeight: parent.width * icon.sizeRatio
 
                   source: "./icons/" + modelData.icon + ".svg"
-
-                  width: 64
-                  height: 64
+                  sourceSize: Qt.size(Math.round(parent.width * icon.sizeRatio), Math.round(parent.width * icon.sizeRatio))
 
                   color: bgRect.currentFg
 
