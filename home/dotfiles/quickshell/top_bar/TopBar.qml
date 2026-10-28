@@ -98,6 +98,11 @@ PanelWindow {
             parentWindow: root
           }
 
+          CpuWidget {
+            parentWindow: root
+          }
+
+
           NetworkWidget {
             parentWindow: root
           }
@@ -108,11 +113,7 @@ PanelWindow {
 
           BatteryWidget {
             parentWindow: root
-          }
-          
-          CpuWidget {
-            parentWindow: root
-          }
+          }          
         }
       } 
     }

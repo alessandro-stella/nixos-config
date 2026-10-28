@@ -179,15 +179,14 @@ PanelWindow {
               biometricState = "no_match"
               if (StateManager.isLocked) {
                 fprintProcess.running = false
-                fprintProcess.running = true
+                passwordErrorTimer.start()
               }
             }
           }
         }
 
         onExited: (code, status) => {
-          if (StateManager.isLocked && hasBiometricSensor && !fprintProcess.running && biometricState !== "matched") {
-            biometricState = "waiting"
+          if (StateManager.isLocked && hasBiometricSensor && biometricState === "waiting") {
             fprintProcess.running = true
           }
         }
@@ -217,7 +216,10 @@ PanelWindow {
           if (StateManager.isLocked) {
             pwdBuffer = ""
             passwordState = "idle"
-            if (hasBiometricSensor) biometricState = "waiting"
+            if (hasBiometricSensor) {
+              biometricState = "waiting"
+              if (!fprintProcess.running) fprintProcess.running = true
+            }
             if (pamPassword.active) pamPassword.abort()
           }
         }
@@ -435,7 +437,7 @@ PanelWindow {
             visible: passwordState === "verifying" || passwordState === "error" || passwordState === "success" || biometricState === "no_match"
             text: {
               if (passwordState === "success") return "Success"
-              if (passwordState === "verifying") return "Verifying..."
+              if (passwordState === "verifying") return "Verifying"
               if (passwordState === "error" || biometricState === "no_match") return "Try again"
               return ""
             }
