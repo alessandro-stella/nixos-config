@@ -96,14 +96,29 @@ in
   };
 
   # Font
-  fonts.packages = with pkgs; [ font-awesome nerd-fonts.jetbrains-mono ];
+  fonts.packages = with pkgs; [
+    font-awesome
+    nerd-fonts.jetbrains-mono
+    inter
+    noto-fonts
+  ];
+  
   fonts.fontconfig = {
     enable = true;
-    defaultFonts.monospace = [ "JetBrainsMono Nerd Font" ];
     antialias = true;
     hinting = { enable = true; style = "slight"; };
-    subpixel.rgba = "none";
+    subpixel = {
+      rgba = "rgb";
+      lcdfilter = "default";
+    };
+    defaultFonts = {
+      monospace = [ "JetBrainsMono Nerd Font" ];
+      sansSerif = [ "Inter" "Noto Sans" ];
+      serif = [ "Noto Serif" ];
+    };
   };
+
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
 
   # Nautilus indicization
   programs.dconf.enable = true;
