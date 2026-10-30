@@ -6,10 +6,10 @@
     evince
     loupe
     pavucontrol
-    apostrophe
     bruno 
     brave-origin
     qsynth
+    marktext
 
     # Tool CLI
     btop
