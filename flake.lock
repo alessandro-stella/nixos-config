@@ -1,5 +1,25 @@
 {
   "nodes": {
+    "artcraft": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793442980,
+        "narHash": "sha256-a0NTvMEJHAX4u1EVe778aR2diTvlDUJBYSO3jJwLxvY=",
+        "owner": "ipeglin",
+        "repo": "artcraft-nix",
+        "rev": "c0d4b9b38cca39b8677540103308795989df5949",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ipeglin",
+        "repo": "artcraft-nix",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -58,6 +78,7 @@
     },
     "root": {
       "inputs": {
+        "artcraft": "artcraft",
         "home-manager": "home-manager",
         "minegrub-world-sel-theme": "minegrub-world-sel-theme",
         "nixpkgs": "nixpkgs"

@@ -33,6 +33,10 @@ let
         return 1
       fi
 
+      if git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+        git add -A . >/dev/null 2>&1
+      fi
+
       local flake_name=""
 
       if [ -z "$flake_name" ]; then
@@ -86,9 +90,9 @@ let
         rm -f "$outfile"
         return 0
       else
-        read -t 0.1 -n 10000 key 2>/dev/null || true
-
         local exit_code=$?
+        read -t 0.1 -n 10000 key 2>/dev/null || true
+        
         echo ""
         gum log --structured --level error "Build failed," cmd "sudo nixos-rebuild switch --flake .#$flake_name --impure"
 
