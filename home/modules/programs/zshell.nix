@@ -37,11 +37,7 @@ let
         git add -A . >/dev/null 2>&1
       fi
 
-      local flake_name=""
-
-      if [ -z "$flake_name" ]; then
-        flake_name="$NIXOS_DEVICE_TYPE"
-      fi
+      local flake_name="$NIXOS_DEVICE_TYPE"
 
       if [ -z "$flake_name" ]; then
         local available_configs
@@ -59,18 +55,6 @@ let
         return 1
       fi
 
-      gum log --level info "Updating package count..."
-      
-      local sys_json=$(nix eval --json --impure ".#nixosConfigurations.$flake_name.config.environment.systemPackages" --apply 'pkgs: map (p: { name = p.pname or p.name or "unknown"; }) pkgs' 2>/dev/null || echo "[]")
-      local home_json=$(nix eval --json --impure ".#nixosConfigurations.$flake_name.config.home-manager.users.$USER.home.packages" --apply 'pkgs: map (p: { name = p.pname or p.name or "unknown"; }) pkgs' 2>/dev/null || echo "[]")
-
-      local total_packages=$(jq -r -s 'add | unique_by(.name) | map(select(.name != "unknown")) | length' <(echo "$sys_json") <(echo "$home_json") 2>/dev/null || echo 0)
-      
-      echo $total_packages > ~/.local/share/nix-installed-packages
-      gum log --level info "Found $total_packages unique installed packages"
-
-      echo ""
-
       gum log --level info "Preparing rebuild..."
 
       if ! sudo -n true 2>/dev/null; then
@@ -79,20 +63,30 @@ let
         fi
       fi
 
-      local outfile=$(mktemp)
+      local outfile
+      outfile=$(mktemp)
 
       if gum spin --spinner dot --title "Building NixOS ($flake_name)..." -- \
         bash -c "set -o pipefail; sudo nixos-rebuild switch --flake '.#$flake_name' --impure 2>&1 | tee '$outfile'"; then
 
         read -t 0.1 -n 10000 key 2>/dev/null || true
 
+        local hm total_packages
+        hm=$(nix-store -q --references "/etc/profiles/per-user/$USER" 2>/dev/null | grep home-manager-path)
+        total_packages=$(nix-store -q --references /run/current-system/sw $hm 2>/dev/null | xargs nix-store -q --deriver 2>/dev/null | sort -u | wc -l)
+
+        mkdir -p ~/.local/share
+        echo "$total_packages" > ~/.local/share/nix-installed-packages
+        gum log --level info "Found $total_packages unique installed packages"
+
+        echo ""
         gum log --level info "✓ Build completed successfully!"
         rm -f "$outfile"
         return 0
       else
         local exit_code=$?
         read -t 0.1 -n 10000 key 2>/dev/null || true
-        
+
         echo ""
         gum log --structured --level error "Build failed," cmd "sudo nixos-rebuild switch --flake .#$flake_name --impure"
 
