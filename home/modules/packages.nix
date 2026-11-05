@@ -19,12 +19,11 @@
     tree
     ripgrep
     nodejs
-    (pkgs.python3.withPackages (ppkgs: [
-      ppkgs.openrgb-python
-    ]))
     tree-sitter
     wakatime-cli
     oh-my-posh
+    pandoc
+    texliveFull
 
     # Graphical suite
     hyprland

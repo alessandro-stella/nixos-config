@@ -169,9 +169,85 @@ let
       return 0
     }
   '';
-in
-{
-  home.packages = [
+
+  md2pdfCommand = ''
+    md2pdf() {
+      local margin="2cm" fontsize="11pt" font="" out="" toc=0 open=0
+      local opt OPTIND=1
+
+      _md2pdf_usage() {
+        printf '%s\n' \
+          "Usage: md2pdf [options] file.md" \
+          "" \
+          "Options:" \
+          "  -m MARGIN    Page margin (default: 2cm)" \
+          "  -s SIZE      Font size (default: 11pt)" \
+          "  -f FONT      Main font (e.g. \"DejaVu Serif\")" \
+          "  -o FILE      Output PDF (default: <input>.pdf)" \
+          "  -t           Add table of contents" \
+          "  -O           Open the PDF after conversion" \
+          "  -h           Show this help"
+      }
+
+      while getopts "m:s:f:o:tOh" opt; do
+        case $opt in
+          m) margin="$OPTARG" ;;
+          s) fontsize="$OPTARG" ;;
+          f) font="$OPTARG" ;;
+          o) out="$OPTARG" ;;
+          t) toc=1 ;;
+          O) open=1 ;;
+          h) _md2pdf_usage; return 0 ;;
+          *)
+            _md2pdf_usage
+            return 1
+            ;;
+        esac
+      done
+      shift $((OPTIND - 1))
+
+      local src="$1"
+
+      if [ -z "$src" ]; then
+        gum log --structured --level error "No markdown file specified," example "md2pdf notes.md"
+        return 1
+      fi
+
+      if [ ! -f "$src" ]; then
+        gum log --structured --level error "File not found," path "$src"
+        return 1
+      fi
+
+      [ -z "$out" ] && out="''${src%.*}.pdf"
+
+      local args=(-V "geometry:margin=$margin" -V "fontsize=$fontsize")
+      [ -n "$font" ] && args+=(-V "mainfont=$font")
+      [ "$toc" -eq 1 ] && args+=(--toc)
+
+      gum log --structured --level info "Converting," from "$src" to "$out"
+
+      if nix shell nixpkgs#pandoc nixpkgs#texliveSmall -c \
+        pandoc "$src" -o "$out" --pdf-engine=xelatex "''${args[@]}"; then
+        gum log --structured --level info "PDF created," path "$out"
+
+        if [ "$open" -eq 1 ]; then
+          if command -v xdg-open >/dev/null 2>&1; then
+            ( xdg-open "$out" >/dev/null 2>&1 & )
+          elif command -v open >/dev/null 2>&1; then
+            open "$out"
+          else
+            gum log --structured --level warn "No PDF opener found," path "$out"
+          fi
+        fi
+      else
+        gum log --structured --level error "Conversion failed," file "$src"
+        return 1
+      fi
+    } 
+  '';
+  in
+  {
+    home.packages = [
     customGum
   ];
 
@@ -199,6 +275,7 @@ in
       ${nixosSwitchCommand}
       ${nixosCleanCommand}
       ${nixosTestCommand}
+      ${md2pdfCommand}
 
       # Oh My Posh
       eval "$(oh-my-posh --init --shell zsh --config ~/.config/oh-my-posh/theme.omp.json)"
