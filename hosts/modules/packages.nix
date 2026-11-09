@@ -17,6 +17,7 @@
     psmisc 
     fzf 
     ntfs3g 
+    python3
     networkmanagerapplet 
     gsettings-desktop-schemas
   ];
