@@ -42,7 +42,7 @@ QtObject {
   readonly property color accent2: Accents.accent2
 
   // Top bar properties
-  readonly property color barBackground: Qt.rgba(colBg.r, colBg.g, colBg.b, 0.5)
+  readonly property color barBackground: Qt.rgba(colBg.r, colBg.g, colBg.b, 0.6)
   readonly property color barColor: colFg
   readonly property color barDarkColor: mix(colBg, colFg, 0.8)
   readonly property color barMutedColor: mix(colBg, colFg, 0.6)
