@@ -8,7 +8,7 @@
   boot.supportedFilesystems = [ "ntfs-3g" ];
   boot.blacklistedKernelModules = [ "ntfs3" ];
   services.udisks2.enable = true;
-  services.gvfs.enable = true; 
+  services.gvfs.enable = true;
 
   # Language and timezone
   time.timeZone = "Europe/Rome";
@@ -30,7 +30,11 @@
   users.users.${username} = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "networkmanager" "wireshark" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+      "wireshark"
+    ];
   };
 
   programs.zsh = {
@@ -49,12 +53,18 @@
   };
 
   # Nix cleanup
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-generations +5";
+  programs.nh = {
+    enable = true;
+    clean = {
+      enable = true;
+      dates = "daily";
+      extraArgs = "--keep 5";
+    };
   };
 
   # Additional setup for flakes
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
 }
