@@ -63,6 +63,7 @@ reboot
 
 <br>
 
-## Custom build command
+## Custom commands
 Instead of using the very verbose ```sudo nixos-rebuild switch --flake .#<HOST> --impure``` to rebuild the system, there's a very useful custom command: ```nixos-apply```.
 This greatly improves the usability of the system, as it both shortens the actual command to write and eliminates the verbosity of NixOS errors by only keeping the useful parts.
+There's also the `nixos-clean` command, useful to manually clean the store from all the useless data kept by nix.
