@@ -9,7 +9,6 @@
     bruno 
     brave-origin
     qsynth
-    marktext
 
     # Tool CLI
     btop
@@ -37,5 +36,8 @@
     quickshell
     lm_sensors
     zenity
+
+    # Custom installations
+    (pkgs.callPackage ./programs/marktext.nix {})
   ];
 }
