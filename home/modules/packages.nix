@@ -6,7 +6,7 @@
     evince
     loupe
     pavucontrol
-    bruno 
+    bruno
     brave-origin
     qsynth
 
@@ -38,6 +38,6 @@
     zenity
 
     # Custom installations
-    (pkgs.callPackage ./programs/marktext.nix {})
+    (pkgs.callPackage ./programs/marktext.nix { })
   ];
 }

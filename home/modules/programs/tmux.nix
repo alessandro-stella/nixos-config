@@ -6,13 +6,13 @@
 
     # Prefix: Ctrl+x
     shortcut = "x";
-    
+
     baseIndex = 1;
     escapeTime = 0;
     secureSocket = false;
     mouse = true;
     historyLimit = 50000;
-    
+
     plugins = with pkgs; [
       {
         plugin = tmuxPlugins.minimal-tmux-status;
@@ -30,7 +30,7 @@
         '';
       }
     ];
-    
+
     extraConfig = ''
       # Terminal settings for foot 
       set -g default-terminal "tmux-256color"
@@ -47,16 +47,16 @@
 
       # Toggle status bar
       bind-key b set-option status
-     
+
       # Prevent automatic window renaming
       set-option -g allow-rename off
-     
+
       # Create a new window in the current directory
       bind c new-window -c "#{pane_current_path}" \; set status on
-     
+
       # Close the current window
       bind x kill-window
-     
+
       # Kill the entire session
       bind X confirm-before -p "Kill entire session? (y/n)" kill-session
 

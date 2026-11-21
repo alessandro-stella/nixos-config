@@ -22,7 +22,10 @@ in
   services.xserver = {
     enable = true;
     excludePackages = [ pkgs.xterm ];
-    xkb = { layout = "it"; variant = ""; };
+    xkb = {
+      layout = "it";
+      variant = "";
+    };
   };
 
   # Hyprland
@@ -49,13 +52,16 @@ in
       PathChanged = "/home/${username}/.config/themes/current_theme/name";
     };
   };
-  
+
   systemd.services.sddm-wallpaper-seed = {
     description = "Seed SDDM wallpaper and accents, clear cache if changed";
     wantedBy = [ "graphical.target" ];
-    before = [ "display-manager.service" ]; 
-    path = with pkgs; [ coreutils diffutils ];
-    
+    before = [ "display-manager.service" ];
+    path = with pkgs; [
+      coreutils
+      diffutils
+    ];
+
     serviceConfig = {
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "sddm-wallpaper-seed" ''
@@ -88,11 +94,21 @@ in
   # XDG Portals
   xdg.portal = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-hyprland ];
-    config.common.default = [ "hyprland" "gtk" ];
-  }; 
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-hyprland
+    ];
+    config.common.default = [
+      "hyprland"
+      "gtk"
+    ];
+  };
   systemd.user.services.xdg-desktop-portal = {
-    unitConfig = { Requires = [ "graphical-session.target" ]; Wants = [ "graphical-session.target" ]; After = [ "graphical-session.target" ]; };
+    unitConfig = {
+      Requires = [ "graphical-session.target" ];
+      Wants = [ "graphical-session.target" ];
+      After = [ "graphical-session.target" ];
+    };
   };
 
   # Font
@@ -102,18 +118,24 @@ in
     inter
     noto-fonts
   ];
-  
+
   fonts.fontconfig = {
     enable = true;
     antialias = true;
-    hinting = { enable = true; style = "slight"; };
+    hinting = {
+      enable = true;
+      style = "slight";
+    };
     subpixel = {
       rgba = "rgb";
       lcdfilter = "default";
     };
     defaultFonts = {
       monospace = [ "JetBrainsMono Nerd Font" ];
-      sansSerif = [ "Inter" "Noto Sans" ];
+      sansSerif = [
+        "Inter"
+        "Noto Sans"
+      ];
       serif = [ "Noto Serif" ];
     };
   };
@@ -132,7 +154,7 @@ in
   # Graphical packages for polkit authorization
   environment.systemPackages = with pkgs; [
     polkit_gnome
-    (writeShellScriptBin "start-polkit" ''exec ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1'')
+    (writeShellScriptBin "start-polkit" "exec ${polkit_gnome}/libexec/polkit-gnome-authentication-agent-1")
     sddmTheme
   ];
 }

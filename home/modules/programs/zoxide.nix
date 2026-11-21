@@ -2,7 +2,7 @@
 
 {
   home.packages = with pkgs; [
-    zoxide 
+    zoxide
   ];
 
   programs.zoxide.enable = true;

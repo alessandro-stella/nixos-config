@@ -1,4 +1,7 @@
-{ config, pkgs, inputs, username, ...}:
+{
+  pkgs,
+  ...
+}:
 
 {
   # Cursor settings
@@ -20,7 +23,7 @@
 
   gtk = {
     enable = true;
-    
+
     theme = {
       name = "adw-gtk3-dark";
       package = pkgs.adw-gtk3;

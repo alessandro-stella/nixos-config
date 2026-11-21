@@ -1,12 +1,10 @@
-{ config, username, hostType, dotfilesPath, ... }:
+{
+  config,
+  hostType,
+  dotfilesPath,
+  ...
+}:
 
-let
-  activationPath = config.lib.makeBinPath [
-    config.pkgs.bash
-    config.pkgs.coreutils
-    config.pkgs.git
-  ];
-in
 {
   xdg.configFile = {
     "btop".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/btop";
@@ -16,13 +14,17 @@ in
     "scripts".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/scripts";
     "foot".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/foot";
     "quickshell".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/quickshell";
+    "marktext/preferences.json".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/marktext/preferences.json";
 
     # Hyprland configuration
-    "hypr/hyprland.lua".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/hyprland.lua";
-    "hypr/keybinds.lua".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/keybinds.lua";
+    "hypr/hyprland.lua".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/hyprland.lua";
+    "hypr/keybinds.lua".source =
+      config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/keybinds.lua";
     "hypr/.luarc.json".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/.luarc.json";
 
     # System-specific modules
     "hypr/modules".source = config.lib.file.mkOutOfStoreSymlink "${dotfilesPath}/hypr/${hostType}";
-  }; 
+  };
 }

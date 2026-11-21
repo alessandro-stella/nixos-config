@@ -1,4 +1,4 @@
-{ config, pkgs, username, ... }:
+{ pkgs, username, ... }:
 
 {
   imports = [
@@ -20,7 +20,7 @@
     efi.canTouchEfiVariables = true;
   };
 
-  # Disabling potentially damaged sensor 
+  # Disabling potentially damaged sensor
   services.logind.settings.Login.HandleLidSwitch = "ignore";
 
   # Laptop only packages
@@ -63,7 +63,7 @@
   hardware.bluetooth.enable = true;
   services.blueman.enable = true;
 
-  # Disable trackpoint (hardware damage causes drift, I suppose)
+  # Disable trackpoint (hardware damage causes drift)
   systemd.services.trackpoint-filter = {
     description = "Filter trackpoint drift";
     wantedBy = [ "multi-user.target" ];
@@ -94,14 +94,14 @@
     };
   };
 
-  # Fingerprint reader 
+  # Fingerprint reader
   services.fprintd = {
     enable = true;
   };
 
-  # Disable PAM and fingerprint interaction 
+  # Disable PAM and fingerprint interaction
   security.pam.services = {
-    login.fprintAuth = false; 
+    login.fprintAuth = false;
     su.fprintAuth = false;
     sudo.fprintAuth = false;
     polkit-1.fprintAuth = false;
@@ -110,22 +110,31 @@
     xdg-desktop-portal.fprintAuth = false;
   };
 
-  # Quickshell permissions for fprintd 
+  # Quickshell permissions for fprintd
   security.sudo.extraRules = [
     {
       users = [ username ];
       commands = [
         {
           command = "${pkgs.fprintd}/bin/fprintd-verify";
-          options = [ "NOPASSWD" "NOEXEC" ];
+          options = [
+            "NOPASSWD"
+            "NOEXEC"
+          ];
         }
         {
           command = "${pkgs.fprintd}/bin/fprintd-list";
-          options = [ "NOPASSWD" "NOEXEC" ];
+          options = [
+            "NOPASSWD"
+            "NOEXEC"
+          ];
         }
         {
           command = "${pkgs.bash}/bin/bash";
-          options = [ "NOPASSWD" "NOEXEC" ];
+          options = [
+            "NOPASSWD"
+            "NOEXEC"
+          ];
         }
       ];
     }

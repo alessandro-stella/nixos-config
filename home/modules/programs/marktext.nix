@@ -20,7 +20,7 @@ appimageTools.wrapType2 {
     install -m 444 -D ${appimageContents}/marktext.desktop -t $out/share/applications
     substituteInPlace $out/share/applications/marktext.desktop \
       --replace-fail 'Exec=AppRun' 'Exec=marktext'
-    
+
     if [ -d "${appimageContents}/usr/share/icons" ]; then
       cp -r ${appimageContents}/usr/share/icons $out/share/
     fi

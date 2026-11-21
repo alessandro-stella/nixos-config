@@ -1,4 +1,9 @@
-{ config, pkgs, username, ... }:
+{
+  config,
+  pkgs,
+  username,
+  ...
+}:
 
 {
   imports = [
@@ -39,7 +44,7 @@
             imgName = "nixos";
           }
         ];
-      };  
+      };
     };
 
     efi.canTouchEfiVariables = true;
@@ -76,7 +81,7 @@
     name=HDMI-A-1
     mode=off
   '';
- 
+
   # Desktop specific packages
   environment.systemPackages = with pkgs; [
     playerctl
@@ -88,7 +93,7 @@
   services.printing = {
     enable = true;
     drivers = with pkgs; [
-      hplipWithPlugin 
+      hplipWithPlugin
       samsung-unified-linux-driver
       splix
       hplip
