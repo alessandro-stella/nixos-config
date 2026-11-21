@@ -1,4 +1,4 @@
-{ config, pkgs, dotfilesPath, hostType, ... }:
+{ pkgs, hostType, ... }:
 
 let
   customGum = import ./gum.nix { inherit pkgs; };
@@ -226,8 +226,7 @@ let
 
       gum log --structured --level info "Converting," from "$src" to "$out"
 
-      if nix shell nixpkgs#pandoc nixpkgs#texliveSmall -c \
-        pandoc "$src" -o "$out" --pdf-engine=xelatex "''${args[@]}"; then
+      if pandoc "$src" -o "$out" --pdf-engine=xelatex "''${args[@]}"; then
         gum log --structured --level info "PDF created," path "$out"
 
         if [ "$open" -eq 1 ]; then
@@ -245,15 +244,15 @@ let
       fi
     } 
   '';
-  in
-  {
-    home.packages = [
+in
+{
+  home.packages = [
     customGum
   ];
 
   programs.zsh = {
     enable = true;
-    
+
     shellAliases = {
       ls = "ls --color=auto";
       grep = "grep --color=auto";
