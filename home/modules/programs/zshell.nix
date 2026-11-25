@@ -224,6 +224,12 @@ let
       [ -n "$font" ] && args+=(-V "mainfont=$font")
       [ "$toc" -eq 1 ] && args+=(--toc)
 
+      args+=(
+        -V 'header-includes=\usepackage[table]{xcolor}'
+        -V 'header-includes=\renewcommand{\arraystretch}{1.3}'
+        -V 'header-includes=\let\oldlongtable\longtable\let\endoldlongtable\endlongtable\renewenvironment{longtable}{\rowcolors{2}{gray!10}{white}\oldlongtable}{\endoldlongtable}'
+      )
+
       gum log --structured --level info "Converting," from "$src" to "$out"
 
       if pandoc "$src" -o "$out" --pdf-engine=xelatex "''${args[@]}"; then
